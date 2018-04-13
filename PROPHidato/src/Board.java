@@ -5,7 +5,7 @@ public abstract class Board {
 	
 	public Board(Cell firstCell) {
 		cells = new HashMap<Integer, Cell>();
-		cells.put(firstCell.getCellID(), firstCell);	
+		cells.put(firstCell.getCellID(), firstCell);
 	}
 	
 	//static Board autogenerate() {}
