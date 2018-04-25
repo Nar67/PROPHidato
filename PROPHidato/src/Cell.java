@@ -4,17 +4,16 @@ public class Cell {
 	static Integer cellNumerator = 0;
 	private Integer cellID;
 	private Vector<Cell> neighbours;
-	private Integer value;
+	private cellType cellType;
 	
-	public Integer getValue() {
-		return value;
+	public enum cellType {
+		TRIANGLE,
+		SQUARE,
+		HEXAGON
 	}
-
-	public void setValue(Integer value) {
-		this.value = value;
-	}
-
-	public Cell() {
+	
+	public Cell(cellType cType) {
+		this.setCellType(cType);
 		cellID = cellNumerator;
 		cellNumerator++;
 	}
@@ -33,5 +32,13 @@ public class Cell {
 
 	public void setNeighbours(Vector<Cell> neighbours) {
 		this.neighbours = neighbours;
+	}
+
+	public cellType getCellType() {
+		return cellType;
+	}
+
+	public void setCellType(cellType cellType) {
+		this.cellType = cellType;
 	}
 }
