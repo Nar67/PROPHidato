@@ -1,9 +1,8 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Cell {
-	static Integer cellNumerator = 0;
 	private Integer cellID;
-	private Vector<Cell> neighbours;
+	private ArrayList<Cell> neighbours;
 	private Integer value;
 	
 	public Integer getValue() {
@@ -15,9 +14,12 @@ public class Cell {
 	}
 
 	public Cell() {
-		cellID = cellNumerator;
-		cellNumerator++;
+		
 	}
+	
+	public Cell(ArrayList<Cell> neighbours) {
+		this.neighbours = neighbours;
+	} 
 
 	public Integer getCellID() {
 		return this.cellID;
@@ -27,11 +29,11 @@ public class Cell {
 		this.cellID = cellID;
 	}
 
-	public Vector<Cell> getNeighbours() {
+	public ArrayList<Cell> getNeighbours() {
 		return neighbours;
 	}
 
-	public void setNeighbours(Vector<Cell> neighbours) {
+	public void setNeighbours(ArrayList<Cell> neighbours) {
 		this.neighbours = neighbours;
 	}
 }
