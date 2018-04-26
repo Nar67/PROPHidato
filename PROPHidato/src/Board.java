@@ -14,11 +14,6 @@ public abstract class Board {
 		cellNumerator = 0;
 	}
 	
-	void addCell(Integer id) {
-		
-		
-	}
-	
 	void removeCell(Integer id) {}
 	
 	void addCell(Cell cell) {
