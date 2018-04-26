@@ -7,7 +7,14 @@ public class Partida {
 	
 	public Partida createPartida(Integer diff) {
 		System.out.println("Para autogenerar un Hidato pulse: 1; para generar su propio Hidato pulse: 2.\n");
-		if 
+		Scanner keyboard = new Scanner(System.in);
+		int action = keyboard.nextInt();
+		if (action == 1) cridar Funcio d'autogeneracio d'hidato
+		else {
+			System.out.println("Introduzca un hidato válido\n");
+			keyboard = new Scanner(System.in);
+			int action = keyboard.nextInt();
+		}
 	}
 	
 	public boolean checkFinished(Hidato hidato) {

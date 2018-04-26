@@ -1,10 +1,11 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Ranking {
-	HashMap<String, Integer> rank;
+	private ArrayList<String> rank;
 	
 	public Ranking() {
-		rank = new HashMap<String, Integer>();
+		rank = new ArrayList<String>();
 	}
 	
 	public void llegirRanking() {
