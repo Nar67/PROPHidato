@@ -1,8 +1,8 @@
 
 public class HexagonBoard extends Board {
 
-	public HexagonBoard(Integer rows, Integer cols) {
-		super(rows, cols);
+	public HexagonBoard(String params[], String input[][]) {
+		super(params, input);
 		// TODO Auto-generated constructor stub
 	}
 

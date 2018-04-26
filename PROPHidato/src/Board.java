@@ -1,4 +1,6 @@
 public abstract class Board {
+	
+	
 	private String tyAdj;
 	private String boardID;
 	private Integer rows;
@@ -10,15 +12,18 @@ public abstract class Board {
 		return tyAdj;
 	}
 
-	public Board(Integer rows, Integer cols) {
-		this.rows = rows;
-		this.cols = cols;
+	public Board(String params[], String input[][]) {
+		this.rows = Integer.parseInt(params[2]);
+		this.cols = Integer.parseInt(params[3]);
+		this.tyAdj = params[1];
 		for (Integer i = 0; i < rows; i++) {
 			for (Integer j = 0; j < cols; j++) {
 				cells[i][j]= new Cell(i, j);
+				cells[i][j].setValue(input[i][j]);
 			}
 		}
 	}
+	
 	
 	public Integer getRows() {
 		return rows;
@@ -37,11 +42,11 @@ public abstract class Board {
 	}
 
 	
-	void setValueToCell(Integer row, Integer col, Integer value) {
+	void setValueToCell(Integer row, Integer col, String value) {
 		cells[row][col].setValue(value);
 	}
 	
-	void setValueToCell(Cell cell, Integer value) {
+	void setValueToCell(Cell cell, String value) {
 		cells[cell.getRow()][cell.getCol()].setValue(value);
 	}
 	

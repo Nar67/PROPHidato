@@ -1,9 +1,6 @@
-import java.util.ArrayList;
 
 public class Cell {
-	private Integer cellID;
-	private ArrayList<Cell> neighbours;
-	private Integer value;
+	private String value;
 	private Integer col;
 	private Integer row;
 	private String tyCell;
@@ -12,33 +9,17 @@ public class Cell {
 		return tyCell;
 	}
 	
-	public Integer getValue() {
+	public String getValue() {
 		return value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 
 	public Cell(Integer row, Integer col) {
 		this.row = row;
 		this.col = col;
-	}
-
-	public Integer getCellID() {
-		return this.cellID;
-	}
-
-	public void setCellID(Integer cellID) {
-		this.cellID = cellID;
-	}
-
-	public ArrayList<Cell> getNeighbours() {
-		return neighbours;
-	}
-
-	public void setNeighbours(ArrayList<Cell> neighbours) {
-		this.neighbours = neighbours;
 	}
 
 	public Integer getCol() {

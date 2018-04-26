@@ -1,8 +1,8 @@
 
 public class TriangleBoard extends Board {
 
-	public TriangleBoard(Integer rows, Integer cols) {
-		super(rows, cols);
+	public TriangleBoard(String params[], String input[][]) {
+		super(params, input);
 		// TODO Auto-generated constructor stub
 	}
 
