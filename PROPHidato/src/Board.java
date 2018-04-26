@@ -4,6 +4,11 @@ public abstract class Board {
 	private Integer cellNumerator;
 	
 	
+	public Board() {
+		cells = new ArrayList<Cell>();
+		cellNumerator = 0;
+	}
+	
 	public Board(Cell firstCell) {
 		cells = new ArrayList<Cell>();
 		cells.add(0, firstCell);
