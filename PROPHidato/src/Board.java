@@ -1,28 +1,58 @@
-import java.util.ArrayList;
 public abstract class Board {
-	ArrayList<Cell> cells;
-	private Integer cellNumerator;
+	private String tyAdj;
+	private String boardID;
+	private Integer rows;
+	private Integer cols;
+	Cell cells[][];
 	
 	
-	public Board() {
-		cells = new ArrayList<Cell>();
-		cellNumerator = 0;
+	public String getTyAdj() {
+		return tyAdj;
+	}
+
+	public Board(Integer rows, Integer cols) {
+		this.rows = rows;
+		this.cols = cols;
+		for (Integer i = 0; i < rows; i++) {
+			for (Integer j = 0; j < cols; j++) {
+				cells[i][j]= new Cell(i, j);
+			}
+		}
 	}
 	
-	public Board(Cell firstCell) {
-		cells = new ArrayList<Cell>();
-		cells.add(0, firstCell);
-		cellNumerator = 0;
+	public Integer getRows() {
+		return rows;
+	}
+
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
+
+	public Integer getCols() {
+		return cols;
+	}
+
+	public void setCols(Integer cols) {
+		this.cols = cols;
+	}
+
+	
+	void setValueToCell(Integer row, Integer col, Integer value) {
+		cells[row][col].setValue(value);
 	}
 	
-	//static Board autogenerate() {}
-	
-	//boolean isValid() {}
-	
-	void addCell(Cell cell) {
-		cell.setCellID(cellNumerator++);
+	void setValueToCell(Cell cell, Integer value) {
+		cells[cell.getRow()][cell.getCol()].setValue(value);
 	}
 	
 	void removeCell(Integer id) {}
+
+	public String getBoardID() {
+		return boardID;
+	}
+
+	public void setBoardID(String boardID) {
+		this.boardID = boardID;
+	}
 	
 }
