@@ -1,14 +1,17 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 public abstract class Board {
-	HashMap<Integer, Cell> cells;
+	ArrayList<Cell> cells;
+	private Integer cellNumerator;
 	
 	public Board() {
-		cells = new HashMap<Integer, Cell>();
+		cells = new ArrayList<Cell>();
+		cellNumerator = 0;
 	}
 	
 	public Board(Cell firstCell) {
-		cells = new HashMap<Integer, Cell>();
-		cells.put(firstCell.getCellID(), firstCell);
+		cells = new ArrayList<Cell>();
+		cells.add(0, firstCell);
+		cellNumerator = 0;
 	}
 	
 	void addCell(Integer id) {
@@ -18,7 +21,9 @@ public abstract class Board {
 	
 	void removeCell(Integer id) {}
 	
-	//static Board autogenerate() {}
+	void addCell(Cell cell) {
+		cell.setCellID(cellNumerator++);
+	}
 	
 	//boolean isValid() {}
 	

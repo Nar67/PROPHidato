@@ -1,22 +1,25 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Cell {
-	static Integer cellNumerator = 0;
 	private Integer cellID;
-	private Vector<Cell> neighbours;
-	private cellType cellType;
+	private ArrayList<Cell> neighbours;
+	private Integer value;
 	
-	public enum cellType {
-		TRIANGLE,
-		SQUARE,
-		HEXAGON
+	public Integer getValue() {
+		return value;
+	}
+
+	public void setValue(Integer value) {
+		this.value = value;
+	}
+
+	public Cell() {
+		
 	}
 	
-	public Cell(cellType cType) {
-		this.setCellType(cType);
-		cellID = cellNumerator;
-		cellNumerator++;
-	}
+	public Cell(ArrayList<Cell> neighbours) {
+		this.neighbours = neighbours;
+	} 
 
 	public Integer getCellID() {
 		return this.cellID;
@@ -26,19 +29,11 @@ public class Cell {
 		this.cellID = cellID;
 	}
 
-	public Vector<Cell> getNeighbours() {
+	public ArrayList<Cell> getNeighbours() {
 		return neighbours;
 	}
 
-	public void setNeighbours(Vector<Cell> neighbours) {
+	public void setNeighbours(ArrayList<Cell> neighbours) {
 		this.neighbours = neighbours;
-	}
-
-	public cellType getCellType() {
-		return cellType;
-	}
-
-	public void setCellType(cellType cellType) {
-		this.cellType = cellType;
 	}
 }
