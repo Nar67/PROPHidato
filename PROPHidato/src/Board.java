@@ -3,6 +3,7 @@ public abstract class Board {
 	ArrayList<Cell> cells;
 	private Integer cellNumerator;
 	
+	
 	public Board() {
 		cells = new ArrayList<Cell>();
 		cellNumerator = 0;
@@ -14,12 +15,14 @@ public abstract class Board {
 		cellNumerator = 0;
 	}
 	
-	void removeCell(Integer id) {}
+	//static Board autogenerate() {}
+	
+	//boolean isValid() {}
 	
 	void addCell(Cell cell) {
 		cell.setCellID(cellNumerator++);
 	}
 	
-	//boolean isValid() {}
+	void removeCell(Integer id) {}
 	
 }
