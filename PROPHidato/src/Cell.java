@@ -5,6 +5,7 @@ public class Cell {
 	private Integer row;
 	private String tyCell;
 	
+	
 	public String getTyCell() {
 		return tyCell;
 	}
