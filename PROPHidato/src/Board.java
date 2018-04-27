@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public abstract class Board {
 	
 	
@@ -63,6 +65,10 @@ public abstract class Board {
 	public Cell getCell(Integer i, Integer j) {
 		return cells[i][j];
 	}
+	
+	abstract ArrayList<Cell> getNeighbours(Cell cell);
+	
+	//public Board autogenerateBoard()
 	
 	
 }
