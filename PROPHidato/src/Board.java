@@ -5,7 +5,7 @@ public abstract class Board {
 	private String boardID;
 	private Integer rows;
 	private Integer cols;
-	Cell cells[][];
+	private Cell cells[][];
 	
 	
 	public String getTyAdj() {
@@ -59,5 +59,10 @@ public abstract class Board {
 	public void setBoardID(String boardID) {
 		this.boardID = boardID;
 	}
+	
+	public Cell getCell(Integer i, Integer j) {
+		return cells[i][j];
+	}
+	
 	
 }
