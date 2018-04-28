@@ -2,6 +2,9 @@ import java.util.Scanner;
 
 import com.sun.beans.editors.IntegerEditor;
 import com.sun.org.apache.xml.internal.serializer.ElemDesc;
+import com.sun.org.apache.xpath.internal.operations.And;
+import com.sun.org.apache.xpath.internal.operations.Equals;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -75,11 +78,8 @@ public class Partida {
 					break;
 			};
 			Hidato hidato = new Hidato(tauler);
-			hidato.resoldreHidato();
-			hidato.printHidato();
-			
-			/*
-			if (!isValid(tauler)) System.out.println("El tablero introducido no es resoluble");
+						
+			if (hidato.checkHidato()) System.out.println("El tablero introducido no es resoluble");
 			else {
 				System.out.println("Escoja dificultad: 1(fácil), 2(normal), 3(difícil).");
 				int diff = keyboard.nextInt();
@@ -99,7 +99,7 @@ public class Partida {
 						++current;
 					}
 				}
-			}*/
+			}
 		}
 		else if (action == 1) {
 			System.out.println("Escoja dificultad: 1(muy fácil), 2(fácil), 3(normal), 4(difícil), 5(muy difícil), 6(experto).");
@@ -107,10 +107,48 @@ public class Partida {
 			int diff = keyboard.nextInt();
 			System.out.println();
 			System.out.println("Autogenerando Hidato ...");
+			
 			int randomi = ThreadLocalRandom.current().nextInt(3, 8);
 			int randomj = ThreadLocalRandom.current().nextInt(3, 8);
 			String matriu[][] = new String[randomi][randomj];
+			System.out.println(randomi);
+			System.out.println(randomj);
+			int randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
+			int randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
+			matriu[randomstarti][randomstartj] = "1";
 			
+			int hashtags = (randomi*randomj)/3;
+			for (int i = 0; i < hashtags; ++i) {
+				randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
+				randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
+				while (matriu[randomstarti][randomstartj] != null) {
+					randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
+					randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
+				}
+				matriu[randomstarti][randomstartj]= "#"; 
+			}
+			
+			randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
+			randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
+			while (matriu[randomstarti][randomstartj] != null) {
+				randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
+				randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
+			}
+			matriu[randomstarti][randomstartj] = Integer.toString((randomi*randomj)-hashtags);
+
+			for (int i = 0; i < matriu.length; ++i) {
+				for (int j = 0; j < matriu[0].length; ++j) {
+					if ((i != randomstarti || j != randomstartj) && matriu[i][j] == null) matriu[i][j] = "?";					
+				}
+			}
+			
+			for (int i = 0; i < matriu.length; ++i) {
+				for (int j = 0; j < matriu[0].length; ++j) {
+					System.out.print(matriu[i][j]);
+					System.out.print(" ");
+				}
+				System.out.println();
+			}
 			Board tauler;
 			switch(diff) {
 				case 1:
@@ -137,7 +175,9 @@ public class Partida {
 					String params5[] = {"T", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 					tauler = new TriangleBoard(params5,  matriu);
 					break;
-			}			
+			}
+			Hidato hidato = new Hidato(tauler);
+			hidato.checkHidato();
 		}
     }
 	
