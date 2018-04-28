@@ -49,7 +49,7 @@ public abstract class Board {
 		}
 	}
 }
-	
+	*/
 	public void printBoard() {
 		Integer rows = this.getRows();
 		Integer cols = this.getCols();
@@ -63,7 +63,6 @@ public abstract class Board {
 			System.out.println();
 		}
 	}
-	*/
 	
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
