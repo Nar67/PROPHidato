@@ -46,6 +46,27 @@ public class Partida {
 		int cellID = hidato.nextMove();		
 	}
 	
+	public void startPlaying() {
+		
+		int current = 2;
+		while (!isAcabada()) {
+			System.out.println("Introduzca la posición (i, j) donde quiere poner el siguiente número");
+			Scanner keyboard = new Scanner(System.in);
+			int i = keyboard.nextInt();
+			int j = keyboard.nextInt();/*
+			if (!isMoveValid(i, j)) System.out.println("El movimiento no es válido");
+			else if (jaExisteix(i, j)) {
+				hidato.getTaulell().setValueToCell(Integer.parseInt(i), Integer.parseInt(j), null);
+				--current;
+			}
+			else {*/
+				tauler.setValueToCell(Integer.parseInt(i), Integer.parseInt(j), Integer.toString(current));
+				++current;
+			}
+		}
+	
+	
+	
 	public static void main(String[] args) {
 		System.out.println("Para autogenerar un Hidato pulse: 1; para generar su propio Hidato pulse: 2.\n");
 		Scanner keyboard = new Scanner(System.in);
@@ -78,28 +99,15 @@ public class Partida {
 					break;
 			};
 			Hidato hidato = new Hidato(tauler);
-						
+			/*			
 			if (hidato.checkHidato()) System.out.println("El tablero introducido no es resoluble");
 			else {
 				System.out.println("Escoja dificultad: 1(fácil), 2(normal), 3(difícil).");
 				int diff = keyboard.nextInt();
 				Partida partida;
-				partida = new Partida(diff);
-				int current = 2;
-				while (!partida.isAcabada()) {
-					String move = keyboard.nextLine();
-					String movepro[] = move.split(" ");
-					if (!isMoveValid(movepro[0], movepro[1])) System.out.println("El movimiento no es válido");
-					else if (jaExisteix(movepro[0], movepro[1])) {
-						tauler.setValueToCell(Integer.parseInt(movepro[0]), Integer.parseInt(movepro[1]), null);
-						--current;
-					}
-					else {
-						tauler.setValueToCell(Integer.parseInt(movepro[0]), Integer.parseInt(movepro[1]), Integer.toString(current));
-						++current;
-					}
-				}
-			}
+				partida = new Partida(hidato, diff);
+				
+			}*/
 		}
 		else if (action == 1) {
 			System.out.println("Escoja dificultad: 1(muy fácil), 2(fácil), 3(normal), 4(difícil), 5(muy difícil), 6(experto).");
@@ -159,10 +167,6 @@ public class Partida {
 					String params1[] = {"Q", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 					tauler = new SquareBoard(params1, matriu);
 					break;
-				default:
-					String params2[] = {"H", "C", Integer.toString(randomi), Integer.toString(randomj)};
-					tauler = new HexagonBoard(params2,  matriu);
-					break;
 				case 4:
 					String params3[] = {"H", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 					tauler = new HexagonBoard(params3,  matriu);
@@ -175,9 +179,31 @@ public class Partida {
 					String params5[] = {"T", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 					tauler = new TriangleBoard(params5,  matriu);
 					break;
+				default:
+					String params2[] = {"H", "C", Integer.toString(randomi), Integer.toString(randomj)};
+					tauler = new HexagonBoard(params2,  matriu);
+					break;
 			}
 			Hidato hidato = new Hidato(tauler);
-			hidato.checkHidato();
+			//hidato.checkHidato();
+			int current = 2;
+			while (true) {
+				System.out.println("Introduzca la posición (i, j) donde quiere poner el siguiente número");
+				keyboard = new Scanner(System.in);
+				int i = keyboard.nextInt();
+				int j = keyboard.nextInt();
+				//if (!isMoveValid(i, j)) System.out.println("El movimiento no es válido");
+				if (!tauler.getCell(i, j).getValue().equals("#") && !tauler.getCell(i, j).getValue().equals("?")) {
+					tauler.setValueToCell(i, j, "?");
+					--current;
+					tauler.printBoard();
+				}
+				else {
+					tauler.setValueToCell(i, j, Integer.toString(current));
+					++current;
+					tauler.printBoard();
+				}
+			}
 		}
     }
 	
