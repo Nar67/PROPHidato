@@ -19,11 +19,13 @@ public class HexagonBoard extends Board {
 			else if(j < this.getCols() - 1) {
 				result.add(this.getCell(i+1, j));
 				result.add(this.getCell(i, j+1));
+				result.add(this.getCell(i, j-1));
 				result.add(this.getCell(i+1, j-1));
 			}
 			else {
 				result.add(this.getCell(i+1, j));
 				result.add(this.getCell(i+1, j-1));
+				result.add(this.getCell(i, j-1));
 			}
 		}
 		else if(i < this.getRows() - 1) {
@@ -46,7 +48,7 @@ public class HexagonBoard extends Board {
 				}
 				else {
 					result.add(this.getCell(i+1, j-1));
-					result.add(this.getCell(i-1, j+1));
+					result.add(this.getCell(i-1, j-1));
 				}
 				result.add(this.getCell(i, j+1));
 				result.add(this.getCell(i, j-1));
