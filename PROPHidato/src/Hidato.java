@@ -19,7 +19,7 @@ public class Hidato {
 	public Hidato(Board a) {
 		this.taulell = a;
 		this.solucio = this.taulell;
-		this.ctype = "T";
+		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
 		this.cols = a.getCols();
