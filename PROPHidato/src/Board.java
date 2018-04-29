@@ -8,6 +8,25 @@ public abstract class Board {
 	private Integer cols;
 	private String tyCell;
 	private Cell cells[][];
+	private String[] params;
+	private String[][] matriu;
+	
+	public String[] getParams() {
+		return params;
+	}
+
+	public void setParams(String[] params) {
+		this.params = params;
+	}
+
+	public String[][] getMatriu() {
+		return matriu;
+	}
+
+	public void setMatriu(String[][] matriu) {
+		this.matriu = matriu;
+	}
+
 	
 	/**
 	
@@ -93,6 +112,8 @@ public abstract class Board {
 	}
 
 	public Board(String params[], String input[][]) {
+		this.params = params;
+		this.matriu = input;
 		this.rows = Integer.parseInt(params[2]);
 		this.cols = Integer.parseInt(params[3]);
 		this.tyAdj = params[1];
