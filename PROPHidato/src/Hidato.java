@@ -35,7 +35,7 @@ public class Hidato {
 	}
 	
 	public int[] getStart() {
-		return start;
+		return Hidato.start;
 	}
 	
 	public boolean checkHidato() {
