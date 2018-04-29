@@ -17,8 +17,8 @@ public class Hidato {
     private int[] given, start;
 
 	public Hidato(Board a) {
-		this.taulell = a;	
-		this.solucio = a;
+		this.taulell = new SquareBoard(a.getParams(),a.getMatriu());	
+		this.solucio = new SquareBoard(a.getParams(),a.getMatriu());
 		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
