@@ -17,7 +17,8 @@ public class Hidato {
     private static int[] given, start;
 
 	public Hidato(Board a) {
-		this.taulell = a;		
+		this.taulell = a;	
+		this.solucio = a;
 		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
@@ -47,8 +48,6 @@ public class Hidato {
 	}
 	
 	private void setupHidato() {
-		Board board = new SquareBoard(this.taulell);
-		this.solucio = board;
 		List<Integer> list = new ArrayList<>(this.rows * this.cols);
         for(int i = 0; i < this.rows; ++i) {
         	for(int j = 0; j < this.cols; ++j) {
