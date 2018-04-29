@@ -13,30 +13,33 @@ public class Hidato {
 	public Integer emptyCells;
 	public Integer fixedCells;
 	private boolean acabat;
+	private boolean te_solu;
     private static int[] given, start;
 	
 	public Hidato(Board a) {
 		this.taulell = a;
 		this.solucio = this.taulell;
-		this.ctype = a.getCell(0,0).getTyCell();
+		this.ctype = "T";
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
 		this.cols = a.getCols();
 		this.acabat = false;
+		this.te_solu = false;
 	}
 	
 	public void iniHidato() {
 		//inizialització hidato(posar numeros en una board buida)
 	}
-	
-	public void checkHidato() {
+	public Board getTaulell() {
+		return this.taulell;
+	}
+	public boolean checkHidato() {
 		setupHidato();
 		boolean aux = solve(start[0],start[1],1,0);
-		if(aux) {
-			this.acabat = true;
-			System.out.println("Hidato correcte, vas per el bon camí ;)");
-		}
-		else System.out.println("No hi ha solució");
+		this.acabat = true;
+		if(aux) this.te_solu = true;
+		else te_solu = false;
+		return aux;
 	}
 	
 	private void setupHidato() {
@@ -61,149 +64,37 @@ public class Hidato {
         }
         Collections.sort(list);
         given = new int[list.size()];
-        for (int i = 0; i < given.length; i++)
+        for (int i = 0; i < given.length; i++) {
             given[i] = list.get(i);
+        }
+        
 		
 	}
     private  boolean solve(int i, int j, int n, int next) {
 		Cell a = this.solucio.getCell(i, j);
-
-    	if (n > given[given.length - 1])
+		if (n > given[given.length - 1])
             return true; //ja està resolt
-    	if (a.getValue() == "#") return false;
-    	if (a.getValue() != "?" && Integer.parseInt(a.getValue()) != n)
+    	if (a.getValue().equals("*")  || a.getValue().equals("#")) return false;
+    	if (!a.getValue().equals("?")  && Integer.parseInt(a.getValue()) != n)
             return false;
-    	if (a.getValue() == "?" && given[next] == n) 
+    	if (a.getValue().equals("?") && given[next] == n) 
     		 return false;
     	
     	
-    	if(Integer.parseInt(a.getValue()) == n) {
+    	if(!a.getValue().equals("?") && Integer.parseInt(a.getValue()) == n) {
     		++next;
     	}
     	//aqui començem propiament dit a resoldre
     	//posem el valor actual a 0
     	String valor_inicial = a.getValue();
     	this.solucio.setValueToCell(i, j, Integer.toString(n));
-    	
-    	if(ctype == "Q") {
-    		if(atype == "CA") {
-    			for (int q = -1; q < 2; q++) {
-    				for (int w = -1; w < 2; w++) {
-    					if (((i + q >= 0) && (j + w>= 0)) && ((i + q < this.rows) && (j + w< this.cols))&& solve(i + q, j + w, n + 1, next))
-                           	return true;
-    				}    
-    			}
-                    
-    		}
-    		else if(atype == "C") {
-    			if(i-1 >= 0) {
-    				if(solve(i-1, j, n+1, next)) return true;
-    			}
-    			if(i+1 < this.rows) {
-    				if(solve(i+1, j, n+1, next)) return true;
-    			}
-    			if(j-1 >= 0) {
-    				if(solve(i, j-1, n+1, next)) return true;
-    			}
-    			if(j+1 < this.cols) {
-    				if(solve(i, j+1, n+1, next)) return true;
-    			}
-    		}
-    	}
-    	else if(ctype == "T") {
-    		if(atype == "CA") {
-    			if((i%2 != 0 && j%2 == 0) || (i%2 == 0 && j%2 != 0)) { //triangle dret
-    				for(int q = -1; q < 2; ++q) {
-    					if(q == -1) {
-    						for(int w = -1; w < 2; ++w) {
-    							if (((i + q >= 0) && (j + w>= 0)) && ((i + q < this.rows) && (j + w< this.cols))&& solve(i + q, j + w, n + 1, next))
-    	                           	return true;
-    						}
-    					}
-    					else {
-    						for(int w = -2; w < 4; ++w) {
-    							if (((i + q >= 0) && (j + w>= 0)) && ((i + q < this.rows) && (j + w< this.cols))&& solve(i + q, j + w, n + 1, next))
-    	                           	return true;
-    						}
-    					}
-    				}
-    			}
-    			else if((i%2 != 0 && j%2 != 0) || (i%2 == 0 && j%2 == 0)) { //triangle del revés
-    				for(int q = -1; q < 2; ++q) {
-    					if(q == 1) {
-    						for(int w = -1; w < 2; ++w) {
-    							if (((i + q >= 0) && (j + w>= 0)) && ((i + q < this.rows) && (j + w< this.cols))&& solve(i + q, j + w, n + 1, next))
-    	                           	return true;
-    						}
-    					}
-    					else {
-    						for(int w = -2; w < 4; ++w) {
-    							if (((i + q >= 0) && (j + w>= 0)) && ((i + q < this.rows) && (j + w< this.cols))&& solve(i + q, j + w, n + 1, next))
-    	                           	return true;
-    						}
-    					}
-    				}
-    			}
-    			
-    		}
-    		else if(atype == "C") {
-    			if((i%2 != 0 && j%2 == 0) || (i%2 == 0 && j%2 != 0)) { //triangle dret
-    				if(i+1 < this.rows) {
-        				if(solve(i+1, j, n+1, next)) return true;
-        			}
-        			if(j-1 >= 0) {
-        				if(solve(i, j-1, n+1, next)) return true;
-        			}
-        			if(j+1 < this.cols) {
-        				if(solve(i, j+1, n+1, next)) return true;
-        			}
-    			}
-    			else if((i%2 != 0 && j%2 != 0) || (i%2 == 0 && j%2 == 0)) { //triangle del revés
-        			if(i+1 < this.rows) {
-        				if(solve(i+1, j, n+1, next)) return true;
-        			}
-        			if(j-1 >= 0) {
-        				if(solve(i, j-1, n+1, next)) return true;
-        			}
-        			if(j+1 < this.cols) {
-        				if(solve(i, j+1, n+1, next)) return true;
-        			}
-    			}
-    		}
-    		
-    	}
-    	else if(ctype == "H") {
-    		//per el cas dels hexagons observem que l'algorisme per CA i per C és el mateix
-    		if(i%2 == 0) {
-    			for (int q = -1; q < 2; q++) {
-    				if(q == 0) {
-    					if(j-1 >= 0) if(solve(i+q, j-1, n+1, next)) return true;
-    					if(j+1 < this.cols) if(solve(i+q, j+1, n+1, next)) return true;
-    				}
-    				else {
-    					if ((i + q >= 0) && (i + q < this.rows)) {
-    						if(j-1 >= 0) if(solve(i+q, j-1, n+1, next)) return true;
-        					if(j < this.cols) if(solve(i+q, j, n+1, next)) return true;
-    					}
-    				}
-    			}
-    		}
-    		else {
-    			for (int q = -1; q < 2; q++) {
-    				if(q == 0) {
-    					if(j-1 >= 0) if(solve(i+q, j-1, n+1, next)) return true;
-    					if(j+1 < this.cols) if(solve(i+q, j+1, n+1, next)) return true;
-    				}
-    				else {
-    					if ((i + q >= 0) && (i + q < this.rows)) {
-    						if(j >= 0) if(solve(i+q, j, n+1, next)) return true;
-        					if(j +1 < this.cols) if(solve(i+q, j+1, n+1, next)) return true;
-    					}
-    				}
-    			}
-    		}
-    		
-    	}
+
+    	printHidato();
+		ArrayList<Cell> result = this.solucio.getNeighbours(a);
+        for (int p = 0; p < result.size(); p++) {
+        	Cell gr = result.get(p);
+        	if(solve(gr.getRow(),gr.getCol(),n+1,next)) return true;
+        }
     	
     	//tornem a posar el valor bo
     	this.solucio.setValueToCell(i, j, valor_inicial);
@@ -212,9 +103,13 @@ public class Hidato {
 	public void resoldreHidato() {
 		setupHidato();
 		boolean aux = solve(start[0],start[1],1,0);
-		if(aux) this.acabat = true;
-		else System.out.println("No hi ha solució");
-
+		this.acabat = true;
+		if(aux) {
+			this.te_solu = true;
+			System.out.println("Hidato correcte, vas per el bon camí ;)");
+			printHidato();
+		}
+		else {System.out.println("No hi ha solució"); this.te_solu = false;}
 	}
 	
 	public void printHidato() {
@@ -226,11 +121,67 @@ public class Hidato {
 			}
 			System.out.println();
 		}
+		System.out.println();
+
 	}
-	
-	public Integer nextMove() {
+	public boolean isMoveValid(int i, int j, int ii, int jj) {
+		if(this.acabat) {
+			Cell a = this.solucio.getCell(i, j);
+			ArrayList<Cell> result = this.solucio.getNeighbours(a);
+	        for (int p = 0; p < result.size(); p++) {
+	        	Cell gr = result.get(p);
+	        	if(gr.getRow() == ii && gr.getCol() == jj) {
+	        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
+	        			return true;
+	        		}
+	        	}
+	        }
+		}
+		else {
+			checkHidato();
+			Cell a = this.solucio.getCell(i, j);
+			ArrayList<Cell> result = this.solucio.getNeighbours(a);
+	        for (int p = 0; p < result.size(); p++) {
+	        	Cell gr = result.get(p);
+	        	if(gr.getRow() == ii && gr.getCol() == jj) {
+	        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
+	        			return true;
+	        		}
+	        	}
+	        }
+		}
+		return false;
+	}
+	public ArrayList<Integer> nextMove(int i, int j) {
 		//retona quina cella és el seguent moviment
-		return 0;
+		ArrayList<Integer> resultt = new ArrayList<Integer>();
+
+		if(this.acabat) {
+			Cell a = this.solucio.getCell(i, j);
+			ArrayList<Cell> result = this.solucio.getNeighbours(a);
+	        for (int p = 0; p < result.size(); p++) {
+	        	Cell gr = result.get(p);
+	        	if(gr.getValue().equals(a.getValue())) {
+	        		resultt.add(gr.getRow());
+	        		resultt.add(gr.getCol());
+	        		return resultt;
+	        	}
+	        }
+		}
+		else {
+			checkHidato();
+			Cell a = this.solucio.getCell(i, j);
+			ArrayList<Cell> result = this.solucio.getNeighbours(a);
+	        for (int p = 0; p < result.size(); p++) {
+	        	Cell gr = result.get(p);
+	        	if(gr.getValue().equals(a.getValue())) {
+	        		resultt.add(gr.getRow());
+	        		resultt.add(gr.getCol());
+	        		return resultt;
+	        	}
+	        }
+		}
+		return resultt;
 	}
 
 }
