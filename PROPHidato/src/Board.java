@@ -106,6 +106,15 @@ public abstract class Board {
 		}
 	}
 	
+	public Board(Board another) {
+		this.tyAdj = another.tyAdj;
+		this.boardID = another.boardID;
+		this.rows = another.rows;
+		this.cols = another.cols;
+		this.tyCell = another.tyCell;
+		this.cells = another.cells;
+	}
+	
 	public String getTyAdj() {
 		return tyAdj;
 	}
@@ -144,6 +153,10 @@ public abstract class Board {
 	}
 	
 	void removeCell(Integer id) {}
+	
+	public Cell[][] getCells() {
+		return cells;
+	}
 
 	public String getBoardID() {
 		return boardID;
