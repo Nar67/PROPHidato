@@ -14,7 +14,7 @@ public class Hidato {
 	public Integer fixedCells;
 	private boolean acabat;
 	private boolean te_solu;
-    private static int[] given, start;
+    private int[] given, start;
 
 	public Hidato(Board a) {
 		this.taulell = a;	
@@ -35,7 +35,7 @@ public class Hidato {
 	}
 	
 	public int[] getStart() {
-		return Hidato.start;
+		return this.start;
 	}
 	
 	public boolean checkHidato() {
