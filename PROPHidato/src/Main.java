@@ -8,8 +8,8 @@ public class Main {
 		Scanner keyboard = new Scanner(System.in);
 		int action = keyboard.nextInt();
 		ControlDomini controlador = new ControlDomini();
-		if (action == 1) controlador.generaHidato();
-		else if (action == 2) controlador.llegeixHidato();
+		if (action == 1) controlador.jugar(controlador.generaHidato());
+		else if (action == 2) controlador.jugar(controlador.llegeixHidato());
 		else System.out.print("No es una opció vàlida.");
 	}
 }

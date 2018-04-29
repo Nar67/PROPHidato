@@ -98,7 +98,7 @@ public class Hidato {
     	String valor_inicial = a.getValue();
     	this.solucio.setValueToCell(i, j, Integer.toString(n));
 
-    	printHidato();
+    	//printHidato();
 		ArrayList<Cell> result = this.solucio.getNeighbours(a);
         for (int p = 0; p < result.size(); p++) {
         	Cell gr = result.get(p);
@@ -116,7 +116,7 @@ public class Hidato {
 		if(aux) {
 			this.te_solu = true;
 			System.out.println("Hidato correcte, vas per el bon camí ;)");
-			printHidato();
+			//printHidato();
 		}
 		else {System.out.println("No hi ha solució"); this.te_solu = false;}
 	}

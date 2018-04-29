@@ -84,8 +84,8 @@ public class Partida {
 		int randomi = ThreadLocalRandom.current().nextInt(3, 8);
 		int randomj = ThreadLocalRandom.current().nextInt(3, 8);
 		String matriu[][] = new String[randomi][randomj];
-		System.out.println(randomi);
-		System.out.println(randomj);
+		//System.out.println(randomi);
+		//System.out.println(randomj);
 		int randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
 		int randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
 		matriu[randomstarti][randomstartj] = "1";
@@ -148,21 +148,36 @@ public class Partida {
 	public void startPlaying() {
 		
 		int current = 2;
+		int curri, currj;
+		int previ[] = new int[64];
+		int prevj[] = new int[64];
 		while (!isAcabada()) {
 			System.out.println("Introduzca la posición (i, j) donde quiere poner el siguiente número");
 			Scanner keyboard = new Scanner(System.in);
 			int i = keyboard.nextInt();
-			int j = keyboard.nextInt();
-			if (!isMoveValid(i, j)) System.out.println("El movimiento no es válido");
+			int j = keyboard.nextInt();			
+			if (current == 2) {
+				curri = hidato.getStart()[0];
+				currj = hidato.getStart()[1];
+				previ[current-2] = hidato.getStart()[0];
+				prevj[current-2] = hidato.getStart()[1];
+			}
+			if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");
 			else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
-				hidato.getTaulell().setValueToCell(Integer.parseInt(i), Integer.parseInt(j), null);
+				hidato.getTaulell().setValueToCell(i, j, null);
+				curri = previ[current-2];
+				currj = prevj[current-2];
+				hidato.getTaulell().printBoard();
 				--current;
-				tauler.printBoard();
 			}
 			else {
-				hidato.getTaulell().setValueToCell(Integer.parseInt(i), Integer.parseInt(j), Integer.toString(current));
+				hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
+				previ[current-2] = curri;
+				prevj[current-2] = currj;
+				curri = i;
+				currj = j;
 				++current;
-				tauler.printBoard();
+				hidato.getTaulell().printBoard();
 			}
 		}
 	}	
