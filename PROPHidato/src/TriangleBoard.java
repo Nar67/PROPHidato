@@ -13,7 +13,7 @@ public class TriangleBoard extends Board {
 		ArrayList<Cell> result = new ArrayList<Cell>();
 		if(i < 1) {
 			if(j < 1) {
-				result.add(this.getCell(i+1, j));
+				result.add(this.getCell(i, j+1));
 			}
 			else if(j < this.getCols() - 1) {
 				result.add(this.getCell(i, j+1));
@@ -64,11 +64,21 @@ public class TriangleBoard extends Board {
 			}
 			else {
 				result.add(this.getCell(i, j-1));
-				if(j%2 == 0) {
-					result.add(this.getCell(i-1, j));
+				if(i%2 == 0) {
+					if(j%2 == 0) {
+						result.add(this.getCell(i-1, j));
+					}
+					else {
+						result.add(this.getCell(i+1, j));
+					}
 				}
 				else {
-					result.add(this.getCell(i+1, j));
+					if(j%2 == 0) {
+						result.add(this.getCell(i+1, j));
+					}
+					else {
+						result.add(this.getCell(i-1, j));
+					}
 				}
 			}
 		}

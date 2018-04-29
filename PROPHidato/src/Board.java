@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 public abstract class Board {
 	private String tyAdj;
 	private String boardID;
@@ -68,7 +66,6 @@ public abstract class Board {
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Introduzca un hidato v�lido\n");
-		keyboard = new Scanner(System.in);
 		String dades = keyboard.nextLine();
 		String params[] = dades.split(",");
 		String matriu[][] = new String[Integer.parseInt(params[2])][Integer.parseInt(params[3])];
@@ -81,9 +78,10 @@ public abstract class Board {
 			}				
 			System.out.println();
 		}
+		keyboard.close();
 		Board board = new TriangleBoard(params, matriu);
 		//board.printBoard();
-		Cell cell = board.getCell(3,4);
+		Cell cell = board.getCell(1, 4);
 		ArrayList<Cell> arrayList = board.getNeighbours(cell);
 		for (int i = 0; i < arrayList.size(); i++) {
 			Cell c = arrayList.get(i);
