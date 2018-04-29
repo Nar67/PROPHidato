@@ -127,6 +127,8 @@ public abstract class Board {
 		}
 	}
 	
+
+	
 	public String getTyAdj() {
 		return tyAdj;
 	}
@@ -165,6 +167,10 @@ public abstract class Board {
 	}
 	
 	void removeCell(Integer id) {}
+	
+	public Cell[][] getCells() {
+		return cells;
+	}
 
 	public String getBoardID() {
 		return boardID;

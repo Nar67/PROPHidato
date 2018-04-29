@@ -7,6 +7,7 @@ public class SquareBoard extends Board {
 		// TODO Auto-generated constructor stub
 	}
 	
+
 	public ArrayList<Cell> getNeighbours(Cell cell) {
 		Integer i = cell.getRow();
 		Integer j = cell.getCol();
