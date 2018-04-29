@@ -8,6 +8,7 @@ public abstract class Board {
 	private String boardID;
 	private Integer rows;
 	private Integer cols;
+	private String tyCell;
 	private Cell cells[][];
 	
 	/**
@@ -97,6 +98,7 @@ public abstract class Board {
 		this.rows = Integer.parseInt(params[2]);
 		this.cols = Integer.parseInt(params[3]);
 		this.tyAdj = params[1];
+		this.tyCell = params[0];
 		cells = new Cell[rows][cols];
 		for (Integer i = 0; i < rows; i++) {
 			for (Integer j = 0; j < cols; j++) {
@@ -110,6 +112,14 @@ public abstract class Board {
 		return tyAdj;
 	}
 	
+	public String getTyCell() {
+		return tyCell;
+	}
+
+	public void setTyCell(String tyCell) {
+		this.tyCell = tyCell;
+	}
+
 	public Integer getRows() {
 		return rows;
 	}
