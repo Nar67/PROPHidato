@@ -45,19 +45,7 @@ public class Hidato {
 	}
 	
 	public int[] getStart() {
-		int gas[] = null;
-		 for(int i = 0; i < this.rows; ++i) {
-	        	for(int j = 0; j < this.cols; ++j) {
-	        		Cell a = this.taulell.getCell(i, j);
-	        		int val = Integer.parseInt(a.getValue());
-    				if(val == 1) {
-    					gas = new int[]{i,j}; 
-    					return gas;
-    				}
-    				
-	        	}
-		 }
-		 return gas;
+		return Hidato.start;
 	}
 	
 	
