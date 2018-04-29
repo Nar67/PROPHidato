@@ -13,7 +13,7 @@ public class ControlDomini {
 		}
 		partida.setHidato(hidato);
 		hidato.printHidatoOriginal();
-		hidato.printHidato();
+		//hidato.printHidato();
 		return partida;
 	}
 	

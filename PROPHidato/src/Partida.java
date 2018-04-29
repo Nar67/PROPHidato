@@ -162,14 +162,14 @@ public class Partida {
 				previ[current-2] = start[0];
 				prevj[current-2] = start[1];
 			}
-			if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");
-			else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
-				hidato.getTaulell().setValueToCell(i, j, null);
+			if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
+				hidato.getTaulell().setValueToCell(i, j, "?");
+				--current;
 				curri = previ[current-2];
 				currj = prevj[current-2];
 				hidato.getTaulell().printBoard();
-				--current;
 			}
+			else if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");			
 			else {
 				hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
 				previ[current-2] = curri;
