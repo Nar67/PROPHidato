@@ -19,6 +19,8 @@ public class Main {
 			}				
 			System.out.println();
 		}
+		ControlDomini controlador = new ControlDomini();
+		controlador.jugaManualHidato(matriu, params);
 	}
 	
 	private static void generarHidato() {
@@ -66,10 +68,12 @@ public class Main {
 		for (int i = 0; i < matriu.length; ++i) {
 			for (int j = 0; j < matriu[0].length; ++j) {
 				System.out.print(matriu[i][j]);
-				System.out.print(" ");
+				System.out.print(",");
 			}
 			System.out.println();
 		}
+		ControlDomini controlador = new ControlDomini();
+		controlador.jugaAutoHidato(matriu, diff, randomi, randomj);
 	}
 	
 	public static void main(String[] args) {
