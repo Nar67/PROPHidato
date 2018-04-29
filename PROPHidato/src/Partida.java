@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.sun.beans.editors.IntegerEditor;
@@ -57,9 +58,7 @@ public class Partida {
 			String aux2[] = aux.split(",");
 			for (int j = 0; j < aux2.length; ++j) {
 				matriu[i][j] = aux2[j]; 
-				System.out.print(matriu[i][j]);
-			}				
-			System.out.println();
+			}
 		}
 		Board tauler;
 		switch(params[0]) {
@@ -148,7 +147,7 @@ public class Partida {
 	public void startPlaying() {
 		
 		int current = 2;
-		int curri, currj;
+		int curri = 0, currj = 0;
 		int previ[] = new int[64];
 		int prevj[] = new int[64];
 		while (!isAcabada()) {
@@ -157,10 +156,11 @@ public class Partida {
 			int i = keyboard.nextInt();
 			int j = keyboard.nextInt();			
 			if (current == 2) {
-				curri = hidato.getStart()[0];
-				currj = hidato.getStart()[1];
-				previ[current-2] = hidato.getStart()[0];
-				prevj[current-2] = hidato.getStart()[1];
+				int[] start = hidato.getStart();
+				curri = start[0];
+				currj = start[1];
+				previ[current-2] = start[0];
+				prevj[current-2] = start[1];
 			}
 			if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");
 			else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {

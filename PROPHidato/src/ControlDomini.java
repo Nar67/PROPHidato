@@ -11,6 +11,9 @@ public class ControlDomini {
 			System.out.println("L'hidato proposat no es resoluble");
 			hidato = partida.llegirTaulell();
 		}
+		partida.setHidato(hidato);
+		hidato.printHidatoOriginal();
+		hidato.printHidato();
 		return partida;
 	}
 	
@@ -28,6 +31,7 @@ public class ControlDomini {
 			hidato = partida.generarTaulell(diff);
 			hidatobuit = hidato;
 		}
+		partida.setHidato(hidato);
 		hidatobuit.getTaulell().printBoard();
 		return partida;
 	}

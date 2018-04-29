@@ -38,26 +38,14 @@ public class Hidato {
 	}
 	
 	public void iniHidato() {
-		//inizialitzaci√≥ hidato(posar numeros en una board buida)
+		//inizialitzaciÛ hidato(posar numeros en una board buida)
 	}
 	public Board getTaulell() {
 		return this.taulell;
 	}
 	
 	public int[] getStart() {
-		int gas[] = null;
-		 for(int i = 0; i < this.rows; ++i) {
-	        	for(int j = 0; j < this.cols; ++j) {
-	        		Cell a = this.taulell.getCell(i, j);
-	        		int val = Integer.parseInt(a.getValue());
-    				if(val == 1) {
-    					gas = new int[]{i,j}; 
-    					return gas;
-    				}
-    				
-	        	}
-		 }
-		 return gas;
+		return Hidato.start;
 	}
 	
 	
@@ -100,7 +88,7 @@ public class Hidato {
     private  boolean solve(int i, int j, int n, int next) {
 		Cell a = this.solucio.getCell(i, j);
 		if (n > given[given.length - 1])
-            return true; //ja est√† resolt
+            return true; //ja est‡ resolt
     	if (a.getValue().equals("*")  || a.getValue().equals("#")) return false;
     	if (!a.getValue().equals("?")  && Integer.parseInt(a.getValue()) != n)
             return false;
@@ -111,12 +99,12 @@ public class Hidato {
     	if(!a.getValue().equals("?") && Integer.parseInt(a.getValue()) == n) {
     		++next;
     	}
-    	//aqui comen√ßem propiament dit a resoldre
+    	//aqui comenÁem propiament dit a resoldre
     	//posem el valor actual a 0
     	String valor_inicial = a.getValue();
     	this.solucio.setValueToCell(i, j, Integer.toString(n));
 
-    	//printHidato();
+    	printHidato();
 		ArrayList<Cell> result = this.solucio.getNeighbours(a);
         for (int p = 0; p < result.size(); p++) {
         	Cell gr = result.get(p);
@@ -133,10 +121,10 @@ public class Hidato {
 		this.acabat = true;
 		if(aux) {
 			this.te_solu = true;
-			System.out.println("Hidato correcte, vas per el bon cam√≠ ;)");
-			//printHidato();
+			System.out.println("Hidato correcte, vas per el bon camÌ ;)");
+			printHidato();
 		}
-		else {System.out.println("No hi ha soluci√≥"); this.te_solu = false;}
+		else {System.out.println("No hi ha soluciÛ"); this.te_solu = false;}
 	}
 	
 	public void printHidato() {
@@ -190,7 +178,7 @@ public class Hidato {
 		return false;
 	}
 	public ArrayList<Integer> nextMove(int i, int j) {
-		//retona quina cella √©s el seguent moviment
+		//retona quina cella Ès el seguent moviment
 		ArrayList<Integer> resultt = new ArrayList<Integer>();
 
 		if(this.acabat) {
