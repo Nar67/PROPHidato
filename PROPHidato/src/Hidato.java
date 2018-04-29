@@ -126,7 +126,17 @@ public class Hidato {
 			System.out.println();
 		}
 		System.out.println();
-
+	}
+	public void printHidatoOriginal() {
+		for(int i = 0; i < rows; ++i) {
+			for(int j = 0; j < cols; ++j) {
+				Cell a = this.taulell.getCell(i, j);
+				System.out.print(a.getValue());
+				System.out.print(",");
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 	public boolean isMoveValid(int i, int j, int ii, int jj) {
 		if(this.acabat) {
