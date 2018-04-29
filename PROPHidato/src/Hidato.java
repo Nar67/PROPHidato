@@ -14,7 +14,7 @@ public class Hidato {
 	public Integer fixedCells;
 	private boolean acabat;
 	private boolean te_solu;
-    private int[] given, start;
+    private static int[] given, start;
 
 	public Hidato(Board a) {
 		if(a.getTyCell().equals("Q")) {
@@ -44,12 +44,22 @@ public class Hidato {
 		return this.taulell;
 	}
 	
-	public ArrayList<Integer>  getStart() {
-		ArrayList<Integer> resultt = new ArrayList<Integer>();
-		resultt.add(start[0]);
-		resultt.add(start[1]);
-		return resultt;
+	public int[] getStart() {
+		int gas[] = null;
+		 for(int i = 0; i < this.rows; ++i) {
+	        	for(int j = 0; j < this.cols; ++j) {
+	        		Cell a = this.taulell.getCell(i, j);
+	        		int val = Integer.parseInt(a.getValue());
+    				if(val == 1) {
+    					gas = new int[]{i,j}; 
+    					return gas;
+    				}
+    				
+	        	}
+		 }
+		 return gas;
 	}
+	
 	
 	public boolean checkHidato() {
 		setupHidato();
