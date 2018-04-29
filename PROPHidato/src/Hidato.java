@@ -17,8 +17,18 @@ public class Hidato {
     private int[] given, start;
 
 	public Hidato(Board a) {
-		this.taulell = new SquareBoard(a.getParams(),a.getMatriu());	
-		this.solucio = new SquareBoard(a.getParams(),a.getMatriu());
+		if(a.getTyCell().equals("Q")) {
+			this.taulell = new SquareBoard(a.getParams(),a.getMatriu());	
+			this.solucio = new SquareBoard(a.getParams(),a.getMatriu());
+		}
+		else if(a.getTyCell().equals("T")) {
+			this.taulell = new TriangleBoard(a.getParams(),a.getMatriu());	
+			this.solucio = new TriangleBoard(a.getParams(),a.getMatriu());
+		}
+		else if(a.getTyCell().equals("H")) {
+			this.taulell = new HexagonBoard(a.getParams(),a.getMatriu());	
+			this.solucio = new HexagonBoard(a.getParams(),a.getMatriu());
+		}
 		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
@@ -34,8 +44,11 @@ public class Hidato {
 		return this.taulell;
 	}
 	
-	public int[] getStart() {
-		return this.start;
+	public ArrayList<Integer>  getStart() {
+		ArrayList<Integer> resultt = new ArrayList<Integer>();
+		resultt.add(start[0]);
+		resultt.add(start[1]);
+		return resultt;
 	}
 	
 	public boolean checkHidato() {
