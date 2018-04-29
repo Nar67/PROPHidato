@@ -81,7 +81,7 @@ public abstract class Board {
 		keyboard.close();
 		Board board = new TriangleBoard(params, matriu);
 		//board.printBoard();
-		Cell cell = board.getCell(2, 4);
+		Cell cell = board.getCell(0, 1);
 		ArrayList<Cell> arrayList = board.getNeighbours(cell);
 		for (int i = 0; i < arrayList.size(); i++) {
 			Cell c = arrayList.get(i);

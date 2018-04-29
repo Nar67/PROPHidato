@@ -14,70 +14,68 @@ public class TriangleBoard extends Board {
 		if(i < 1) {
 			if(j < 1) {
 				result.add(this.getCell(i, j+1));
+				result.add(this.getCell(i+1, j));
 			}
 			else if(j < this.getCols() - 1) {
 				result.add(this.getCell(i, j+1));
 				result.add(this.getCell(i, j-1));
-				if(j%2 != 0) {
+				if(j%2 == 0) {
 					result.add(this.getCell(i+1, j));
 				}
 			}
 			else {
+				result.add(this.getCell(i, j-1));
 				if(j%2 == 0) {
-					result.add(this.getCell(i, j-1));
-				}
-				else {
 					result.add(this.getCell(i+1, j));
-					result.add(this.getCell(i, j-1));
 				}
 			}
 		}
 		else if(i < this.getRows() - 1) {
 			if(j < 1) {
 				result.add(this.getCell(i, j+1));
-				if((i+1)%2 == 0) {
-					result.add(this.getCell(i-1, j));
+				if(i%2 == 0) {
+					result.add(this.getCell(i+1, j));
 				}
 				else {
-					result.add(this.getCell(i+1, j));
+					result.add(this.getCell(i-1, j));
 				}
 			}
 			else if(j < this.getCols() - 1) {
 				result.add(this.getCell(i, j+1));
 				result.add(this.getCell(i, j-1));
-				if((i+1)%2 == 0) {
+				if(i%2 == 0) {
 					if(j%2 == 0) {
-						result.add(this.getCell(i-1, j));
+						result.add(this.getCell(i+1, j));
 					}
 					else {
-						result.add(this.getCell(i+1, j));
+						result.add(this.getCell(i-1, j));
 					}
 				}
 				else {
 					if(j%2 == 0) {
-						result.add(this.getCell(i+1, j));
+						result.add(this.getCell(i-1, j));
 					}
 					else {
-						result.add(this.getCell(i-1, j));
+						result.add(this.getCell(i+1, j));
 					}
 				}
 			}
 			else {
 				result.add(this.getCell(i, j-1));
-				if((i+1)%2 == 0) {
+				if(i%2 == 0) {
 					if(j%2 == 0) {
-						result.add(this.getCell(i-1, j));
+						result.add(this.getCell(i+1, j));
 					}
 					else {
-						result.add(this.getCell(i+1, j));
+						result.add(this.getCell(i-1, j));
 					}
 				}
 				else {
 					if(j%2 == 0) {
-						result.add(this.getCell(i+1, j));
+						result.add(this.getCell(i-1, j));
 					}
 					else {
-						result.add(this.getCell(i-1, j));
+						result.add(this.getCell(i+1, j));
 					}
 				}
 			}
@@ -85,33 +83,33 @@ public class TriangleBoard extends Board {
 		else {
 			if(j < 1) {
 				result.add(this.getCell(i, j+1));
-				if((i+1)%2 == 0) {
+				if(i%2 != 0) {
 					result.add(this.getCell(i-1, j));
 				}
 			}
 			else if(j < this.getCols() - 1) {
 				result.add(this.getCell(i, j+1));
 				result.add(this.getCell(i, j-1));
-				if((i+1)%2 == 0) {
-					if(j%2 == 0) {
+				if(i%2 == 0) {
+					if(j%2 != 0) {
 						result.add(this.getCell(i-1, j));
 					}
 				}
 				else {
-					if(j%2 != 0) {
+					if(j%2 == 0) {
 						result.add(this.getCell(i-1, j));	
 					}
 				}
 			}
 			else {
 				result.add(this.getCell(i, j-1));
-				if((i+1)%2 == 0) {
-					if(j%2 == 0) {
+				if(i%2 == 0) {
+					if(j%2 != 0) {
 						result.add(this.getCell(i-1, j));
 					}
 				}
 				else {
-					if(j%2 != 0) {
+					if(j%2 == 0) {
 						result.add(this.getCell(i-1, j));
 					}
 				}
