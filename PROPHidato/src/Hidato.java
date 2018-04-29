@@ -18,7 +18,12 @@ public class Hidato {
 	
 	public Hidato(Board a) {
 		this.taulell = a;
-		this.solucio = this.taulell;
+		try {
+			this.solucio = (Board) a.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
@@ -33,6 +38,11 @@ public class Hidato {
 	public Board getTaulell() {
 		return this.taulell;
 	}
+	
+	public int[] getStart() {
+		return start;
+	}
+	
 	public boolean checkHidato() {
 		setupHidato();
 		boolean aux = solve(start[0],start[1],1,0);
@@ -43,8 +53,7 @@ public class Hidato {
 	}
 	
 	private void setupHidato() {
-		this.solucio = this.taulell;
-        List<Integer> list = new ArrayList<>(this.rows * this.cols);
+		List<Integer> list = new ArrayList<>(this.rows * this.cols);
         for(int i = 0; i < this.rows; ++i) {
         	for(int j = 0; j < this.cols; ++j) {
         		Cell a = this.solucio.getCell(i, j);
