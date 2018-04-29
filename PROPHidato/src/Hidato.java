@@ -15,15 +15,9 @@ public class Hidato {
 	private boolean acabat;
 	private boolean te_solu;
     private static int[] given, start;
-	
+
 	public Hidato(Board a) {
-		this.taulell = a;
-		try {
-			this.solucio = (Board) a.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.taulell = a;		
 		this.ctype = a.getTyCell();
 		this.atype = a.getTyAdj();
 		this.rows = a.getRows();
@@ -53,6 +47,8 @@ public class Hidato {
 	}
 	
 	private void setupHidato() {
+		Board board = new SquareBoard(this.taulell);
+		this.solucio = board;
 		List<Integer> list = new ArrayList<>(this.rows * this.cols);
         for(int i = 0; i < this.rows; ++i) {
         	for(int j = 0; j < this.cols; ++j) {
