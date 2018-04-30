@@ -166,8 +166,6 @@ public abstract class Board {
 		cells[cell.getRow()][cell.getCol()].setValue(value);
 	}
 	
-	void removeCell(Integer id) {}
-	
 	public Cell[][] getCells() {
 		return cells;
 	}
@@ -185,8 +183,4 @@ public abstract class Board {
 	}
 	
 	abstract ArrayList<Cell> getNeighbours(Cell cell);
-	
-	//public Board autogenerateBoard()
-	
-	
 }
