@@ -42,7 +42,7 @@ public class Partida {
 		
 	}
 	
-	private boolean moveInBoard(int i, int j) {
+	public boolean moveInBoard(int i, int j) {
 		if (i > hidato.getTaulell().getRows() || i < 0 || j > hidato.getTaulell().getCols() || j < 0) return false;
 		return true;
 	}
@@ -166,6 +166,8 @@ public class Partida {
 			}
 			int i = keyboard.nextInt();
 			if (i == 9) {
+				System.out.println(curri);
+				System.out.println(currj);
 				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); /*
 				int pistai = pista.get(0);
 				int pistaj = pista.get(1);*/
