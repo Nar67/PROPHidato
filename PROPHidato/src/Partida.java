@@ -1,16 +1,12 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.sun.beans.editors.IntegerEditor;
-import com.sun.org.apache.xml.internal.serializer.ElemDesc;
-import com.sun.org.apache.xpath.internal.operations.And;
-import com.sun.org.apache.xpath.internal.operations.Equals;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Partida {
-	private Integer dificultat;
+	private Integer ultim;
 	private Hidato hidato;
 	private boolean acabada = false;
 	
@@ -21,11 +17,23 @@ public class Partida {
 	public void setHidato(Hidato hidato) {
 		this.hidato = hidato;
 	}
+	
+	public Integer getUltim() {
+		return ultim;
+	}
+
+	public void setUltim(Integer ultim) {
+		this.ultim = ultim;
+	}
 
 	public boolean isAcabada() {
 		return acabada;
 	}
 
+	public void acabarPartida() {
+		this.acabada = true;
+	}
+	
 	public Partida() {
 		
 	}
@@ -34,18 +42,11 @@ public class Partida {
 		
 	}
 	
-	public boolean partidaAcabada() {
-		return this.acabada;
+	private boolean moveInBoard(int i, int j) {
+		if (i > hidato.getTaulell().getRows() || i < 0 || j > hidato.getTaulell().getCols() || j < 0) return false;
+		return true;
 	}
-	
-	public void acabarPartida() {
-		this.acabada = true;
-	}
-	
-	public void hint() {
-		int cellID = hidato.nextMove();		
-	}
-	
+		
 	public Hidato llegirTaulell() {
 		System.out.println("Introduzca un hidato válido\n");
 		Scanner keyboard = new Scanner(System.in);
@@ -107,6 +108,7 @@ public class Partida {
 			randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
 		}
 		matriu[randomstarti][randomstartj] = Integer.toString((randomi*randomj)-hashtags);
+		setUltim((randomi*randomj)-hashtags);
 
 		for (int i = 0; i < matriu.length; ++i) {
 			for (int j = 0; j < matriu[0].length; ++j) {
@@ -152,9 +154,9 @@ public class Partida {
 		int prevj[] = new int[64];
 		while (!isAcabada()) {
 			System.out.println("Introduzca la posición (i, j) donde quiere poner el siguiente número");
+			System.out.println();
+			System.out.println("Si desea una pista pulse: 9");
 			Scanner keyboard = new Scanner(System.in);
-			int i = keyboard.nextInt();
-			int j = keyboard.nextInt();			
 			if (current == 2) {
 				int[] start = hidato.getStart();
 				curri = start[0];
@@ -162,23 +164,46 @@ public class Partida {
 				previ[current-2] = start[0];
 				prevj[current-2] = start[1];
 			}
-			if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
-				hidato.getTaulell().setValueToCell(i, j, "?");
-				--current;
-				curri = previ[current-2];
-				currj = prevj[current-2];
+			int i = keyboard.nextInt();
+			if (i == 9) {
+				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); /*
+				int pistai = pista.get(0);
+				int pistaj = pista.get(1);*/
+				System.out.print("Següent moviment: (");
+				System.out.print(pista.get(0));
+				System.out.print(", ");
+				System.out.print(pista.get(1));
+				System.out.println(").");
 				hidato.getTaulell().printBoard();
 			}
-			else if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");			
 			else {
-				hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
-				previ[current-2] = curri;
-				prevj[current-2] = currj;
-				curri = i;
-				currj = j;
-				++current;
-				hidato.getTaulell().printBoard();
-			}
+				int j = keyboard.nextInt();
+				if (!moveInBoard(i, j)) {
+					System.out.println("El movimiento no es válido");
+					hidato.getTaulell().printBoard();
+				}
+				else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
+					hidato.getTaulell().setValueToCell(i, j, "?");
+					--current;
+					curri = previ[current-2];
+					currj = prevj[current-2];
+					hidato.getTaulell().printBoard();
+				}
+				else if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El movimiento no es válido");			
+				else {
+					hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
+					previ[current-2] = curri;
+					prevj[current-2] = currj;
+					curri = i;
+					currj = j;
+					++current;
+					hidato.getTaulell().printBoard();
+					if (current == getUltim()) {
+						acabarPartida();
+						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
+					}
+				}
+			}			
 		}
 	}	
 }

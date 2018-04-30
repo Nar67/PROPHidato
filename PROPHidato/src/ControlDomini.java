@@ -19,7 +19,7 @@ public class ControlDomini {
 	
 	public Partida generaHidato() {
 		Partida partida = new Partida();
-		System.out.println("Escoja dificultad: 1(muy fácil), 2(fácil), 3(normal), 4(difícil), 5(muy difícil), 6(experto).");
+		System.out.println("Escoja dificultad: 1(Q,C), 2(Q,CA), 3(H,C), 4(H,CA), 5(T,C), 6(T,CA).");
 		Scanner keyboard = new Scanner(System.in);
 		keyboard = new Scanner(System.in);
 		int diff = keyboard.nextInt();
