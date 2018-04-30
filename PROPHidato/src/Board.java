@@ -81,7 +81,7 @@ public abstract class Board {
 			System.out.println();
 		}
 	}
-	
+	/*
 	public static void main(String[] args) {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Introduzca un hidato v�lido\n");
@@ -109,7 +109,7 @@ public abstract class Board {
 			System.out.print("value: " + c.getValue() + "\n");
 			System.out.println(); System.out.println();
 		}
-	}
+	}*/
 
 	public Board(String params[], String input[][]) {
 		this.params = params;
