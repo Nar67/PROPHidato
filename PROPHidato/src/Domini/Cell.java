@@ -1,3 +1,4 @@
+package Domini;
 
 public class Cell {
 	private String value;

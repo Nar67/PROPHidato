@@ -1,3 +1,4 @@
+package Domini;
 import java.util.ArrayList;
 
 public class TriangleBoard extends Board {

@@ -1,3 +1,4 @@
+package Domini;
 
 public class Usuari {
 		private String nom;

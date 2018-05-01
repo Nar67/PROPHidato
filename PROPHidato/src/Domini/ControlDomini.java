@@ -1,3 +1,4 @@
+package Domini;
 import java.util.Scanner;
 
 import com.sun.org.glassfish.gmbal.ManagedAttribute;
@@ -27,7 +28,6 @@ public class ControlDomini {
 		System.out.println("Autogenerant hidato ... ");
 		Hidato hidatobuit = new Hidato(hidato.getTaulell());
 		while (!hidato.checkHidato()) {
-			System.out.println(" ... ");
 			hidato = partida.generarTaulell(diff);
 			hidatobuit = hidato;
 		}
