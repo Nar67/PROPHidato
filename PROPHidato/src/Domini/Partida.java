@@ -157,7 +157,7 @@ public class Partida {
 		int prevj[] = new int[64];
 		while (!isAcabada()) {
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
-			System.out.println();
+			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
 			System.out.println("Si desitja una pista premi: 9 (NO FUNCIONA ENCARA)");
 			Scanner keyboard = new Scanner(System.in);
 			if (current == 2) {
