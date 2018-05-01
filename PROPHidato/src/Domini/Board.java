@@ -1,6 +1,5 @@
 package Domini;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public abstract class Board {
 	private String tyAdj;
@@ -28,47 +27,6 @@ public abstract class Board {
 		this.matriu = matriu;
 	}
 
-	
-	/**
-	
-	public String[] readParams() {
-		Scanner keyboard = new Scanner(System.in);
-		keyboard = new Scanner(System.in);
-		String dades = keyboard.nextLine();
-		String res[] = dades.split(",");
-		return res;	
-	}
-	public String[][] readHidato(Integer rows, Integer cols){
-		Scanner keyboard = new Scanner(System.in);
-		keyboard = new Scanner(System.in);
-		String matriu[][] = new String[rows][cols];
-		for (int i = 0; i < matriu.length; ++i) {
-			String aux = keyboard.nextLine();
-			String aux2[] = aux.split(",");
-			for (int j = 0; j < aux2.length; ++j) {
-				matriu[i][j] = aux2[j]; 
-			}
-		}
-		return matriu;
-		
-	}
-	
-	public static void main(String[] args) {
-		String params[] = readParams();
-		Board board = new SquareBoard(params, matriu);
-		board.printBoard();
-		Cell cell = board.getCell(2, 3);
-		ArrayList<Cell> arrayList = board.getNeighbours(cell);
-		for (int i = 0; i < arrayList.size(); i++) {
-			Cell c = arrayList.get(i);
-			System.out.print("i: " + c.getRow() + "\n");
-			System.out.print("j: " + c.getCol() + "\n");
-			System.out.print("value: " + c.getValue() + "\n");
-			System.out.println(); System.out.println();
-		}
-	}
-}
-	*/
 	public void printBoard() {
 		Integer rows = this.getRows();
 		Integer cols = this.getCols();
@@ -82,35 +40,6 @@ public abstract class Board {
 			System.out.println();
 		}
 	}
-	/*
-	public static void main(String[] args) {
-		Scanner keyboard = new Scanner(System.in);
-		System.out.println("Introduzca un hidato v�lido\n");
-		String dades = keyboard.nextLine();
-		String params[] = dades.split(",");
-		String matriu[][] = new String[Integer.parseInt(params[2])][Integer.parseInt(params[3])];
-		for (int i = 0; i < matriu.length; ++i) {
-			String aux = keyboard.nextLine();
-			String aux2[] = aux.split(",");
-			for (int j = 0; j < aux2.length; ++j) {
-				matriu[i][j] = aux2[j]; 
-				//System.out.print(matriu[i][j]);
-			}				
-			System.out.println();
-		}
-		keyboard.close();
-		Board board = new TriangleBoard(params, matriu);
-		//board.printBoard();
-		Cell cell = board.getCell(0, 1);
-		ArrayList<Cell> arrayList = board.getNeighbours(cell);
-		for (int i = 0; i < arrayList.size(); i++) {
-			Cell c = arrayList.get(i);
-			System.out.print("i: " + c.getRow() + "\n");
-			System.out.print("j: " + c.getCol() + "\n");
-			System.out.print("value: " + c.getValue() + "\n");
-			System.out.println(); System.out.println();
-		}
-	}*/
 
 	public Board(String params[], String input[][]) {
 		this.params = params;
@@ -183,5 +112,5 @@ public abstract class Board {
 		return cells[i][j];
 	}
 	
-	abstract ArrayList<Cell> getNeighbours(Cell cell);
+	abstract public ArrayList<Cell> getNeighbours(Cell cell);
 }

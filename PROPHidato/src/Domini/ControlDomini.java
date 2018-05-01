@@ -1,7 +1,7 @@
 package Domini;
 import java.util.Scanner;
 
-import com.sun.org.glassfish.gmbal.ManagedAttribute;
+
 
 public class ControlDomini {
 	
