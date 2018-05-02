@@ -180,6 +180,7 @@ public class Hidato {
 	}
 	public ArrayList<Integer> nextMove(int i, int j) {
 		//retona quina cella és el seguent moviment
+		//assumeix que l'Hidato és resoluble
 		ArrayList<Integer> resultt = new ArrayList<Integer>();
 
 		if(this.acabat) {
@@ -187,11 +188,13 @@ public class Hidato {
 			ArrayList<Cell> result = this.solucio.getNeighbours(a);
 	        for (int p = 0; p < result.size(); p++) {
 	        	Cell gr = result.get(p);
-	        	if(gr.getValue().equals(a.getValue())) {
-	        		resultt.add(gr.getRow());
-	        		resultt.add(gr.getCol());
-	        		return resultt;
-	        	}
+        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
+        			if(Integer.parseInt(gr.getValue()) == ((Integer.parseInt(a.getValue())) +1)){
+        				resultt.add(gr.getRow());
+    	        		resultt.add(gr.getCol());
+    	        		return resultt;
+        			}
+        		}
 	        }
 		}
 		else {
@@ -200,11 +203,13 @@ public class Hidato {
 			ArrayList<Cell> result = this.solucio.getNeighbours(a);
 	        for (int p = 0; p < result.size(); p++) {
 	        	Cell gr = result.get(p);
-	        	if(gr.getValue().equals(a.getValue())) {
-	        		resultt.add(gr.getRow());
-	        		resultt.add(gr.getCol());
-	        		return resultt;
-	        	}
+        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
+        			if(Integer.parseInt(gr.getValue()) == ((Integer.parseInt(a.getValue())) +1)){
+        				resultt.add(gr.getRow());
+    	        		resultt.add(gr.getCol());
+    	        		return resultt;
+        			}
+        		}
 	        }
 		}
 		return resultt;
