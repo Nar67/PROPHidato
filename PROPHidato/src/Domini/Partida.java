@@ -158,7 +158,7 @@ public class Partida {
 		while (!isAcabada()) {
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
-			System.out.println("Si desitja una pista premi: 9 (NO FUNCIONA ENCARA)");
+			System.out.println("Si desitja una pista premi: 9");
 			Scanner keyboard = new Scanner(System.in);
 			if (current == 2) {
 				int[] start = hidato.getStart();
@@ -169,15 +169,13 @@ public class Partida {
 			}
 			int i = keyboard.nextInt();
 			if (i == 9) {
-				System.out.println(curri);
-				System.out.println(currj);
-				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); /*
+				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); 
 				int pistai = pista.get(0);
-				int pistaj = pista.get(1);*/
+				int pistaj = pista.get(1);
 				System.out.print("Següent moviment: (");
-				System.out.print(pista.get(0));
+				System.out.print(pistai);
 				System.out.print(", ");
-				System.out.print(pista.get(1));
+				System.out.print(pistaj);
 				System.out.println(").");
 				hidato.getTaulell().printBoard();
 			}

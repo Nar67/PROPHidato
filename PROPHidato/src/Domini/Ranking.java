@@ -17,11 +17,10 @@ public class Ranking {
 		
 	}
 	
-	public int consultarPosicio(String nomUser) {
-		return;
+	public void consultarPosicio(String nomUser) {
 	}
 	
-	public Ranking globalRanking() {
+	/*public Ranking globalRanking() {
 		return "el ranking global";
 	}
 	
@@ -31,5 +30,5 @@ public class Ranking {
 	
 	public Ranking createdRanking() {
 		return "el ranking created";
-	}
+	}*/
 }
