@@ -10,7 +10,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 
 
-public class InterfaceAdapter implements JsonSerializer<Type>, JsonDeserializer<Type>{
+public class InterfaceAdapter implements JsonSerializer, JsonDeserializer{
 
     private static final String CLASSNAME = "CLASSNAME";
     private static final String DATA = "DATA";
@@ -39,4 +39,9 @@ public class InterfaceAdapter implements JsonSerializer<Type>, JsonDeserializer<
                     throw new JsonParseException(e.getMessage());
                 }
         }
+	@Override
+	public JsonElement serialize(Object arg0, Type arg1, JsonSerializationContext arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     }
