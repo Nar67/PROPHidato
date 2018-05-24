@@ -2,13 +2,49 @@ package Domini;
 import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
 public class Usuari {
+    	@Expose
 		private String nom;
+        @Expose
 		private String password;
 	
 		public Usuari(String nomu, String pass) {
 			this.nom = nomu;
 			this.password = getSHA256Hash(pass);
+			if(true) {
+				//si l'usuari no existeix a la base de dades guardel
+				saveUsuari();
+			}
+		}
+		public int LogIn() {
+			//return 1 if correct login 0 otherwise(user does not exists)
+			if(true) {
+				return 1;
+			}
+			return 0;
+		}
+		
+		public int RegisterUser() {
+			//retrona 1 si s'ha registrat correctament 0 otherwise
+			if(true) {
+				//si l'usuari no existeix a la base de dades guardel
+				saveUsuari();
+				return 1;
+			}
+			return 0;
+		}
+		public void setAnotherPassword(String pass) {
+			this.password = pass;
+		}
+		private void saveUsuari() {
+		    Gson gson = null;
+		    gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		    String json = gson.toJson(this);
+		    System.out.println(json);
 		}
 		private String  bytesToHex(byte[] hash) {
 			        return DatatypeConverter.printHexBinary(hash);
@@ -52,6 +88,9 @@ public class Usuari {
 		}
 		public void EsborrarUsuari() {
 			//borrarà l'usuari de la base de Dades
+		}
+		public static void main(String[] args) {
+			Usuari ursula = new Usuari("sole", "moco");
 		}
 		
 }
