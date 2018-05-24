@@ -57,6 +57,10 @@ public abstract class Board {
 		}
 	}
 	
+	public Board() {
+		
+	}
+	
 
 	
 	public String getTyAdj() {
