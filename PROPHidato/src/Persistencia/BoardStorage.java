@@ -1,5 +1,10 @@
 package Persistencia;
 
-public class BoardStorage {
+import com.google.gson.Gson;
 
+public class BoardStorage {
+	public static void main(String[] args) {
+		Gson gson = new Gson();
+		
+	}
 }
