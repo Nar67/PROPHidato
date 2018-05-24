@@ -7,6 +7,10 @@ public class Cell {
 	private String tyCell;
 	
 	
+	public void setTyCell(String tyCell) {
+		this.tyCell = tyCell;
+	}
+
 	public String getTyCell() {
 		return tyCell;
 	}
