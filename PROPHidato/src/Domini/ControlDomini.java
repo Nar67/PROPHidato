@@ -1,12 +1,13 @@
 package Domini;
+import java.io.IOException;
 import java.util.Scanner;
-
 import Persistencia.ControlPersistencia;
 
 
 
 public class ControlDomini {
-	
+	private Partida currentpartida;
+	private Usuari currentuser;
 	private static ControlDomini cd = new ControlDomini();
 	private ControlDomini() {}
 	public static ControlDomini getInstance() {
@@ -44,13 +45,14 @@ public class ControlDomini {
 	}
 	
 	public void jugar(Integer action) {
-		if (action == 1) generaHidato().startPlaying();
-		else if (action == 2) llegeixHidato().startPlaying();
+		if (action == 1) this.currentpartida = generaHidato();
+		else if (action == 2) this.currentpartida = llegeixHidato();
+		this.currentpartida.startPlaying();
 	}
 	
-	public void savePartida() {
-		ControlPersistencia cp = new ControlPersistencia();
-		cp.savePartida(partida);
+	public void savePartida() throws IOException {
+		ControlPersistencia cp = ControlPersistencia.getInstance();
+		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom());
 	}
 	
 	protected static void storeBoard(String board, Integer boardID) {

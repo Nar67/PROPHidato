@@ -9,9 +9,16 @@ import com.google.gson.annotations.Expose;
 public class Usuari {
     	@Expose
 		private String nom;
-        @Expose
+		@Expose
 		private String password;
-	
+		
+		public String getNom() {
+			return nom;
+		}
+		public void setNom(String nom) {
+			this.nom = nom;
+		}
+		
 		public Usuari(String nomu, String pass) {
 			this.nom = nomu;
 			this.password = getSHA256Hash(pass);

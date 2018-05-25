@@ -1,5 +1,7 @@
 package Persistencia;
 
+import java.io.IOException;
+
 
 public class ControlPersistencia {
 
@@ -8,5 +10,12 @@ public class ControlPersistencia {
 	private ControlPersistencia() {}
 	public static ControlPersistencia getInstance() {
 		return cp;
+	}
+	
+	
+	
+	public void savePartida(String pts, String user) throws IOException {
+		PartidaStorage ps = PartidaStorage.getInstance();
+		ps.savePartida(pts, user);
 	}
 }

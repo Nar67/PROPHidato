@@ -7,11 +7,39 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.ietf.jgss.Oid;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import Persistencia.RuntimeTypeAdapterFactory;
+
 
 public class Partida {
 	private Integer ultim;
 	private Hidato hidato;
+	private String partidaID;
+	private Usuari user;
+	
+	public Usuari getUser() {
+		return user;
+	}
+
+	public void setUser(Usuari user) {
+		this.user = user;
+	}
+
+	public String getPartidaID() {
+		return partidaID;
+	}
+
+	public void setPartidaID(String partidaID) {
+		this.partidaID = partidaID;
+	}
+
 	private boolean acabada = false;
+	
+	public Partida getPartida() {
+		return this;
+	}
 	
 	public Hidato getHidato() {
 		return hidato;
@@ -212,4 +240,15 @@ public class Partida {
 		}
 	}
 	
+	public String partidaToString() {
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		String pts = gson.toJson(this);
+		return pts;
+	}
 }
