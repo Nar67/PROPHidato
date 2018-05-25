@@ -18,15 +18,8 @@ public class BoardStorage {
 			    .registerSubtype(SquareBoard.class, "Q")
 			    .registerSubtype(HexagonBoard.class, "H")
 			    .registerSubtype(TriangleBoard.class, "T");
-		//GsonBuilder builder = new GsonBuilder();
-		//builder.registerTypeAdapter(SquareBoard.class, new InterfaceAdapter())
-		//.registerTypeAdapterFactory(BoardAdapterFactory);
-		//Gson gson2 = builder.create();
-		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory)
-				//.registerTypeAdapter(Partida.class, new InterfaceAdapter())
-				//.registerTypeAdapter(Hidato.class, new InterfaceAdapter())
-				//.registerTypeAdapter(Cell.class, new InterfaceAdapter())
-				.create();
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		ControlDomini cDomini = new ControlDomini();
 		Partida partida = cDomini.generaHidato();
 		String p = gson.toJson(partida);
