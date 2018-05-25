@@ -2,7 +2,6 @@ package Persistencia;
 
 import java.io.IOException;
 
-
 public class ControlPersistencia {
 
 	
@@ -13,9 +12,12 @@ public class ControlPersistencia {
 	}
 	
 	
-	
 	public void savePartida(String pts, String user) throws IOException {
 		PartidaStorage ps = PartidaStorage.getInstance();
 		ps.savePartida(pts, user);
+	}
+	public void storeBoard(String board, String boardID) throws IOException {
+		BoardStorage bs = BoardStorage.getInstance();
+		bs.storeBoard(board, boardID);
 	}
 }

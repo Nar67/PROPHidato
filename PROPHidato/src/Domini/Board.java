@@ -1,5 +1,10 @@
 package Domini;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public abstract class Board {
 	private String tyAdj;
@@ -11,21 +16,7 @@ public abstract class Board {
 	private String[] params;
 	private String[][] matriu;
 	
-	public String[] getParams() {
-		return params;
-	}
 
-	public void setParams(String[] params) {
-		this.params = params;
-	}
-
-	public String[][] getMatriu() {
-		return matriu;
-	}
-
-	public void setMatriu(String[][] matriu) {
-		this.matriu = matriu;
-	}
 
 	public void printBoard() {
 		Integer rows = this.getRows();
@@ -48,6 +39,7 @@ public abstract class Board {
 		this.cols = Integer.parseInt(params[3]);
 		this.tyAdj = params[1];
 		this.tyCell = params[0];
+		//this.boardID = String.valueOf(new File(path).list().length);;
 		cells = new Cell[rows][cols];
 		for (Integer i = 0; i < rows; i++) {
 			for (Integer j = 0; j < cols; j++) {
@@ -57,11 +49,37 @@ public abstract class Board {
 		}
 	}
 	
+	public void storeBoard() throws IOException {
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		String board = gson.toJson(this);
+		ControlDomini cd = ControlDomini.getInstance();
+		cd.storeBoard(board, this.getBoardID());
+	}
+	public String[] getParams() {
+		return params;
+	}
+
+	public void setParams(String[] params) {
+		this.params = params;
+	}
+
+	public String[][] getMatriu() {
+		return matriu;
+	}
+
+	public void setMatriu(String[][] matriu) {
+		this.matriu = matriu;
+	}
+	
 	public Board() {
 		
 	}
-	
-
 	
 	public String getTyAdj() {
 		return tyAdj;
