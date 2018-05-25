@@ -16,7 +16,6 @@ public class ControlDomini {
 		}
 		partida.setHidato(hidato);
 		hidato.printHidatoOriginal();
-		//hidato.printHidato();
 		return partida;
 	}
 	
@@ -38,11 +37,12 @@ public class ControlDomini {
 		return partida;
 	}
 	
-	public void jugar(Partida partida) {
-		partida.startPlaying();
+	public void jugar(Integer action) {
+		if (action == 1) generaHidato().startPlaying();
+		else if (action == 2) llegeixHidato().startPlaying();
 	}
 	
-	public void savePartida(Partida partida) {
+	public void savePartida() {
 		ControlPersistencia cp = new ControlPersistencia();
 		cp.savePartida(partida);
 	}
