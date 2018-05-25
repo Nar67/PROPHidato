@@ -1,8 +1,20 @@
 package Persistencia;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.junit.experimental.theories.Theories;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-//import com.google.gson.typeadapters.RuntimeTypeAdapterFactory;
 
 import Domini.Board;
 import Domini.ControlDomini;
@@ -12,7 +24,7 @@ import Domini.SquareBoard;
 import Domini.TriangleBoard;
 
 public class BoardStorage {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
 			    .registerSubtype(SquareBoard.class, "Q")
@@ -30,10 +42,21 @@ public class BoardStorage {
 		ControlDomini cDomini = new ControlDomini();
 		Partida partida = cDomini.generaHidato();
 		String p = gson.toJson(partida);
-		Partida part = gson.fromJson(p, Partida.class);
-		part.getHidato().printHidato();
-		Board b = part.getHidato().getTaulell();
-		System.out.println("Board: ");
-		b.printBoard();
+		
+		String path = System.getProperty("user.dir");	
+		System.out.println(path);
+		File f = new File(path + File.separator + "hitler.txt");
+		f.getParentFile().mkdirs();
+		f.createNewFile();
+		PrintWriter bts = new PrintWriter(f);
+		bts.write(p);
+		bts.close();
+		
+			
+		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "hitler.txt"));
+		
+		String pene = new String(btl, Charset.forName("UTF-8"));
+		Partida partida2 = gson.fromJson(pene, Partida.class);
+		partida2.startPlaying();
 	}
 }
