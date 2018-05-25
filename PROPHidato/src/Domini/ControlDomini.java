@@ -1,6 +1,8 @@
 package Domini;
 import java.util.Scanner;
 
+import Persistencia.ControlPersistencia;
+
 
 
 public class ControlDomini {
