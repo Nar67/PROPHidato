@@ -1,9 +1,12 @@
 package Persistencia;
 
-import Domini.Partida;
 
 public class ControlPersistencia {
-	public void savePartida(String partida) {
-		
+
+	
+	private static ControlPersistencia cp = new ControlPersistencia();
+	private ControlPersistencia() {}
+	public static ControlPersistencia getInstance() {
+		return cp;
 	}
 }
