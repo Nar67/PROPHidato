@@ -1,6 +1,7 @@
 package Persistencia;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,6 +24,29 @@ import Domini.SquareBoard;
 import Domini.TriangleBoard;
 
 public class BoardStorage {
+	
+	public void storeBoard(String board, Integer boardID) {
+		String path = System.getProperty("user.dir");	
+		path = path + File.separator + "Boards";
+		File f = new File(path + File.separator + "board" + boardID + ".txt");
+		f.getParentFile().mkdirs();
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		PrintWriter writer = null;
+		try {
+			writer = new PrintWriter(f);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		writer.write(board);
+		writer.close();
+		
+	}
 	public static void main(String[] args) throws IOException {
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
@@ -35,14 +59,6 @@ public class BoardStorage {
 		Partida partida = cDomini.generaHidato();
 		String p = gson.toJson(partida);
 		
-		String path = System.getProperty("user.dir");	
-		System.out.println(path);
-		File f = new File(path + File.separator + "hitler.txt");
-		f.getParentFile().mkdirs();
-		f.createNewFile();
-		PrintWriter bts = new PrintWriter(f);
-		bts.write(p);
-		bts.close();
 		
 			
 		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "hitler.txt"));
