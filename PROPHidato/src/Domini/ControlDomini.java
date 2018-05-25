@@ -1,4 +1,5 @@
 package Domini;
+import java.io.IOException;
 import java.util.Scanner;
 
 import Persistencia.ControlPersistencia;
@@ -6,7 +7,7 @@ import Persistencia.ControlPersistencia;
 
 
 public class ControlDomini {
-	
+		
 	private static ControlDomini cd = new ControlDomini();
 	private ControlDomini() {}
 	public static ControlDomini getInstance() {
@@ -47,14 +48,15 @@ public class ControlDomini {
 	public void jugar(Partida partida) {
 		partida.startPlaying();
 	}
-	
+	/*
 	public void savePartida(Partida partida) {
 		ControlPersistencia cp = new ControlPersistencia();
 		cp.savePartida(partida);
 	}
-	
-	protected static void storeBoard(String board, Integer boardID) {
-		ControlPersistencia cp = ControlPersistencia.getInstance();
+	*/
+	protected void storeBoard(String board, String boardID) throws IOException {
+		ControlPersistencia cpers = ControlPersistencia.getInstance();
+		cpers.storeBoard(board, boardID);
 	}
 	
 }

@@ -1,5 +1,6 @@
 package Persistencia;
 
+import java.io.IOException;
 
 public class ControlPersistencia {
 
@@ -8,5 +9,10 @@ public class ControlPersistencia {
 	private ControlPersistencia() {}
 	public static ControlPersistencia getInstance() {
 		return cp;
+	}
+	
+	public void storeBoard(String board, String boardID) throws IOException {
+		BoardStorage bs = BoardStorage.getInstance();
+		bs.storeBoard(board, boardID);
 	}
 }

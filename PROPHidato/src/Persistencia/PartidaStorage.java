@@ -14,6 +14,7 @@ import Domini.Board;
 import Domini.ControlDomini;
 import Domini.HexagonBoard;
 import Domini.Partida;
+import Domini.RuntimeTypeAdapterFactory;
 import Domini.SquareBoard;
 import Domini.TriangleBoard;
 
