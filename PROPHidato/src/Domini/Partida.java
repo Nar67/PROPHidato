@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.ietf.jgss.Oid;
+
 
 public class Partida {
 	private Integer ultim;
@@ -208,5 +210,6 @@ public class Partida {
 				}
 			}			
 		}
-	}	
+	}
+	
 }

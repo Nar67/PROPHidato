@@ -1,9 +1,17 @@
 package Domini;
 import java.util.Scanner;
 
+import Persistencia.ControlPersistencia;
+
 
 
 public class ControlDomini {
+	
+	private static ControlDomini cd = new ControlDomini();
+	private ControlDomini() {}
+	public static ControlDomini getInstance() {
+		return cd;
+	}
 	
 	public Partida llegeixHidato() {
 		Partida partida = new Partida();
@@ -38,6 +46,15 @@ public class ControlDomini {
 	
 	public void jugar(Partida partida) {
 		partida.startPlaying();
+	}
+	
+	public void savePartida(Partida partida) {
+		ControlPersistencia cp = new ControlPersistencia();
+		cp.savePartida(partida);
+	}
+	
+	protected static void storeBoard(String board, Integer boardID) {
+		ControlPersistencia cp = ControlPersistencia.getInstance();
 	}
 	
 }

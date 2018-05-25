@@ -1,6 +1,6 @@
-package Domini;
+package Presentacio;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import Domini.ControlDomini;
 
 public class Main {
 	
@@ -15,5 +15,7 @@ public class Main {
 		}
 		if (action == 1) controlador.jugar(controlador.generaHidato());
 		else if (action == 2) controlador.jugar(controlador.llegeixHidato());
+		keyboard.close();
 	}
 }
+
