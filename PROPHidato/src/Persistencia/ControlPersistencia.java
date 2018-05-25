@@ -24,8 +24,8 @@ public class ControlPersistencia {
 		PartidaStorage ps = PartidaStorage.getInstance();
 		ps.savePartida(pts, user, ID);
 	}
-	public void storeBoard(String board, String boardID) throws IOException {
+	public void storeBoard(String board) throws IOException {
 		BoardStorage bs = BoardStorage.getInstance();
-		bs.storeBoard(board, boardID);
+		bs.storeBoard(board);
 	}
 }

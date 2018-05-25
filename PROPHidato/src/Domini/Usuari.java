@@ -12,7 +12,7 @@ public class Usuari {
 		@Expose
 		private String password;
 		private Integer partidaID;
-		private Integer boardID;
+		private Integer boardNumerator;
 		public String getNom() {
 			return nom;
 		}
@@ -35,6 +35,12 @@ public class Usuari {
 		}
 		public void setPartidaID(Integer partidaID) {
 			this.partidaID = partidaID;
+		}
+		public Integer getBoardNumerator() {
+			return boardNumerator;
+		}
+		public void setBoardNumerator(Integer boardNumerator) {
+			this.boardNumerator = boardNumerator;
 		}
 		public Integer getBoardID() {
 			return boardID;
