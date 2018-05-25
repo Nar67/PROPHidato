@@ -52,7 +52,8 @@ public class ControlDomini {
 	
 	public void savePartida() throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
-		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom());
+		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom(), this.currentpartida.getUser().getPartidaID());
+		this.currentpartida.getUser().setPartidaID(1 + this.currentpartida.getUser().getPartidaID());
 	}
 	
 	protected static void storeBoard(String board, Integer boardID) {

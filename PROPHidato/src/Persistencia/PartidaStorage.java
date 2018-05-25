@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 
 
 public class PartidaStorage {
@@ -16,9 +15,9 @@ public class PartidaStorage {
 	}
 	
 	
-	public void savePartida(String pts, String user) throws IOException {
+	public void savePartida(String pts, String user, Integer ID) throws IOException {
 		String path = System.getProperty("user.dir");
-		File f = new File(path + File.separator + "Users" + File.separator + user + File.separator + "Partida" + user + ID + ".txt");
+		File f = new File(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + user + "_" + ID.toString() + ".txt");
 		f.getParentFile().mkdirs();
 		f.createNewFile();
 		PrintWriter bts = new PrintWriter(f);

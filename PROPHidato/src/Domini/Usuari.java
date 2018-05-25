@@ -11,7 +11,8 @@ public class Usuari {
 		private String nom;
 		@Expose
 		private String password;
-		
+		private Integer partidaID;
+		private Integer boardID;
 		public String getNom() {
 			return nom;
 		}
@@ -22,10 +23,24 @@ public class Usuari {
 		public Usuari(String nomu, String pass) {
 			this.nom = nomu;
 			this.password = getSHA256Hash(pass);
+			this.partidaID = 0;
+			this.boardID = 0;
 			if(true) {
 				//si l'usuari no existeix a la base de dades guardel
 				saveUsuari();
 			}
+		}
+		public Integer getPartidaID() {
+			return partidaID;
+		}
+		public void setPartidaID(Integer partidaID) {
+			this.partidaID = partidaID;
+		}
+		public Integer getBoardID() {
+			return boardID;
+		}
+		public void setBoardID(Integer boardID) {
+			this.boardID = boardID;
 		}
 		public int LogIn() {
 			//return 1 if correct login 0 otherwise(user does not exists)

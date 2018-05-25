@@ -16,7 +16,7 @@ import Persistencia.RuntimeTypeAdapterFactory;
 public class Partida {
 	private Integer ultim;
 	private Hidato hidato;
-	private String partidaID;
+	private Integer partidaID;
 	private Usuari user;
 	
 	public Usuari getUser() {
