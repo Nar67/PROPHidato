@@ -40,4 +40,9 @@ public class ControlDomini {
 		partida.startPlaying();
 	}
 	
+	public void savePartida(Partida partida) {
+		ControlPersistencia cp = new ControlPersistencia();
+		cp.savePartida(partida);
+	}
+	
 }
