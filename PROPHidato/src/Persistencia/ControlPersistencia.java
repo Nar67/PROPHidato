@@ -2,6 +2,8 @@ package Persistencia;
 
 import java.io.IOException;
 
+import Domini.ControlDomini;
+
 public class ControlPersistencia {
 
 	
@@ -9,6 +11,11 @@ public class ControlPersistencia {
 	private ControlPersistencia() {}
 	public static ControlPersistencia getInstance() {
 		return cp;
+	}
+	
+	public String getCurrentUsername() {
+		ControlDomini cd = ControlDomini.getInstance();
+		return cd.getCurrentUsername();
 	}
 	
 	

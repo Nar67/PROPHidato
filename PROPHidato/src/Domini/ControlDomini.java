@@ -14,6 +14,10 @@ public class ControlDomini {
 		return cd;
 	}
 	
+	public String getCurrentUsername() {
+		return ControlDomini.getInstance().currentuser.getNom();
+	}
+	
 	public Partida llegeixHidato() {
 		Partida partida = new Partida();
 		Hidato hidato = partida.llegirTaulell();
