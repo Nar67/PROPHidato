@@ -5,12 +5,10 @@ import java.util.Scanner;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import org.ietf.jgss.Oid;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import Persistencia.RuntimeTypeAdapterFactory;
 
 
 public class Partida {
@@ -27,11 +25,11 @@ public class Partida {
 		this.user = user;
 	}
 
-	public String getPartidaID() {
+	public Integer getPartidaID() {
 		return partidaID;
 	}
 
-	public void setPartidaID(String partidaID) {
+	public void setPartidaID(Integer partidaID) {
 		this.partidaID = partidaID;
 	}
 
