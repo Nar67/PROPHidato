@@ -19,6 +19,14 @@ public class ControlDomini {
 		return cd;
 	}
 	
+	public String getCurrentUsername() {
+		return ControlDomini.getInstance().currentuser.getNom();
+	}
+	
+	public Integer getBoardNumerator() {
+		return ControlDomini.getInstance().getBoardNumerator();
+	}
+	
 	public Partida llegeixHidato() {
 		Partida partida = new Partida();
 		Hidato hidato = partida.llegirTaulell();
@@ -79,9 +87,12 @@ public class ControlDomini {
 		this.currentpartida.getUser().setPartidaID(1 + this.currentpartida.getUser().getPartidaID());
 	}
 
-	protected void storeBoard(String board, String boardID) throws IOException {
+	protected void storeBoard(String board) throws IOException {
 		ControlPersistencia cpers = ControlPersistencia.getInstance();
-		cpers.storeBoard(board, boardID);
+		cpers.storeBoard(board);
+		ControlDomini cd = ControlDomini.getInstance();
+		cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
 	}
+	
 	
 }

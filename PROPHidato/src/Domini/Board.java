@@ -59,7 +59,7 @@ public abstract class Board {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		String board = gson.toJson(this);
 		ControlDomini cd = ControlDomini.getInstance();
-		cd.storeBoard(board, this.getBoardID());
+		cd.storeBoard(board);
 	}
 	public String[] getParams() {
 		return params;

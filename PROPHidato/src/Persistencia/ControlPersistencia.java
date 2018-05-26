@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+import Domini.ControlDomini;
+
 public class ControlPersistencia {
 
 	
@@ -11,6 +13,11 @@ public class ControlPersistencia {
 	private ControlPersistencia() {}
 	public static ControlPersistencia getInstance() {
 		return cp;
+	}
+	
+	public String getCurrentUsername() {
+		ControlDomini cd = ControlDomini.getInstance();
+		return cd.getCurrentUsername();
 	}
 	
 	
@@ -28,8 +35,8 @@ public class ControlPersistencia {
 		PartidaStorage ps = PartidaStorage.getInstance();
 		ps.savePartida(pts, user, ID);
 	}
-	public void storeBoard(String board, String boardID) throws IOException {
+	public void storeBoard(String board) throws IOException {
 		BoardStorage bs = BoardStorage.getInstance();
-		bs.storeBoard(board, boardID);
+		bs.storeBoard(board);
 	}
 }

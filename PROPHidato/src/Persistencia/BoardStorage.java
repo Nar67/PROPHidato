@@ -31,10 +31,14 @@ public class BoardStorage {
 		return bs;
 	}
 	
-	public void storeBoard(String board, String boardID) throws IOException {
+	public void storeBoard(String board) throws IOException {
 		String path = System.getProperty("user.dir");	
-		path = path + File.separator + "Boards";
-		File f = new File(path + File.separator + "board" + String.valueOf(new File(path).list().length) + ".txt");
+		path = path + File.separator + "Users" + File.separator + ControlPersistencia.getInstance().getCurrentUsername();
+		File directory= new File(path);
+		if(! directory.exists()) {
+			directory.mkdir();
+		}
+		File f = new File(path + File.separator + "board" + ControlDomini.getInstance().getBoardNumerator() + ".txt");
 		f.getParentFile().mkdirs();
 		f.createNewFile();
 		PrintWriter writer = new PrintWriter(f);
