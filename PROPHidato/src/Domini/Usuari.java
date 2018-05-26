@@ -24,7 +24,7 @@ public class Usuari {
 			this.nom = nomu;
 			this.password = getSHA256Hash(pass);
 			this.partidaID = 0;
-			this.boardID = 0;
+			this.boardNumerator = 0;
 			if(true) {
 				//si l'usuari no existeix a la base de dades guardel
 				saveUsuari();
@@ -41,12 +41,6 @@ public class Usuari {
 		}
 		public void setBoardNumerator(Integer boardNumerator) {
 			this.boardNumerator = boardNumerator;
-		}
-		public Integer getBoardID() {
-			return boardID;
-		}
-		public void setBoardID(Integer boardID) {
-			this.boardID = boardID;
 		}
 		public int LogIn() {
 			//return 1 if correct login 0 otherwise(user does not exists)
