@@ -8,12 +8,12 @@ import Domini.Partida;
 public class ControlDominiTest {
 
 	public static void testLlegeixHidato() {
-		ControlDomini controlador = new ControlDomini();
+		ControlDomini controlador = ControlDomini.getInstance();
 		Partida partida = controlador.llegeixHidato();
 	}
 	
 	public static void testGeneraHidato() {
-		ControlDomini controlador = new ControlDomini();
+		ControlDomini controlador = ControlDomini.getInstance();
 		Partida partida = controlador.generaHidato();
 	}
 	

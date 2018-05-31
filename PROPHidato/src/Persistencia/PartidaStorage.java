@@ -3,6 +3,11 @@ package Persistencia;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 
 
 
@@ -14,25 +19,31 @@ public class PartidaStorage {
 		return ps;
 	}
 	
+	public ArrayList<String> getPartides(String user) {
+		ArrayList<String> partides = new ArrayList<>();
+		String path = System.getProperty("user.dir");		
+		File f = new File(path + File.separator + "Users");
+		for (File fileEntry : f.listFiles()) {	        
+            partides.add(fileEntry.getName());
+		}
+		return partides;
+	}
+	
+	public String loadPartida(String user, Integer ID) throws IOException {
+		String path = System.getProperty("user.dir");
+		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Users" + File.separator + "Partida_" + user + "_" + ID.toString() + ".txt"));
+		
+		String ptl = new String(btl, Charset.forName("UTF-8"));
+		return ptl;		
+	}
 	
 	public void savePartida(String pts, String user, Integer ID) throws IOException {
 		String path = System.getProperty("user.dir");
 		File f = new File(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + user + "_" + ID.toString() + ".txt");
 		f.getParentFile().mkdirs();
 		f.createNewFile();
-		PrintWriter bts = new PrintWriter(f);
-		bts.write(pts);
-		bts.close();		
-		/*	
-		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "hitler.txt"));
-		
-		String pene = new String(btl, Charset.forName("UTF-8"));
-		
-		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
-				of(Board.class, "cellType")
-			    .registerSubtype(SquareBoard.class, "Q")
-			    .registerSubtype(HexagonBoard.class, "H")
-			    .registerSubtype(TriangleBoard.class, "T");
-		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();*/
+		PrintWriter pfts = new PrintWriter(f);
+		pfts.write(pts);
+		pfts.close();		
 	}
 }

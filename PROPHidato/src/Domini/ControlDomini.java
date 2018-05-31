@@ -1,6 +1,11 @@
 package Domini;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import Persistencia.ControlPersistencia;
 
 
@@ -56,6 +61,24 @@ public class ControlDomini {
 		if (action == 1) this.currentpartida = generaHidato();
 		else if (action == 2) this.currentpartida = llegeixHidato();
 		this.currentpartida.startPlaying();
+	}
+	
+	public ArrayList<String> getPartides(String user) {
+		ControlPersistencia cp = ControlPersistencia.getInstance();
+		return cp.getPartides(user);
+	}
+	
+	public void loadPartida(String user, Integer ID) throws IOException {
+		ControlPersistencia cp = ControlPersistencia.getInstance();
+		String partida = cp.loadPartida(user, ID);
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		this.currentpartida = gson.fromJson(partida,  Partida.class);
 	}
 	
 	public void savePartida() throws IOException {
