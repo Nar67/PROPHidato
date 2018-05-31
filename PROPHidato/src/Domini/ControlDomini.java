@@ -71,5 +71,9 @@ public class ControlDomini {
 		cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
 	}
 	
+	protected Board loadBoard() {
+		ControlPersistencia cpers = ControlPersistencia.getInstance();
+		
+	}
 	
 }
