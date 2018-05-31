@@ -8,6 +8,12 @@ import com.google.gson.annotations.Expose;
 
 
 public class UserStorage {
+	private static UserStorage us = new UserStorage();
+	private UserStorage() {}
+	public static UserStorage getInstance() {
+		return us;
+	}
+	
 	public void storeUser(String data) {
 		
 	}

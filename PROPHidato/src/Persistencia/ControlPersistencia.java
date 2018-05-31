@@ -28,4 +28,8 @@ public class ControlPersistencia {
 		BoardStorage bs = BoardStorage.getInstance();
 		bs.storeBoard(board);
 	}
+	
+	public boolean logInUser(String username, String password) {
+		return UserStorage.getInstance().logInUser(username, password);
+	}
 }
