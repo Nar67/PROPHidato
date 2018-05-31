@@ -1,5 +1,6 @@
 package Presentacio;
 
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -105,9 +106,7 @@ public class LogIn {
 		errorText.setEditable(false);
 		errorText.setBounds(84, 167, 285, 32);
 		frame.getContentPane().add(errorText);
-		
-		
-		
+
 		
 		logInButton.addActionListener(new ActionListener() {
             @Override
@@ -118,9 +117,27 @@ public class LogIn {
             	else {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
-            		String password = passwordField.getText(); //deprecated 
+            		char[] password = passwordField.getPassword(); 
             		if(!cp.logInUser(username, password)) {
-            			
+            			errorText.setText("Username or password may be incorrect, please try again");
+            		}
+            	}
+            		
+            }
+        });
+		
+		signUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if(usernameText.getText().equals("")) {
+            		errorText.setText("Please write a valid username");
+            	}
+            	else {
+            		ControlPresentacio cp = ControlPresentacio.getInstance();
+            		String username = usernameText.getText();
+            		char[] password = passwordField.getPassword();
+            		if(!cp.signUpUser(username, password)) {
+            			errorText.setText("User already exists, pleasy try again");
             		}
             	}
             		

@@ -2,8 +2,10 @@ package Presentacio;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.security.MessageDigest;
 
 import Domini.ControlDomini;
+import Persistencia.ControlPersistencia;
 
 public class ControlPresentacio {
 
@@ -31,5 +33,13 @@ public class ControlPresentacio {
 	public void savePartida() throws IOException {
 		ControlDomini controlDomini = ControlDomini.getInstance();
 		controlDomini.savePartida();
+	}
+	
+	public boolean logInUser(String username, char[] password) {
+		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
+	}
+	
+	public boolean signUpUser(String username, char[] password) {
+		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}
 }

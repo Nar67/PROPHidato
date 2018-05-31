@@ -1,7 +1,10 @@
 package Domini;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.xml.bind.DatatypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -68,6 +71,22 @@ public class ControlDomini {
 		return cp.getPartides(user);
 	}
 	
+	private String  bytesToHex(byte[] hash) {
+        return DatatypeConverter.printHexBinary(hash);
+	}
+	
+	public String getSHA256Hash(String data) {
+        String result = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(data.getBytes("UTF-8"));
+            return bytesToHex(hash); // make it printable
+        }catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+	
 	public void loadPartida(String user, Integer ID) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
 		String partida = cp.loadPartida(user, ID);
@@ -93,10 +112,19 @@ public class ControlDomini {
 		ControlDomini cd = ControlDomini.getInstance();
 		cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
 	}
-	
+	/* TODO loadboard
 	protected Board loadBoard() {
 		ControlPersistencia cpers = ControlPersistencia.getInstance();
 		
+	}
+	*/
+	
+	public boolean logInUser(String username, String password) {
+		return ControlPersistencia.getInstance().logInUser(username, password);
+	}
+	
+	public boolean signUpUser(String username, String password) {
+		return ControlPersistencia.getInstance().logInUser(username, password);
 	}
 	
 }

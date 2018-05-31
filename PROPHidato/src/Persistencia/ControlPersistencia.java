@@ -43,4 +43,9 @@ public class ControlPersistencia {
 	public boolean logInUser(String username, String password) {
 		return UserStorage.getInstance().logInUser(username, password);
 	}
+	
+	
+	public boolean signUpUser(String username, String password) {
+		return UserStorage.getInstance().logInUser(username, password);
+	}
 }

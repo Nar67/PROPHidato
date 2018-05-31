@@ -1,5 +1,4 @@
 package Domini;
-import java.security.MessageDigest;
 import javax.xml.bind.DatatypeConverter;
 
 import com.google.gson.Gson;
@@ -22,7 +21,7 @@ public class Usuari {
 		
 		public Usuari(String nomu, String pass) {
 			this.nom = nomu;
-			this.password = getSHA256Hash(pass);
+			this.password = ControlDomini.getInstance().getSHA256Hash(pass);
 			this.partidaID = 0;
 			this.boardNumerator = 0;
 			if(true) {
@@ -68,20 +67,6 @@ public class Usuari {
 		    String json = gson.toJson(this);
 		    System.out.println(json);
 		}
-		private String  bytesToHex(byte[] hash) {
-			        return DatatypeConverter.printHexBinary(hash);
-		}
-		private String getSHA256Hash(String data) {
-			        String result = null;
-			        try {
-			            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			            byte[] hash = digest.digest(data.getBytes("UTF-8"));
-			            return bytesToHex(hash); // make it printable
-			        }catch(Exception ex) {
-			            ex.printStackTrace();
-			        }
-			        return result;
-			    }
 
 		public Usuari GetUsuari(String nomu, String pass) {
 			//S'implementara en la seguent entrega ja que agafa un usuari de la base de dades
@@ -95,7 +80,7 @@ public class Usuari {
 			System.out.println(this.nom);
 		}
 		public void ChangePassword(String pass) {
-			String sha = getSHA256Hash(pass);
+			String sha = ControlDomini.getInstance().getSHA256Hash(pass);
 			if(this.password.equals(sha)) {
 				System.out.println("Perdoni, ha introduit la mateixa contrasenya");
 			}
