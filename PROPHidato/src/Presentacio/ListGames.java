@@ -2,32 +2,24 @@ package Presentacio;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import javax.swing.JTextPane;
-import javax.swing.border.TitledBorder;
-
-import Persistencia.ControlPersistencia;
-
 import java.awt.Font;
-import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
-public class ListHidatos extends JFrame {
+public class ListGames extends JFrame {
 
 	private JPanel contentPane;
 
@@ -38,7 +30,7 @@ public class ListHidatos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListHidatos frame = new ListHidatos();
+					ListGames frame = new ListGames();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -50,7 +42,7 @@ public class ListHidatos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListHidatos() {
+	public ListGames() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -65,13 +57,13 @@ public class ListHidatos extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		DefaultListModel<String> model = new DefaultListModel<>();  
+		DefaultListModel<String> model = new DefaultListModel<>();
 		JList<String> list = new JList<>(model);
 		list.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		String[] hidatoList = ControlPresentacio.getInstance().listHidatos();
-		for ( int i = 0; i < hidatoList.length; i++ ){
-			model.addElement(hidatoList[i]);
+		String[] gameList = ControlPresentacio.getInstance().listGames();
+		for ( int i = 0; i < gameList.length; i++ ){
+			model.addElement(gameList[i]);
 		}
 		list.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
@@ -79,7 +71,7 @@ public class ListHidatos extends JFrame {
 		txtpnSelectOneHidato.setEditable(false);
 		txtpnSelectOneHidato.setBackground(SystemColor.menu);
 		txtpnSelectOneHidato.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		txtpnSelectOneHidato.setText("Select Hidato");
+		txtpnSelectOneHidato.setText("Select game");
 		
 		JButton playButton = new JButton("Play");
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));

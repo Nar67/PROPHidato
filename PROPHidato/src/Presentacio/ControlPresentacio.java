@@ -50,4 +50,20 @@ public class ControlPresentacio {
 	public String[] listHidatos() {
 		return ControlDomini.getInstance().listHidatos();
 	}
+	
+	public String[] listGames() {
+		return ControlDomini.getInstance().listGames();
+	}
+	
+	public void getEasyRanking(ArrayList<String> users, ArrayList<String> scores) {
+		ControlDomini.getInstance().getEasyRanking(users, scores);
+	}
+	
+	public void getMediumRanking(ArrayList<String> users, ArrayList<String> scores) {
+		ControlDomini.getInstance().getMediumRanking(users, scores);
+	}
+	
+	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {
+		ControlDomini.getInstance().getHardRanking(users, scores);
+	}
 }

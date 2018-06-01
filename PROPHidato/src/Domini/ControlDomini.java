@@ -136,4 +136,35 @@ public class ControlDomini {
 		return ControlPersistencia.getInstance().listHidatos();
 	}
 	
+	public String[] listGames() {
+		return ControlPersistencia.getInstance().listGames(currentuser.getNom());
+	}
+	
+	public void getEasyRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		users.add("peneman");
+		users.add("hitler");
+		users.add("davidogayer");
+		scores.add("123");
+		scores.add("88");
+		scores.add("69");
+	}
+	
+	public void getMediumRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		users.add("yas");
+		users.add("hitler456");
+		users.add("nersr");
+		scores.add("123");
+		scores.add("88");
+		scores.add("69");
+	}
+	
+	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		users.add("boi");
+		users.add("hitler2");
+		users.add("collPuter");
+		scores.add("123");
+		scores.add("88");
+		scores.add("69");
+	}
+	
 }

@@ -43,6 +43,10 @@ public class MainMenu {
 	public MainMenu() {
 		initialize();
 	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -63,6 +67,9 @@ public class MainMenu {
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				GameOptions go = new GameOptions();
+				go.setVisible(true);
+				frame.setVisible(false);
 			}
 		});
 		
