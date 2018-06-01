@@ -48,6 +48,10 @@ public class LogIn {
 	public LogIn() {
 		initialize();
 	}
+	
+	public JFrame getFrame() {
+		return this.frame;
+	}
 
 	/**
 	 * Initialize the contents of the frame.

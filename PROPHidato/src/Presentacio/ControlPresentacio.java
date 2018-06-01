@@ -42,4 +42,12 @@ public class ControlPresentacio {
 	public boolean signUpUser(String username, char[] password) {
 		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}
+	
+	public void generateGame(String diff, String cellType, String adj) {
+		//ControlDomini.getInstance().generateGame()
+	}
+	
+	public String[] listHidatos() {
+		return ControlDomini.getInstance().listHidatos();
+	}
 }

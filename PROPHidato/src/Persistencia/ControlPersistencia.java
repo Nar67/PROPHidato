@@ -48,4 +48,8 @@ public class ControlPersistencia {
 	public boolean signUpUser(String username, String password) {
 		return UserStorage.getInstance().logInUser(username, password);
 	}
+	
+	public String[] listHidatos() {
+		HidatoStorage.getInstance().listHidatos();
+	}
 }

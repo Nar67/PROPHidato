@@ -42,7 +42,12 @@ public class ControlDomini {
 		return partida;
 	}
 	
-	public Partida generaHidato() {
+	public Partida generaHidato() { 
+		//s'ha d'adaptar a la capa de presentacio, li arriben 3 strings:
+		//primer parametre -> la difficultat (pot ser: "Easy", "Medium", "Hard")
+		//segon parametre -> tipus de cell (pot ser: "Triangle" , "Square", "Hexagon")
+		//tercer parametre -> tipus d'adjacencia (pot ser: "Borders" o  "Borders and angles")
+		//S'HA DE PENSAR COM ENVIAR LA PARTIDA A LA CAPA DE PRESENTACIO DONAT QUE NO ES PODEN PASSAR OBJECTES NO PRIMITIUS
 		Partida partida = new Partida();
 		System.out.println("Escoja dificultad: 1(Q,C), 2(Q,CA), 3(H,C), 4(H,CA), 5(T,C), 6(T,CA).");
 		Scanner keyboard = new Scanner(System.in);
@@ -125,6 +130,10 @@ public class ControlDomini {
 	
 	public boolean signUpUser(String username, String password) {
 		return ControlPersistencia.getInstance().logInUser(username, password);
+	}
+	
+	public String[] listHidatos() {
+		return ControlPersistencia.getInstance().listHidatos();
 	}
 	
 }
