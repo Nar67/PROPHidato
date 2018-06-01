@@ -1,34 +1,15 @@
 package Domini;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Ranking {
-	private ArrayList<String> rank;
-	
+public abstract class Ranking {
+	private HashMap<String, Integer> rank;
 	public Ranking() {
-		rank = new ArrayList<String>();
+		this.rank = new HashMap<String, Integer>();
 	}
-	
-	public void llegirRanking() {
-		
+	public Integer getUserScore(String username) {
+		return rank.get(username);
 	}
-	
-	public void updateRanking() {
-		
+	public void setNewScore(String username, Integer score) {
+		rank.put(username, score);
 	}
-	
-	public void consultarPosicio(String nomUser) {
-	}
-	
-	/*public Ranking globalRanking() {
-		return "el ranking global";
-	}
-	
-	public Ranking solvedRanking() {
-		return "el ranking solved";
-	}
-	
-	public Ranking createdRanking() {
-		return "el ranking created";
-	}*/
 }

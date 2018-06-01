@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -16,7 +17,25 @@ public class Partida {
 	private Hidato hidato;
 	private Integer partidaID;
 	private Usuari user;
+	private Integer puntuacio;
+	private String difficulty;
 	
+	public String getDifficulty() {
+		return difficulty;
+	}
+
+	public void setDifficulty(String difficulty) {
+		this.difficulty = difficulty;
+	}
+
+	public Integer getPuntuacio() {
+		return puntuacio;
+	}
+
+	public void setPuntuacio(Integer puntuacio) {
+		this.puntuacio = puntuacio;
+	}
+
 	public Usuari getUser() {
 		return user;
 	}
@@ -61,14 +80,38 @@ public class Partida {
 
 	public void acabarPartida() {
 		this.acabada = true;
+		Ranking rank;
+		int newscore;
+		switch (this.difficulty) {
+			case "Medium":
+				rank = MediumRanking.getInstance();
+				newscore = this.puntuacio + rank.getUserScore(this.user.getNom());
+				rank.setNewScore(this.user.getNom(), newscore);
+				break;
+			
+			case "Hard":
+				rank = HardRanking.getInstance();
+				newscore = this.puntuacio + rank.getUserScore(this.user.getNom());
+				rank.setNewScore(this.user.getNom(), newscore);
+				break;
+	
+			default:
+				rank = EasyRanking.getInstance();
+				int newscor = this.puntuacio + rank.getUserScore(this.user.getNom());
+				rank.setNewScore(this.user.getNom(), newscor);
+				break;
+			}
+		
 	}
 	
 	public Partida() {
-		
+		this.puntuacio = 0;
+		this.difficulty = "Easy";
 	}
 	
 	public Partida(Hidato hidato) {
 		this.hidato = hidato;
+		this.puntuacio = 0;
 	}
 	
 	public boolean moveInBoard(int i, int j) {
@@ -178,7 +221,8 @@ public class Partida {
 	}
 	
 	public void startPlaying() {
-		
+		long startime = System.currentTimeMillis();
+		int nmoves = 0;
 		int current = 2;
 		int curri = 0, currj = 0;
 		int previ[] = new int[64];
@@ -219,6 +263,7 @@ public class Partida {
 					curri = previ[current-2];
 					currj = prevj[current-2];
 					hidato.getTaulell().printBoard();
+					++nmoves;
 				}
 				else if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El moviment no es valid");			
 				else {
@@ -229,8 +274,12 @@ public class Partida {
 					currj = j;
 					++current;
 					hidato.getTaulell().printBoard();
+					++nmoves;
 					if (current == getUltim()) {
 						acabarPartida();
+						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
+						int movescore = 300-(nmoves-current)*5;
+						this.puntuacio = (int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 					}
 				}
