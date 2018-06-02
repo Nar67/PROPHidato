@@ -197,17 +197,20 @@ public class GameView {
                 g.setColor(Color.BLACK );
                 for(int i = 0; i < matrix.size(); i++)
                 	for(int j = 0; j < matrix.get(0).size(); j++) {
+                		System.out.println(String.valueOf(i));
+                		System.out.println(String.valueOf(j));
                 		Polygon p = matrix.get(i).get(j);
                 		g.setStroke(new BasicStroke(3));
                 		if(!board[i][j].equals("#"))
                 			g.drawPolygon(p);
                 		else if(board[i][j].equals("*"))
                 			g.fillPolygon(p);
-                		else if(Integer.parseInt(board[i][j]) >= 0 && Integer.parseInt(board[i][j]) <= 9) {
+                		else if(!board[i][j].equals("#") && (Integer.parseInt(board[i][j]) >= 0 && Integer.parseInt(board[i][j]) <= 9)) {
                 			Rectangle r = p.getBounds();
                 			int x = (int)r.getLocation().getX();
                 			int y = (int)r.getLocation().getY();
                 			g.drawString(board[i][j],x+25, y+25);	
+                			System.out.println("entro lokkkkkkkkkkkkkkkkkkkkkkkkk");
                 		}
                 		
                 	}

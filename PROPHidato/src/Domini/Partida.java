@@ -172,7 +172,6 @@ public class Partida {
 	}
 	
 	public Hidato generarTaulell(String diff, String cellType, String adj) {
-		//System.out.println("Autogenerando Hidato ...");
 		
 		int randomi = ThreadLocalRandom.current().nextInt(3, 8);
 		int randomj = ThreadLocalRandom.current().nextInt(3, 8);

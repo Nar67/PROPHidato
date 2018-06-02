@@ -58,7 +58,7 @@ public class ControlDomini {
 			hidatobuit = hidato;
 		}
 		partida.setHidato(hidato);
-		//hidatobuit.getTaulell().printBoard();
+		hidato.getTaulell().printBoard();
 		return hidato.getTaulell().getMatriu();
 	}
 	
