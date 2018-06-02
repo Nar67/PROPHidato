@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -51,7 +53,14 @@ public class RankingView extends JFrame {
 	 * Create the frame.
 	 */
 	public RankingView() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                    setVisible(false);
+                    dispose();
+                }
+        });
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int)screenSize.getWidth(),(int)screenSize.getHeight());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
