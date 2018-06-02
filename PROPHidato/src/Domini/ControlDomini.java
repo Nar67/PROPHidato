@@ -31,6 +31,10 @@ public class ControlDomini {
 		return ControlDomini.getInstance().getBoardNumerator();
 	}
 	
+	private void createCurrentUser(String nom, String pass) {
+		this.currentuser = new Usuari(nom,pass);
+	}
+	
 	public Partida llegeixHidato() {
 		Partida partida = new Partida();
 		Hidato hidato = partida.llegirTaulell();
@@ -121,12 +125,18 @@ public class ControlDomini {
 	}
 	*/
 	
-	public boolean logInUser(String username, String password) {
-		return ControlPersistencia.getInstance().logInUser(username, password);
+	public boolean logInUser(String username, String password) throws IOException {
+		if(ControlPersistencia.getInstance().logInUser(username, password)) {
+			createCurrentUser(username,password);
+		}
+		return false;
 	}
 	
-	public boolean signUpUser(String username, String password) {
-		return ControlPersistencia.getInstance().logInUser(username, password);
+	public boolean signUpUser(String username, String password) throws IOException {
+		if(ControlPersistencia.getInstance().signUpUser(username, password)) {
+			createCurrentUser(username,password);
+		}
+		return false;
 	}
 	
 	public String[] listHidatos() {
