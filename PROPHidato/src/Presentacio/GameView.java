@@ -203,7 +203,7 @@ public class GameView {
                 			g.drawPolygon(p);
                 		else if(board[i][j].equals("*"))
                 			g.fillPolygon(p);
-                		else if(Integer.parseInt(board[i][j]) >= 0 && Integer.parseInt(board[i][j]) >= 9) {
+                		else if(Integer.parseInt(board[i][j]) >= 0 && Integer.parseInt(board[i][j]) <= 9) {
                 			Rectangle r = p.getBounds();
                 			int x = (int)r.getLocation().getX();
                 			int y = (int)r.getLocation().getY();

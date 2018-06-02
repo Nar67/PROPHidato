@@ -209,7 +209,7 @@ public class Partida {
 			}
 		}
 			
-		Board tauler = null;		
+		Board tauler;		
 
 		if (diff.equals("Easy") && cellType.equals("Square") && adj.equals("Borders")) {
 			String params[] = {"Q", "C", Integer.toString(randomi), Integer.toString(randomj)};
@@ -231,7 +231,7 @@ public class Partida {
 			String params2[] = {"H", "C", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new HexagonBoard(params2,  matriu);
 		}
-		else if(diff.equals("Hard") && cellType.equals("Hexagon") && adj.equals("Borders and angles")) {
+		else  {
 			String params3[] = {"H", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new HexagonBoard(params3,  matriu);
 		}
