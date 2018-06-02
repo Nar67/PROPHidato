@@ -99,6 +99,8 @@ public class RankingView extends JFrame {
 		easyRanking.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		modelEasy.addColumn("Username");
 		modelEasy.addColumn("Score");
+		
+		
 		ArrayList<String> usersEasy = new ArrayList<String>();
 		ArrayList<String> scoresEasy = new ArrayList<String>();
 		ControlPresentacio.getInstance().getEasyRanking(usersEasy, scoresEasy);
