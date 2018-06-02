@@ -11,7 +11,7 @@ public class Usuari {
 		@Expose
 		private String password;
 		private Integer partidaID;
-		private Integer boardNumerator;
+
 		public String getNom() {
 			return nom;
 		}
@@ -23,11 +23,6 @@ public class Usuari {
 			this.nom = nomu;
 			this.password = ControlDomini.getInstance().getSHA256Hash(pass);
 			this.partidaID = 0;
-			this.boardNumerator = 0;
-			if(true) {
-				//si l'usuari no existeix a la base de dades guardel
-				saveUsuari();
-			}
 		}
 		public Integer getPartidaID() {
 			return partidaID;
@@ -35,38 +30,7 @@ public class Usuari {
 		public void setPartidaID(Integer partidaID) {
 			this.partidaID = partidaID;
 		}
-		public Integer getBoardNumerator() {
-			return boardNumerator;
-		}
-		public void setBoardNumerator(Integer boardNumerator) {
-			this.boardNumerator = boardNumerator;
-		}
-		public int LogIn() {
-			//return 1 if correct login 0 otherwise(user does not exists)
-			if(true) {
-				return 1;
-			}
-			return 0;
-		}
 		
-		public int RegisterUser() {
-			//retrona 1 si s'ha registrat correctament 0 otherwise
-			if(true) {
-				//si l'usuari no existeix a la base de dades guardel
-				saveUsuari();
-				return 1;
-			}
-			return 0;
-		}
-		public void setAnotherPassword(String pass) {
-			this.password = pass;
-		}
-		private void saveUsuari() {
-		    Gson gson = null;
-		    gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-		    String json = gson.toJson(this);
-		    System.out.println(json);
-		}
 
 		public Usuari GetUsuari(String nomu, String pass) {
 			//S'implementara en la seguent entrega ja que agafa un usuari de la base de dades
@@ -95,9 +59,6 @@ public class Usuari {
 		}
 		public void EsborrarUsuari() {
 			//borrarà l'usuari de la base de Dades
-		}
-		public static void main(String[] args) {
-			Usuari ursula = new Usuari("sole", "moco");
 		}
 		
 }
