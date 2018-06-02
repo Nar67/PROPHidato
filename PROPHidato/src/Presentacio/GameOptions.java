@@ -116,6 +116,11 @@ public class GameOptions extends JFrame {
 				String adj = adjacencyBox.getSelectedItem().toString();
 				String cellType = cellTypeBox.getSelectedItem().toString();
 				String[][] mat = cp.generateGame(diff, cellType, adj);
+				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};
+				GameView gv = new GameView();
+				gv.setBoard(mat);
+				gv.setParams(params);
+				gv.getFrame().setVisible(true);
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(internalFrame.getContentPane());
