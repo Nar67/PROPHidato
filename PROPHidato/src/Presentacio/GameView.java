@@ -2,6 +2,7 @@ package Presentacio;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -50,8 +51,14 @@ public class GameView {
 	/**
 	 * Create the application.
 	 */
-	public GameView() {
+	public GameView(String[] params, String[][] matrix) {
+		this.params = params;
+		this.board = matrix;
 		initialize();
+	}
+	
+	public GameView() {
+		
 	}
 
 	/**
@@ -174,11 +181,8 @@ public class GameView {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		params = new String[]{"Q", "CA", "3", "4"};
-		board = new String[][] {{"#", "1", "?", "#"},
-								{"?", "?", "?", "*"},
-								{"7", "?", "9", "#"}
-								};
+		for(String s: params)
+			System.out.println("Params2: " + s);
 		
 		if(params[0].equals("Q")) {
 			matrix = genSquareMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]));
@@ -195,25 +199,30 @@ public class GameView {
                 super.paintComponent(g3d);
                 Graphics2D g = (Graphics2D) g3d;
                 g.setColor(Color.BLACK );
-                for(int i = 0; i < matrix.size(); i++)
+                		
+        		System.out.println(String.valueOf(matrix.size()));
+        		System.out.println(String.valueOf(matrix.get(0).size()));
+        		
+                for(int i = 0; i < matrix.size(); i++) {
                 	for(int j = 0; j < matrix.get(0).size(); j++) {
-                		System.out.println(String.valueOf(i));
-                		System.out.println(String.valueOf(j));
                 		Polygon p = matrix.get(i).get(j);
+                		System.out.print(board[i][j]);
                 		g.setStroke(new BasicStroke(3));
+                		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 		if(!board[i][j].equals("#"))
                 			g.drawPolygon(p);
-                		else if(board[i][j].equals("*"))
+                		if(board[i][j].equals("*"))
                 			g.fillPolygon(p);
-                		else if(!board[i][j].equals("#") && (Integer.parseInt(board[i][j]) >= 0 && Integer.parseInt(board[i][j]) <= 9)) {
+                		if(!board[i][j].equals("#") && !board[i][j].equals("?")) {
                 			Rectangle r = p.getBounds();
                 			int x = (int)r.getLocation().getX();
                 			int y = (int)r.getLocation().getY();
-                			g.drawString(board[i][j],x+25, y+25);	
-                			System.out.println("entro lokkkkkkkkkkkkkkkkkkkkkkkkk");
+                			g.drawString(board[i][j],x+25, y+25);
                 		}
                 		
                 	}
+                System.out.println();
+                }
             }
             /*
             @Override
@@ -276,4 +285,6 @@ public class GameView {
 	public void setParams(String[] s) {
 		 this.params = s;
 	}
+	
+
 }

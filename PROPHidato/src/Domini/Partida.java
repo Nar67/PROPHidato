@@ -210,29 +210,25 @@ public class Partida {
 			
 		Board tauler;		
 
-		if (diff.equals("Easy") && cellType.equals("Square") && adj.equals("Borders")) {
+		if (cellType.equals("Square") && adj.equals("Borders")) {
 			String params[] = {"Q", "C", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new SquareBoard(params, matriu);
 		}
-		else if (diff.equals("Easy") && cellType.equals("Square") && adj.equals("Borders and angles")) {
+		else if (cellType.equals("Square") && adj.equals("Borders and angles")) {
 			String params1[] = {"Q", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new SquareBoard(params1, matriu);
 		}
-		else if (diff.equals("Medium") && cellType.equals("Triangle") && adj.equals("Borders")) {
+		else if (cellType.equals("Triangle") && adj.equals("Borders")) {
 			String params4[] = {"T", "C", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new TriangleBoard(params4,  matriu);
 		}
-		else if (diff.equals("Medium") && cellType.equals("Triangle") && adj.equals("Borders and angles")) {
+		else if (cellType.equals("Triangle") && adj.equals("Borders and angles")) {
 			String params5[] = {"T", "CA", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new TriangleBoard(params5,  matriu);
 		}
-		else if (diff.equals("Hard") && cellType.equals("Hexagon") && adj.equals("Borders")) {
+		else {
 			String params2[] = {"H", "C", Integer.toString(randomi), Integer.toString(randomj)};
 			tauler = new HexagonBoard(params2,  matriu);
-		}
-		else  {
-			String params3[] = {"H", "CA", Integer.toString(randomi), Integer.toString(randomj)};
-			tauler = new HexagonBoard(params3,  matriu);
 		}
 		
 		Hidato hidato = new Hidato(tauler);

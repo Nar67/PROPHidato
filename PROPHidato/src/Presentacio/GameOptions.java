@@ -116,10 +116,15 @@ public class GameOptions extends JFrame {
 				String adj = adjacencyBox.getSelectedItem().toString();
 				String cellType = cellTypeBox.getSelectedItem().toString();
 				String[][] mat = cp.generateGame(diff, cellType, adj);
+				if(cellType.equals("Square")) cellType = "Q";
+				else if(cellType.equals("Triangle")) cellType = "T";
+				else if(cellType.equals("Hexagon")) cellType = "H";
+				if(adj.equals("Borders")) adj = "C";
+				if(adj.equals("Borders and angles")) adj = "CA";
 				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};
-				GameView gv = new GameView();
-				gv.setBoard(mat);
-				gv.setParams(params);
+				for(String s: params)
+					System.out.println("Params: " + s);
+				GameView gv = new GameView(params, mat);
 				gv.getFrame().setVisible(true);
 			}
 		});
