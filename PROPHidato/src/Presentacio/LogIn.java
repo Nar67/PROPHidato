@@ -127,6 +127,11 @@ public class LogIn {
 						if(!cp.logInUser(username, password)) {
 							errorText.setText("Username or password may be incorrect, please try again");
 						}
+						else {
+							MainMenu nm = new MainMenu();
+							nm.getFrame().setVisible(true);
+							frame.setVisible(false);
+						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -149,6 +154,11 @@ public class LogIn {
             		try {
 						if(!cp.signUpUser(username, password)) {
 							errorText.setText("User already exists, pleasy try again");
+						}
+						else {
+							MainMenu nm = new MainMenu();
+							nm.getFrame().setVisible(true);
+							frame.setVisible(false);
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
