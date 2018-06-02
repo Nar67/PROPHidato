@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -122,9 +123,14 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword(); 
-            		if(!cp.logInUser(username, password)) {
-            			errorText.setText("Username or password may be incorrect, please try again");
-            		}
+            		try {
+						if(!cp.logInUser(username, password)) {
+							errorText.setText("Username or password may be incorrect, please try again");
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             	}
             		
             }
@@ -140,9 +146,14 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword();
-            		if(!cp.signUpUser(username, password)) {
-            			errorText.setText("User already exists, pleasy try again");
-            		}
+            		try {
+						if(!cp.signUpUser(username, password)) {
+							errorText.setText("User already exists, pleasy try again");
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             	}
             		
             }
