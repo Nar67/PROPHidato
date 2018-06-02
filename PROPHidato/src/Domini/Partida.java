@@ -19,6 +19,13 @@ public class Partida {
 	private Usuari user;
 	private Integer puntuacio;
 	private String difficulty;
+	private long startime;
+	private Integer nmoves = 0;
+	private Integer current = 2;
+	private Integer curri = 0;
+	private Integer currj = 0;
+	private Integer previ[] = new Integer[64];
+	private Integer prevj[] = new Integer[64];
 	
 	public String getDifficulty() {
 		return difficulty;
@@ -104,14 +111,26 @@ public class Partida {
 		
 	}
 	
-	public Partida() {
+	public void initializeContext() {
 		this.puntuacio = 0;
 		this.difficulty = "Easy";
+		this.startime = System.currentTimeMillis();
+		this.current = 2;
+		this.nmoves = 0;
+		this.current = 2;
+		this.curri = 0;
+		this.currj = 0;
+		this.previ = new Integer[64];
+		this.prevj = new Integer[64];
+	}
+	
+	public Partida() {
+		initializeContext();
 	}
 	
 	public Partida(Hidato hidato) {
 		this.hidato = hidato;
-		this.puntuacio = 0;
+		initializeContext();
 	}
 	
 	public boolean moveInBoard(int i, int j) {
@@ -220,26 +239,18 @@ public class Partida {
 		return hidato;
 	}
 	
-	public void startPlaying() {
-		long startime = System.currentTimeMillis();
-		int nmoves = 0;
-		int current = 2;
-		int curri = 0, currj = 0;
-		int previ[] = new int[64];
-		int prevj[] = new int[64];
-		while (!isAcabada()) {
+	public void startPlaying(Integer i, Integer j) {
+		if (!isAcabada()) {
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
 			System.out.println("Si desitja una pista premi: 9");
-			Scanner keyboard = new Scanner(System.in);
-			if (current == 2) {
+			if (this.current == 2) {
 				int[] start = hidato.getStart();
 				curri = start[0];
 				currj = start[1];
 				previ[current-2] = start[0];
 				prevj[current-2] = start[1];
 			}
-			int i = keyboard.nextInt();
 			if (i == 9) {
 				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); 
 				int pistai = pista.get(0);
@@ -252,7 +263,6 @@ public class Partida {
 				hidato.getTaulell().printBoard();
 			}
 			else {
-				int j = keyboard.nextInt();
 				if (!moveInBoard(i, j)) {
 					System.out.println("El moviment no es valid");
 					hidato.getTaulell().printBoard();
