@@ -115,7 +115,7 @@ public class GameOptions extends JFrame {
 				String diff = difficulyBox.getSelectedItem().toString();
 				String adj = adjacencyBox.getSelectedItem().toString();
 				String cellType = cellTypeBox.getSelectedItem().toString();
-				cp.generateGame(diff, cellType, adj);
+				String[][] mat = cp.generateGame(diff, cellType, adj);
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(internalFrame.getContentPane());

@@ -56,4 +56,8 @@ public class ControlPersistencia {
 	public String[] listGames(String user) {
 		return PartidaStorage.getInstance().getPartides(user).toArray(new String[0]);
 	}
+	
+	public String loadHidato(String name) {
+		return HidatoStorage.getInstance().loadHidato(name);
+	}
 }

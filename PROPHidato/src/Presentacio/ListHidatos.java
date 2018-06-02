@@ -26,6 +26,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListHidatos extends JFrame {
 
@@ -82,6 +84,18 @@ public class ListHidatos extends JFrame {
 		txtpnSelectOneHidato.setText("Select Hidato");
 		
 		JButton playButton = new JButton("Play");
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = list.getSelectedValue();
+				String[] params = new String[] {};
+				String[][] matriu = new String[][] {};
+				ControlPresentacio.getInstance().loadHidato(selected, params, matriu);
+				GameView gv = new GameView();
+				gv.setBoard(matriu);
+				gv.setParams(params);
+				gv.getFrame().setVisible(true);
+			}
+		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

@@ -43,8 +43,8 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}
 	
-	public void generateGame(String diff, String cellType, String adj) {
-		//ControlDomini.getInstance().generateGame()
+	public String[][] generateGame(String diff, String cellType, String adj) {
+		return ControlDomini.getInstance().generateGame()
 	}
 	
 	public String[] listHidatos() {
@@ -65,5 +65,9 @@ public class ControlPresentacio {
 	
 	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {
 		ControlDomini.getInstance().getHardRanking(users, scores);
+	}
+	
+	public void loadHidato(String name, String[] params, String[][] matriu) {
+		ControlDomini.getInstance().loadHidato(name, params, matriu);
 	}
 }
