@@ -2,6 +2,7 @@ package Domini;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import javax.xml.bind.DatatypeConverter;
@@ -141,6 +142,11 @@ public class ControlDomini {
 	}
 	
 	public void getEasyRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		Ranking r = EasyRanking.getInstance();
+	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
+	        users.add(pair.getKey());
+	        scores.add(String.valueOf(pair.getValue()));
+	    }
 		users.add("peneman");
 		users.add("hitler");
 		users.add("davidogayer");
@@ -150,6 +156,11 @@ public class ControlDomini {
 	}
 	
 	public void getMediumRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		Ranking r = MediumRanking.getInstance();
+	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
+	        users.add(pair.getKey());
+	        scores.add(String.valueOf(pair.getValue()));
+	    }
 		users.add("yas");
 		users.add("hitler456");
 		users.add("nersr");
@@ -159,6 +170,11 @@ public class ControlDomini {
 	}
 	
 	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+		Ranking r = HardRanking.getInstance();
+	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
+	        users.add(pair.getKey());
+	        scores.add(String.valueOf(pair.getValue()));
+	    }
 		users.add("boi");
 		users.add("hitler2");
 		users.add("collPuter");

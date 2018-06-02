@@ -12,4 +12,7 @@ public abstract class Ranking {
 	public void setNewScore(String username, Integer score) {
 		rank.put(username, score);
 	}
+	public HashMap<String, Integer> getRanking(){
+		return this.rank;
+	}
 }
