@@ -22,12 +22,12 @@ public class UserStorage {
 		return us;
 	}
 	
-	public void storeUser(String data)  throws IOException{
+	public void storeUser(String data, String nom)  throws IOException{
 		String path = System.getProperty("user.dir");	
-		path = path + File.separator + "Users" + File.separator + ControlPersistencia.getInstance().getCurrentUsername();
+		path = path + File.separator + "Users" + File.separator + nom;
 		File directory= new File(path);
 		if(! directory.exists()) {
-			directory.mkdir();
+			directory.mkdirs();
 		}
 		File f = new File(path + File.separator + "shadow.txt");
 		f.getParentFile().mkdirs();
@@ -43,11 +43,20 @@ public class UserStorage {
 		//si existeix, es comprova que la password sigui correcte, si no ho és, retorna fals
 		//si existeix l'usuari i la password és correcte, retorna true.
 		String path = System.getProperty("user.dir");
-		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Users" + File.separator + username + File.separator  + "shadow.txt"));
-		String ptl = new String(btl, Charset.forName("UTF-8"));
-		if(ptl.equals(password)) {
-			return true;
+		byte[] btl;
+
+		try {
+			btl = Files.readAllBytes(Paths.get(path + File.separator + "Users" + File.separator + username + File.separator  + "shadow.txt"));
+			String ptl = new String(btl, Charset.forName("UTF-8"));
+			if(ptl.equals(password)) {
+				return true;
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			System.out.println("gas");
 		}
+		System.out.println("gaaas");
+
 		return false;
 	}
 	
@@ -56,11 +65,17 @@ public class UserStorage {
 		//si no existeix, es guarda l'usuari i retorna true
 		//si existeix, retorna false.
 		//No es el mateix que storeUser perque allà no és necesari comprovar si existeix, potser l'estas sobreescrivint.
+		System.out.println("fdasfdsae");
+
 		if(this.logInUser(username, password)){
+			System.out.println("falsetat");
 			return false;
+		}else {
+			System.out.println("hola");
+			this.storeUser(password,username);
+			return true;
+			
 		}
 		
-		this.storeUser(password);
-		return true;
 	}
 }
