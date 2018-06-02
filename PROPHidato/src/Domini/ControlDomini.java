@@ -183,4 +183,18 @@ public class ControlDomini {
 		scores.add("69");
 	}
 	
+	public void loadHidato(String name, String[] params, String[][] matriu) {
+		String hidato = ControlPersistencia.getInstance().loadHidato(name);
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		Hidato h = gson.fromJson(hidato,  Hidato.class);
+		params = h.getTaulell().getParams();
+		matriu = h.getTaulell().getMatriu();
+	}
+	
 }

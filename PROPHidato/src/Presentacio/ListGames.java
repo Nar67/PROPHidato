@@ -18,6 +18,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ListGames extends JFrame {
 
@@ -74,6 +76,12 @@ public class ListGames extends JFrame {
 		txtpnSelectOneHidato.setText("Select game");
 		
 		JButton playButton = new JButton("Play");
+		playButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String selected = list.getSelectedValue();
+				String board, params, time, moves;
+			}
+		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
