@@ -43,27 +43,23 @@ public class ControlDomini {
 		return partida;
 	}
 	
-	public Partida generaHidato() { 
+	public String[][] generaHidato(String diff, String cellType, String adj) { 
 		//s'ha d'adaptar a la capa de presentacio, li arriben 3 strings:
 		//primer parametre -> la difficultat (pot ser: "Easy", "Medium", "Hard")
 		//segon parametre -> tipus de cell (pot ser: "Triangle" , "Square", "Hexagon")
 		//tercer parametre -> tipus d'adjacencia (pot ser: "Borders" o  "Borders and angles")
 		//S'HA DE PENSAR COM ENVIAR LA PARTIDA A LA CAPA DE PRESENTACIO DONAT QUE NO ES PODEN PASSAR OBJECTES NO PRIMITIUS
 		Partida partida = new Partida();
-		System.out.println("Escoja dificultad: 1(Q,C), 2(Q,CA), 3(H,C), 4(H,CA), 5(T,C), 6(T,CA).");
-		Scanner keyboard = new Scanner(System.in);
-		keyboard = new Scanner(System.in);
-		int diff = keyboard.nextInt();
-		Hidato hidato = partida.generarTaulell(diff);
+		Hidato hidato = partida.generarTaulell(diff, cellType, adj);
 		System.out.println("Autogenerant hidato ... ");
 		Hidato hidatobuit = new Hidato(hidato.getTaulell());
 		while (!hidato.checkHidato()) {
-			hidato = partida.generarTaulell(diff);
+			hidato = partida.generarTaulell(diff, cellType, adj);
 			hidatobuit = hidato;
 		}
 		partida.setHidato(hidato);
-		hidatobuit.getTaulell().printBoard();
-		return partida;
+		//hidatobuit.getTaulell().printBoard();
+		return hidato.getTaulell().getMatriu();
 	}
 	
 	public void jugar(Integer action) {

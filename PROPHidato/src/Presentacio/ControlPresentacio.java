@@ -44,7 +44,7 @@ public class ControlPresentacio {
 	}
 	
 	public String[][] generateGame(String diff, String cellType, String adj) {
-		return ControlDomini.getInstance().generateGame()
+		return ControlDomini.getInstance().generaHidato(diff, cellType, adj);
 	}
 	
 	public String[] listHidatos() {
