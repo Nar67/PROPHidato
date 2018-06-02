@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.xml.ws.Dispatch;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -74,6 +76,13 @@ public class MainMenu {
 		});
 		
 		JButton rankingButton = new JButton("RANKING");
+		rankingButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RankingView rv = new RankingView();
+				rv.setVisible(true);
+				
+			}
+		});
 		rankingButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
 		JButton logOutButton = new JButton("Log Out");

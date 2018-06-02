@@ -279,7 +279,7 @@ public class Partida {
 						acabarPartida();
 						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
 						int movescore = 300-(nmoves-current)*5;
-						this.puntuacio = (int)finaltime + movescore;						
+						this.puntuacio = 300-(int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 					}
 				}
