@@ -9,8 +9,14 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -20,6 +26,12 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BasicStroke;
 import java.awt.Canvas;
+import javax.swing.JLabel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import org.omg.CORBA.PRIVATE_MEMBER;
+
+import javax.swing.Timer;
 
 public class GameView {
 
@@ -28,6 +40,8 @@ public class GameView {
 	private String[][] board;
 	private String[] params;
 	private Vector<Vector<Polygon>> matrix;
+	Vector<Vector<Point>> centers;
+	private int moves;
 	/**
 	 * Launch the application.
 	 */
@@ -58,72 +72,95 @@ public class GameView {
 	}
 	
 	public GameView() {
-		
+		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private Vector<Vector<Polygon>> genSquareMatrix(int rows, int cols){
+
+	private Point calcCenter(Vector<Point> points) {
+	    double centroidX = 0, centroidY = 0;
+        for(Point p : points) {
+            centroidX += p.getX();
+            centroidY += p.getY();
+        }
+    return new Point((int)centroidX / points.size(),(int) centroidY / points.size());
+	}
+	
+	
+	private Vector<Vector<Polygon>> genSquareMatrix(int rows, int cols, Vector<Vector<Point>> centers){
 		int xOffset = 800 - (cols*BORDER_SIZE)/2;
 		int yOffset = 450 - (rows*BORDER_SIZE)/2;
 		Vector<Vector<Polygon>> matrix = new Vector<Vector<Polygon>>();
 		for(int i=0;i<rows;i++){
 	        Vector<Polygon> r = new Vector<Polygon>();
+	        Vector<Point> c = new Vector<Point>();
 	        for(int j=0;j<cols;j++){
 	        	Polygon p = new Polygon();
-	        	p.addPoint(BORDER_SIZE*j + xOffset, BORDER_SIZE*i + yOffset);
-	        	p.addPoint(BORDER_SIZE*j + BORDER_SIZE + xOffset, BORDER_SIZE*i + yOffset);
-	        	p.addPoint(BORDER_SIZE*j + BORDER_SIZE + xOffset, BORDER_SIZE*i + BORDER_SIZE + yOffset);
-	        	p.addPoint(BORDER_SIZE*j + xOffset, BORDER_SIZE*i + BORDER_SIZE + yOffset);
+	        	Vector<Point> points = new Vector<Point>();
+	        	points.add(new Point(BORDER_SIZE*j + xOffset, BORDER_SIZE*i + yOffset));
+	        	points.add(new Point(BORDER_SIZE*j + BORDER_SIZE + xOffset, BORDER_SIZE*i + yOffset));
+	        	points.add(new Point(BORDER_SIZE*j + BORDER_SIZE + xOffset, BORDER_SIZE*i + BORDER_SIZE + yOffset));
+	        	points.add(new Point(BORDER_SIZE*j + xOffset, BORDER_SIZE*i + BORDER_SIZE + yOffset));
+	        	p.addPoint(points.get(0).x, points.get(0).y);
+	        	p.addPoint(points.get(1).x, points.get(1).y);
+	        	p.addPoint(points.get(2).x, points.get(2).y);
+	        	p.addPoint(points.get(3).x, points.get(3).y);
+	        	c.addElement(calcCenter(points));
 	            r.add(p);
 	        }
+	        centers.add(c);
 	        matrix.add(r);
 	    }
 		return matrix;
 	}
 	
-	private Vector<Vector<Polygon>> genTriangleMatrix(int rows, int cols){
+	private Vector<Vector<Polygon>> genTriangleMatrix(int rows, int cols, Vector<Vector<Point>> centers){
 		int xOffset = 800 - (cols*BORDER_SIZE)/2;
 		int yOffset = 450 - (rows*BORDER_SIZE)/2;
 		int h = (int) (BORDER_SIZE * (Math.sqrt(3.0)/2));
 		Vector<Vector<Polygon>> matrix = new Vector<Vector<Polygon>>();
 		for(int i=0;i<rows;i++){
 	        Vector<Polygon> r = new Vector<Polygon>();
+	        Vector<Point> c = new Vector<Point>();
 	        for(int j=0;j<cols;j++){
 	        	Polygon p = new Polygon();
+	        	Vector<Point> points = new Vector<Point>();
 	        	if(i%2 == 0) { //row is even
 	        		if(j%2 == 0) { // cols is even
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + xOffset, h * (i+1) + yOffset);
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset, h * (i+1) + yOffset);
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset, i * h  + yOffset);
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + xOffset, h * (i+1) + yOffset));
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset, h * (i+1) + yOffset));
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset, i * h  + yOffset));
 	        		}
 	        		else {
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset, i * h  + yOffset);
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset + BORDER_SIZE, i * h  + yOffset);
-	        			p.addPoint((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset, h * (i+1) + yOffset);
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset, i * h  + yOffset));
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset + BORDER_SIZE, i * h  + yOffset));
+	        			points.add(new Point((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset, h * (i+1) + yOffset));
 	        		}
 	        	}
 	        	else {
-	        		if(j%2 == 0) { 	        			
-	        			p.addPoint(((j/2)*BORDER_SIZE + BORDER_SIZE/2  + xOffset)+ BORDER_SIZE/2, i * h  + yOffset);
-	        			p.addPoint(((j/2)*BORDER_SIZE + BORDER_SIZE/2  + xOffset + BORDER_SIZE)+ BORDER_SIZE/2, i * h  + yOffset);
-	        			p.addPoint(((j/2)*BORDER_SIZE + BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset);
+	        		if(j%2 == 0) {
+	        			points.add(new Point(((j/2)*BORDER_SIZE + BORDER_SIZE/2  + xOffset)+ BORDER_SIZE/2, i * h  + yOffset));
+	        			points.add(new Point(((j/2)*BORDER_SIZE + BORDER_SIZE/2  + xOffset + BORDER_SIZE)+ BORDER_SIZE/2, i * h  + yOffset));
+	        			points.add(new Point(((j/2)*BORDER_SIZE + BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset));
 	        		}
 	        		else {
-	        			p.addPoint(((j/2 +1)*BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset);
-	        			p.addPoint(((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset);
-	        			p.addPoint(((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset)+ BORDER_SIZE/2, i * h  + yOffset);
+	        			points.add(new Point(((j/2 +1)*BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset));
+	        			points.add(new Point(((j/2 +1)*BORDER_SIZE + BORDER_SIZE + xOffset)+ BORDER_SIZE/2, h * (i+1) + yOffset));
+	        			points.add(new Point(((j/2 +1)*BORDER_SIZE + BORDER_SIZE/2  + xOffset)+ BORDER_SIZE/2, i * h  + yOffset));
 	        		}
 	        	}
+	        	p.addPoint(points.get(0).x, points.get(0).y);
+	        	p.addPoint(points.get(1).x, points.get(1).y);
+	        	p.addPoint(points.get(2).x, points.get(2).y);
+	        	c.addElement(calcCenter(points));
 	            r.add(p);
 	        }
+	        centers.add(c);
 	        matrix.add(r);
 	    }
 		return matrix;
 	}
 	
-	private Vector<Vector<Polygon>> genHexagonMatrix(int rows, int cols){
+	private Vector<Vector<Polygon>> genHexagonMatrix(int rows, int cols, Vector<Vector<Point>> centers){
 		int radius = 25;
 		int a = (int) (radius * (Math.cos(Math.toRadians(180/6))));
 		int s = (int) (a * (2* Math.tan(Math.toRadians(180/6))));
@@ -132,6 +169,7 @@ public class GameView {
 		Vector<Vector<Polygon>> matrix = new Vector<Vector<Polygon>>();
 		for(int i=0;i<rows;i++){
 	        Vector<Polygon> r = new Vector<Polygon>();
+	        Vector<Point> c = new Vector<Point>();
 	        for(int j=0;j<cols;j++){
 	        	int x = initialX + a*2*j;
 	        	int y = initialY + (s/2+radius)*i;
@@ -139,8 +177,10 @@ public class GameView {
 
 	    		Point center = new Point(x,y);
 	        	Polygon p = addPoints(center, radius);
+	        	c.add(center);
 		        r.add(p);
 	            }
+	        centers.add(c);
 	        matrix.add(r);
 	        }
 		return matrix;
@@ -173,6 +213,13 @@ public class GameView {
         return new Point(ptX, ptY);
     }
 	
+    private Point getCenter(Rectangle2D r) {
+    	double h = r.getHeight();
+    	double w = r.getWidth();
+    	return new Point((int) (r.getX() + w/2),(int) (r.getY() + h/2));
+    }
+    
+	
 	private void initialize() {
 		frame = new JFrame();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -181,16 +228,15 @@ public class GameView {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		for(String s: params)
-			System.out.println("Params2: " + s);
 		
-		if(params[0].equals("Q")) {
-			matrix = genSquareMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]));
-		}
+		centers = new Vector<Vector<Point>>();
+		
+		if(params[0].equals("Q"))
+			matrix = genSquareMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]), centers);
 		else if(params[0].equals("T"))
-			matrix = genTriangleMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]));
+			matrix = genTriangleMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]), centers);
 		else if(params[0].equals("H"))
-			matrix = genHexagonMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]));
+			matrix = genHexagonMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]), centers);
 		//matrix = genHexagonMatrix(7, 7);
 		
         JPanel panel = new JPanel() {
@@ -199,14 +245,9 @@ public class GameView {
                 super.paintComponent(g3d);
                 Graphics2D g = (Graphics2D) g3d;
                 g.setColor(Color.BLACK );
-                		
-        		System.out.println(String.valueOf(matrix.size()));
-        		System.out.println(String.valueOf(matrix.get(0).size()));
-        		
                 for(int i = 0; i < matrix.size(); i++) {
                 	for(int j = 0; j < matrix.get(0).size(); j++) {
                 		Polygon p = matrix.get(i).get(j);
-                		System.out.print(board[i][j]);
                 		g.setStroke(new BasicStroke(3));
                 		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 		if(!board[i][j].equals("#"))
@@ -214,24 +255,17 @@ public class GameView {
                 		if(board[i][j].equals("*"))
                 			g.fillPolygon(p);
                 		if(!board[i][j].equals("#") && !board[i][j].equals("?")) {
-                			Rectangle r = p.getBounds();
-                			int x = (int)r.getLocation().getX();
-                			int y = (int)r.getLocation().getY();
-                			g.drawString(board[i][j],x+25, y+25);
+                			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
+                			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
+                			g.drawString(board[i][j], xOffset, yOffset);
                 		}
-                		
                 	}
-                System.out.println();
                 }
             }
-            /*
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(800, 600);
-            }
-            */
         };
         
+		JLabel movesLabel = new JLabel("");
+		movesLabel.setFont(new Font("Tahoma", Font.PLAIN, 29));
         MouseAdapter ma = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -243,6 +277,7 @@ public class GameView {
                 			int x = (int)r.getLocation().getX();
                 			int y = (int)r.getLocation().getY();
                 			Graphics g = panel.getGraphics();
+                			movesLabel.setText(String.valueOf(++moves));
                 			//g.drawString("1", x+25, y+25);
                 			g.fillPolygon(p);
                 }
@@ -259,20 +294,53 @@ public class GameView {
 		
 		//JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
+		
+		JLabel lblTime = new JLabel("Time ");
+		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		
+		JLabel chrono = new JLabel("");
+		chrono.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		
+		JLabel lblMoves = new JLabel("Moves");
+		lblMoves.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		
+
+
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(30)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(313, Short.MAX_VALUE))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblTime)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(chrono, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(36, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(74)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(34, Short.MAX_VALUE))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(74)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(197)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblTime, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
+								.addComponent(chrono, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+							.addGap(60)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(77, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 	}
@@ -285,6 +353,4 @@ public class GameView {
 	public void setParams(String[] s) {
 		 this.params = s;
 	}
-	
-
 }

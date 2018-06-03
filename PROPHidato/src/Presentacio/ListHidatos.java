@@ -90,9 +90,7 @@ public class ListHidatos extends JFrame {
 				String[] params = new String[] {};
 				String[][] matriu = new String[][] {};
 				ControlPresentacio.getInstance().loadHidato(selected, params, matriu);
-				GameView gv = new GameView();
-				gv.setBoard(matriu);
-				gv.setParams(params);
+				GameView gv = new GameView(params, matriu);
 				gv.getFrame().setVisible(true);
 			}
 		});

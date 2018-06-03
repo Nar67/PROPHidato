@@ -71,11 +71,13 @@ public class LogIn {
 		txtpnWelcome.setText("Welcome");
 		
 		JTextPane txtpnUsername = new JTextPane();
+		txtpnUsername.setEditable(false);
 		txtpnUsername.setBounds(84, 99, 73, 20);
 		txtpnUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtpnUsername.setText("Username");
 		
 		JTextPane txtpnPassword = new JTextPane();
+		txtpnPassword.setEditable(false);
 		txtpnPassword.setBounds(84, 142, 73, 20);
 		txtpnPassword.setText("Password");
 		txtpnPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -123,18 +125,13 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword(); 
-            		try {
-						if(!cp.logInUser(username, password)) {
-							errorText.setText("Username or password may be incorrect, please try again");
-						}
-						else {
-							MainMenu nm = new MainMenu();
-							nm.getFrame().setVisible(true);
-							frame.setVisible(false);
-						}
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+            		if(!cp.logInUser(username, password)) {
+						errorText.setText("Username or password may be incorrect, please try again");
+					}
+					else {
+						MainMenu nm = new MainMenu();
+						nm.getFrame().setVisible(true);
+						frame.setVisible(false);
 					}
             	}
             		
@@ -151,18 +148,13 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword();
-            		try {
-						if(!cp.signUpUser(username, password)) {
-							errorText.setText("User already exists, pleasy try again");
-						}
-						else {
-							MainMenu nm = new MainMenu();
-							nm.getFrame().setVisible(true);
-							frame.setVisible(false);
-						}
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+            		if(!cp.signUpUser(username, password)) {
+						errorText.setText("User already exists, pleasy try again");
+					}
+					else {
+						MainMenu nm = new MainMenu();
+						nm.getFrame().setVisible(true);
+						frame.setVisible(false);
 					}
             	}
             		
