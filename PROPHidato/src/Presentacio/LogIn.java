@@ -20,6 +20,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SpringLayout;
 import javax.swing.Box;
+import java.awt.Panel;
+import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class LogIn {
 
@@ -60,41 +62,49 @@ public class LogIn {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setResizable(false);
-		frame.getContentPane().setBackground(Color.WHITE);
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		frame.setBounds(100, 100, 487, 302);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JTextPane txtpnWelcome = new JTextPane();
-		txtpnWelcome.setBounds(139, 10, 193, 51);
+		txtpnWelcome.setBackground(Color.DARK_GRAY);
+		txtpnWelcome.setForeground(Color.WHITE);
+		txtpnWelcome.setBounds(20, 0, 461, 97);
 		txtpnWelcome.setEditable(false);
-		txtpnWelcome.setFont(new Font("Tahoma", Font.PLAIN, 42));
-		txtpnWelcome.setText("Welcome");
+		txtpnWelcome.setFont(new Font("Yu Gothic UI Semibold", Font.BOLD, 36));
+		txtpnWelcome.setText("Welcome to the HidatoGame");
 		
 		JTextPane txtpnUsername = new JTextPane();
-		txtpnUsername.setBounds(84, 99, 73, 20);
+		txtpnUsername.setBackground(Color.DARK_GRAY);
+		txtpnUsername.setForeground(Color.WHITE);
+		txtpnUsername.setEditable(false);
+		txtpnUsername.setBounds(48, 122, 73, 20);
 		txtpnUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtpnUsername.setText("Username");
 		
 		JTextPane txtpnPassword = new JTextPane();
-		txtpnPassword.setBounds(84, 142, 73, 20);
+		txtpnPassword.setBackground(Color.DARK_GRAY);
+		txtpnPassword.setForeground(Color.WHITE);
+		txtpnPassword.setEditable(false);
+		txtpnPassword.setBounds(48, 153, 73, 20);
 		txtpnPassword.setText("Password");
 		txtpnPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
 		usernameText = new JTextField();
-		usernameText.setBounds(181, 99, 135, 20);
+		usernameText.setBounds(170, 122, 135, 20);
 		usernameText.setColumns(10);
 		
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(181, 142, 135, 20);
+		passwordField.setBounds(170, 153, 135, 20);
 		passwordField.setToolTipText("password");
 		
 		JButton logInButton = new JButton("Log In");
-		logInButton.setBounds(84, 230, 91, 23);
+		logInButton.setBounds(102, 201, 91, 23);
 
 		
 		JButton signUpButton = new JButton("Sign Up");
-		signUpButton.setBounds(275, 230, 91, 23);
+		signUpButton.setBounds(214, 201, 91, 23);
 		
 		
 		frame.getContentPane().setLayout(null);
@@ -107,10 +117,15 @@ public class LogIn {
 		frame.getContentPane().add(signUpButton);
 		
 		JTextPane errorText = new JTextPane();
+		errorText.setBackground(Color.DARK_GRAY);
 		errorText.setForeground(Color.RED);
 		errorText.setEditable(false);
-		errorText.setBounds(84, 167, 285, 32);
+		errorText.setBounds(40, 230, 285, 32);
 		frame.getContentPane().add(errorText);
+		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtpnUsername, usernameText, txtpnPassword, passwordField, logInButton, signUpButton, errorText, txtpnWelcome}));
+		frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{frame.getContentPane(), txtpnWelcome, txtpnUsername, usernameText, txtpnPassword, passwordField, logInButton, signUpButton, errorText}));
+		
+		
 
 		
 		logInButton.addActionListener(new ActionListener() {
