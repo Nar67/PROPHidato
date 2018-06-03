@@ -117,7 +117,7 @@ public class ControlDomini {
 		ControlPersistencia cpers = ControlPersistencia.getInstance();
 		cpers.storeBoard(board);
 		ControlDomini cd = ControlDomini.getInstance();
-		//cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
+		cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
 	}
 	/* TODO loadboard
 	protected Board loadBoard() {
@@ -203,6 +203,18 @@ public class ControlDomini {
 		scores.add("123");
 		scores.add("88");
 		scores.add("69");*/
+	}
+	
+	public HashMap<String, Integer> getRanking() throws IOException {//TODO ranking
+		
+	}
+	
+	public HashMap<String, Integer> getMediumRanking() throws IOException {//TODO ranking
+		
+	}
+	
+	public HashMap<String, Integer> storeHardRanking() throws IOException {//TODO ranking
+		
 	}
 	
 	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
