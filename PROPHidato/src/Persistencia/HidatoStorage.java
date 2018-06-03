@@ -54,7 +54,7 @@ public class HidatoStorage {
 		String path = System.getProperty("user.dir");
 		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Hidatos" + File.separator + name + ".txt"));
 		String ptl = new String(btl, Charset.forName("UTF-8"));
-		return pt1;
+		return ptl;
 	}
 
 }

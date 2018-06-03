@@ -21,7 +21,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SpringLayout;
 import javax.swing.Box;
 import java.awt.Panel;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 
 public class LogIn {
 
@@ -122,8 +121,6 @@ public class LogIn {
 		errorText.setEditable(false);
 		errorText.setBounds(40, 230, 285, 32);
 		frame.getContentPane().add(errorText);
-		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{txtpnUsername, usernameText, txtpnPassword, passwordField, logInButton, signUpButton, errorText, txtpnWelcome}));
-		frame.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{frame.getContentPane(), txtpnWelcome, txtpnUsername, usernameText, txtpnPassword, passwordField, logInButton, signUpButton, errorText}));
 		
 		
 

@@ -6,7 +6,12 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +19,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+
+import javafx.util.Pair;
+
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -51,8 +59,9 @@ public class RankingView extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
 	 */
-	public RankingView() {
+	public RankingView() throws IOException {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -109,22 +118,22 @@ public class RankingView extends JFrame {
 		modelEasy.addColumn("Username");
 		modelEasy.addColumn("Score");
 		
+		HashMap<String, Integer> rankEasy = ControlPresentacio.getInstance().getEasyRanking();
 		
-		ArrayList<String> usersEasy = new ArrayList<String>();
-		ArrayList<String> scoresEasy = new ArrayList<String>();
-		ControlPresentacio.getInstance().getEasyRanking(usersEasy, scoresEasy);
-		for(int i = 0; i < usersEasy.size(); i++) {
-			modelEasy.addRow(new Object[]{usersEasy.get(i), scoresEasy.get(i)});
-		}
+	    Iterator<Entry<String, Integer>> itE = rankEasy.entrySet().iterator();
+	    while (itE.hasNext()) {
+	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itE.next();
+	        modelEasy.addRow(new Object[]{pair.getKey(), pair.getValue()});
+	        itE.remove(); // avoids a ConcurrentModificationException
+	    }
+
+
 		easyRanking.setRowHeight(30);
 		TableColumnModel columnModelEasy = easyRanking.getColumnModel();
 		columnModelEasy.getColumn(0).setPreferredWidth(1700);
 		columnModelEasy.getColumn(1).setPreferredWidth(100);
 		
 		easyPanel.add(easyRanking);
-		
-		
-		
 		JPanel mediumPanel = new JPanel();
 		mediumPanel.setBackground(Color.WHITE);
 		tabbedPane.addTab("Medium", null, mediumPanel, null);
@@ -138,12 +147,14 @@ public class RankingView extends JFrame {
 		mediumRanking.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		modelMedium.addColumn("Username");
 		modelMedium.addColumn("Score");
-		ArrayList<String> usersMedium = new ArrayList<String>();
-		ArrayList<String> scoresMedium = new ArrayList<String>();
-		ControlPresentacio.getInstance().getMediumRanking(usersMedium, scoresMedium);
-		for(int i = 0; i < usersMedium.size(); i++) {
-			modelMedium.addRow(new Object[]{usersMedium.get(i), scoresMedium.get(i)});
-		}
+		HashMap<String, Integer> rankMedium = ControlPresentacio.getInstance().getMediumRanking();
+		
+	    Iterator<Entry<String, Integer>> itM = rankMedium.entrySet().iterator();
+	    while (itM.hasNext()) {
+	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itM.next();
+	        modelMedium.addRow(new Object[]{pair.getKey(), pair.getValue()});
+	        itM.remove(); // avoids a ConcurrentModificationException
+	    }
 		mediumRanking.setRowHeight(30);
 		TableColumnModel columnModelMedium = mediumRanking.getColumnModel();
 		columnModelMedium.getColumn(0).setPreferredWidth(1700);
@@ -164,12 +175,14 @@ public class RankingView extends JFrame {
 		hardRanking.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		modelHard.addColumn("Username");
 		modelHard.addColumn("Score");
-		ArrayList<String> usersHard = new ArrayList<String>();
-		ArrayList<String> scoreshard = new ArrayList<String>();
-		ControlPresentacio.getInstance().getHardRanking(usersHard, scoreshard);
-		for(int i = 0; i < usersHard.size(); i++) {
-			modelHard.addRow(new Object[]{usersHard.get(i), scoreshard.get(i)});
-		}
+		HashMap<String, Integer> rankHard = ControlPresentacio.getInstance().getHardRanking();
+		
+	    Iterator<Entry<String, Integer>> itH = rankHard.entrySet().iterator();
+	    while (itH.hasNext()) {
+	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itH.next();
+	        modelMedium.addRow(new Object[]{pair.getKey(), pair.getValue()});
+	        itH.remove(); // avoids a ConcurrentModificationException
+	    }
 		hardRanking.setRowHeight(30);
 		TableColumnModel columnModelHard = hardRanking.getColumnModel();
 		columnModelHard.getColumn(0).setPreferredWidth(1700);
@@ -177,5 +190,5 @@ public class RankingView extends JFrame {
 		
 		hardPanel.add(hardRanking);
 		contentPane.setLayout(gl_contentPane);
+	    }
 	}
-}

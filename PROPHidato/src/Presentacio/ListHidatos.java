@@ -20,6 +20,7 @@ import java.awt.Color;
 import java.awt.SystemColor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
@@ -89,7 +90,12 @@ public class ListHidatos extends JFrame {
 				String selected = list.getSelectedValue();
 				String[] params = new String[] {};
 				String[][] matriu = new String[][] {};
-				ControlPresentacio.getInstance().loadHidato(selected, params, matriu);
+				try {
+					ControlPresentacio.getInstance().loadHidato(selected, params, matriu);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				GameView gv = new GameView(params, matriu);
 				gv.getFrame().setVisible(true);
 			}

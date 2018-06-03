@@ -15,6 +15,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.xml.ws.Dispatch;
 
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -78,7 +79,13 @@ public class MainMenu {
 		JButton rankingButton = new JButton("RANKING");
 		rankingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RankingView rv = new RankingView();
+				RankingView rv = null;
+				try {
+					rv = new RankingView();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				rv.setVisible(true);
 				
 			}
