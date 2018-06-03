@@ -75,28 +75,18 @@ public class LogIn {
 		txtpnWelcome.setText("Welcome to the HidatoGame");
 		
 		JTextPane txtpnUsername = new JTextPane();
-<<<<<<< HEAD
-		txtpnUsername.setEditable(false);
-		txtpnUsername.setBounds(84, 99, 73, 20);
-=======
 		txtpnUsername.setBackground(Color.DARK_GRAY);
 		txtpnUsername.setForeground(Color.WHITE);
 		txtpnUsername.setEditable(false);
 		txtpnUsername.setBounds(48, 122, 73, 20);
->>>>>>> 9a08c1c082328cf6e101b8a482a442c6992aa168
 		txtpnUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		txtpnUsername.setText("Username");
 		
 		JTextPane txtpnPassword = new JTextPane();
-<<<<<<< HEAD
-		txtpnPassword.setEditable(false);
-		txtpnPassword.setBounds(84, 142, 73, 20);
-=======
 		txtpnPassword.setBackground(Color.DARK_GRAY);
 		txtpnPassword.setForeground(Color.WHITE);
 		txtpnPassword.setEditable(false);
 		txtpnPassword.setBounds(48, 153, 73, 20);
->>>>>>> 9a08c1c082328cf6e101b8a482a442c6992aa168
 		txtpnPassword.setText("Password");
 		txtpnPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
@@ -148,13 +138,18 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword(); 
-            		if(!cp.logInUser(username, password)) {
-						errorText.setText("Username or password may be incorrect, please try again");
-					}
-					else {
-						MainMenu nm = new MainMenu();
-						nm.getFrame().setVisible(true);
-						frame.setVisible(false);
+            		try {
+						if(!cp.logInUser(username, password)) {
+							errorText.setText("Username or password may be incorrect, please try again");
+						}
+						else {
+							MainMenu nm = new MainMenu();
+							nm.getFrame().setVisible(true);
+							frame.setVisible(false);
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
             	}
             		
@@ -171,13 +166,18 @@ public class LogIn {
             		ControlPresentacio cp = ControlPresentacio.getInstance();
             		String username = usernameText.getText();
             		char[] password = passwordField.getPassword();
-            		if(!cp.signUpUser(username, password)) {
-						errorText.setText("User already exists, pleasy try again");
-					}
-					else {
-						MainMenu nm = new MainMenu();
-						nm.getFrame().setVisible(true);
-						frame.setVisible(false);
+            		try {
+						if(!cp.signUpUser(username, password)) {
+							errorText.setText("User already exists, pleasy try again");
+						}
+						else {
+							MainMenu nm = new MainMenu();
+							nm.getFrame().setVisible(true);
+							frame.setVisible(false);
+						}
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
             	}
             		
