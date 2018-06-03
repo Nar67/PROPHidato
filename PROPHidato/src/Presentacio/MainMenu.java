@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 public class MainMenu {
 
@@ -56,6 +60,8 @@ public class MainMenu {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.setBackground(Color.DARK_GRAY);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize((int)screenSize.getWidth(),(int)screenSize.getHeight());
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -64,9 +70,11 @@ public class MainMenu {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton createButton = new JButton("CREATE");
+		createButton.setBounds(513, 345, 320, 94);
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
 		JButton playButton = new JButton("PLAY");
+		playButton.setBounds(513, 108, 320, 94);
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -77,6 +85,7 @@ public class MainMenu {
 		});
 		
 		JButton rankingButton = new JButton("RANKING");
+		rankingButton.setBounds(513, 494, 320, 94);
 		rankingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RankingView rv = null;
@@ -93,6 +102,7 @@ public class MainMenu {
 		rankingButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
 		JButton logOutButton = new JButton("Log Out");
+		logOutButton.setBounds(23, 687, 121, 41);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LogIn login = new LogIn();
@@ -101,33 +111,25 @@ public class MainMenu {
 			}
 		});
 		logOutButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(797)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(playButton, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-								.addComponent(createButton, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
-								.addComponent(rankingButton, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(logOutButton, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(797, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(201)
-					.addComponent(playButton, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-					.addGap(183)
-					.addComponent(createButton, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 208, Short.MAX_VALUE)
-					.addComponent(rankingButton, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
-					.addGap(125)
-					.addComponent(logOutButton, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		frame.getContentPane().setLayout(groupLayout);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(384, 465, 92, 140);
+		label.setIcon(new ImageIcon(MainMenu.class.getResource("/img/Transparent_Gold_Cup_Trophy_PNG_Clipart.png")));
+		frame.getContentPane().setLayout(null);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setBounds(868, 465, 92, 140);
+		label_1.setIcon(new ImageIcon(MainMenu.class.getResource("/img/Transparent_Gold_Cup_Trophy_PNG_Clipart.png")));
+		frame.getContentPane().add(label_1);
+		frame.getContentPane().add(label);
+		frame.getContentPane().add(playButton);
+		frame.getContentPane().add(createButton);
+		frame.getContentPane().add(rankingButton);
+		frame.getContentPane().add(logOutButton);
+		
+		JTextArea txtrDondeHayAmor = new JTextArea();
+		txtrDondeHayAmor.setText("Donde hay amor hay vida - Gandhi");
+		txtrDondeHayAmor.setBounds(166, 697, 278, 22);
+		frame.getContentPane().add(txtrDondeHayAmor);
 	}
 }
