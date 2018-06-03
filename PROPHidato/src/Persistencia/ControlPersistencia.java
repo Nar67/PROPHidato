@@ -40,12 +40,12 @@ public class ControlPersistencia {
 		bs.storeBoard(board);
 	}
 	
-	public boolean logInUser(String username, String password) {
+	public boolean logInUser(String username, String password) throws IOException {
 		return UserStorage.getInstance().logInUser(username, password);
 	}
 	
 	
-	public boolean signUpUser(String username, String password) {
+	public boolean signUpUser(String username, String password) throws IOException {
 		return UserStorage.getInstance().logInUser(username, password);
 	}
 	
