@@ -7,16 +7,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -25,13 +19,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
-
-import javax.swing.Timer;
 
 public class GameView {
 
@@ -213,11 +202,6 @@ public class GameView {
         return new Point(ptX, ptY);
     }
 	
-    private Point getCenter(Rectangle2D r) {
-    	double h = r.getHeight();
-    	double w = r.getWidth();
-    	return new Point((int) (r.getX() + w/2),(int) (r.getY() + h/2));
-    }
     
 	
 	private void initialize() {
@@ -240,11 +224,13 @@ public class GameView {
 		//matrix = genHexagonMatrix(7, 7);
 		
         JPanel panel = new JPanel() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected void paintComponent(Graphics g3d) {
                 super.paintComponent(g3d);
                 Graphics2D g = (Graphics2D) g3d;
-                g.setColor(Color.BLACK );
+                g.setColor(Color.BLACK);
                 for(int i = 0; i < matrix.size(); i++) {
                 	for(int j = 0; j < matrix.get(0).size(); j++) {
                 		Polygon p = matrix.get(i).get(j);
@@ -252,8 +238,11 @@ public class GameView {
                 		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 		if(!board[i][j].equals("#"))
                 			g.drawPolygon(p);
-                		if(board[i][j].equals("*"))
+                		if(board[i][j].equals("*")) {
+                			g.setColor(Color.PINK);
                 			g.fillPolygon(p);
+                			g.setColor(Color.BLACK);
+                		}
                 		if(!board[i][j].equals("#") && !board[i][j].equals("?")) {
                 			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
                 			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
@@ -270,19 +259,26 @@ public class GameView {
             @Override
             public void mouseClicked(MouseEvent me) {
                 super.mouseClicked(me);
-                for(Vector<Polygon> v : matrix)
-                	for(Polygon p : v)
+                for(Integer i = 0; i < matrix.size(); i++)
+                	for(Integer j = 0; j < matrix.get(0).size(); j++) {
+                		Polygon p = matrix.get(i).get(j);
                 		if (p.contains(me.getPoint())) {
-                			Rectangle r = p.getBounds();
-                			int x = (int)r.getLocation().getX();
-                			int y = (int)r.getLocation().getY();
                 			Graphics g = panel.getGraphics();
                 			movesLabel.setText(String.valueOf(++moves));
-                			//g.drawString("1", x+25, y+25);
-                			g.fillPolygon(p);
+                			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
+                			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
+                			int next = -3;
+							try {
+								next = ControlPresentacio.getInstance().nextMove(i, j);
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							if(next > 0)
+								g.drawString(String.valueOf(next), xOffset, yOffset);
+                		}
+                	}
                 }
-
-            }
         };
         panel.addMouseListener(ma);//add listener to panel 
         

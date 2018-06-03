@@ -84,4 +84,8 @@ public class ControlPresentacio {
 	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
 		ControlDomini.getInstance().loadHidato(name, params, matriu);
 	}
+	
+	public Integer nextMove(Integer i, Integer j) throws IOException {
+		return ControlDomini.getInstance().nextMove(i, j);
+	}
 }
