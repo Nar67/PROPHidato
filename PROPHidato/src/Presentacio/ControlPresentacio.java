@@ -2,6 +2,7 @@ package Presentacio;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.security.MessageDigest;
 
 import Domini.ControlDomini;
@@ -14,11 +15,11 @@ public class ControlPresentacio {
 	public static ControlPresentacio getInstance() {
 		return cp;
 	}
-	
+	/*
 	public void jugar(Integer action) {
 		ControlDomini controlador = ControlDomini.getInstance();
 		controlador.jugar(action);
- 	}
+ 	}*/
 	
 	public void displayPartides(String user) {
 		ControlDomini controlDomini = ControlDomini.getInstance();
@@ -35,11 +36,11 @@ public class ControlPresentacio {
 		controlDomini.savePartida();
 	}
 	
-	public boolean logInUser(String username, char[] password) {
+	public boolean logInUser(String username, char[] password) throws IOException {
 		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}
 	
-	public boolean signUpUser(String username, char[] password) {
+	public boolean signUpUser(String username, char[] password) throws IOException {
 		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}
 	
@@ -55,19 +56,19 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().listGames();
 	}
 	
-	public void getEasyRanking(ArrayList<String> users, ArrayList<String> scores) {
-		ControlDomini.getInstance().getEasyRanking(users, scores);
+	public HashMap<String, Integer> getEasyRanking() throws IOException {
+		return ControlDomini.getInstance().getEasyRanking();
 	}
 	
-	public void getMediumRanking(ArrayList<String> users, ArrayList<String> scores) {
-		ControlDomini.getInstance().getMediumRanking(users, scores);
+	public HashMap<String, Integer> getMediumRanking() throws IOException {
+		return ControlDomini.getInstance().getMediumRanking();
 	}
 	
-	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {
-		ControlDomini.getInstance().getHardRanking(users, scores);
+	public HashMap<String, Integer> getHardRanking() throws IOException {
+		return ControlDomini.getInstance().getHardRanking();
 	}
 	
-	public void loadHidato(String name, String[] params, String[][] matriu) {
+	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
 		ControlDomini.getInstance().loadHidato(name, params, matriu);
 	}
 }
