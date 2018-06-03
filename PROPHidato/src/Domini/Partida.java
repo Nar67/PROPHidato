@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+import javax.print.attribute.standard.RequestingUserName;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -236,7 +236,7 @@ public class Partida {
 		return hidato;
 	}
 	
-	public void startPlaying(Integer i, Integer j) throws IOException {
+	public Integer nextMove(Integer i, Integer j) throws IOException {
 		if (!isAcabada()) {
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
@@ -247,7 +247,7 @@ public class Partida {
 				currj = start[1];
 				previ[current-2] = start[0];
 				prevj[current-2] = start[1];
-			}
+			}/*
 			if (i == 9) {
 				ArrayList<Integer> pista = hidato.nextMove(curri,  currj); 
 				int pistai = pista.get(0);
@@ -258,11 +258,12 @@ public class Partida {
 				System.out.print(pistaj);
 				System.out.println(").");
 				hidato.getTaulell().printBoard();
-			}
-			else {
+			}*/
+			//else {
 				if (!moveInBoard(i, j)) {
 					System.out.println("El moviment no es valid");
 					hidato.getTaulell().printBoard();
+					return -1;
 				}
 				else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
 					hidato.getTaulell().setValueToCell(i, j, "?");
@@ -271,8 +272,12 @@ public class Partida {
 					currj = prevj[current-2];
 					hidato.getTaulell().printBoard();
 					++nmoves;
+					return this.current;
 				}
-				else if (!hidato.isMoveValid(curri, currj, i, j)) System.out.println("El moviment no es valid");			
+				else if (!hidato.isMoveValid(curri, currj, i, j)) {
+					System.out.println("El moviment no es valid");
+					return -1;
+				}
 				else {
 					hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
 					previ[current-2] = curri;
@@ -289,9 +294,11 @@ public class Partida {
 						this.puntuacio = 300-(int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 					}
+					return this.current;
 				}
-			}			
+			//}			
 		}
+		return -2;
 	}
 	
 	public String partidaToString() {

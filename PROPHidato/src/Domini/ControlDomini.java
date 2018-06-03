@@ -63,8 +63,13 @@ public class ControlDomini {
 			hidatobuit = hidato;
 		}
 		partida.setHidato(hidato);
+		this.currentpartida = partida;
 		hidato.getTaulell().printBoard();
 		return hidato.getTaulell().getMatriu();
+	}
+	
+	public Integer nextMove(Integer i, Integer j) throws IOException {
+		return this.currentpartida.nextMove(i,j);
 	}
 	
 	/*public void jugar(Integer action) {
