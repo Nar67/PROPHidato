@@ -21,6 +21,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SpringLayout;
 import javax.swing.Box;
 import java.awt.Panel;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class LogIn {
 
@@ -121,6 +123,12 @@ public class LogIn {
 		errorText.setEditable(false);
 		errorText.setBounds(40, 230, 285, 32);
 		frame.getContentPane().add(errorText);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(LogIn.class.getResource("/img/xxx.png")));
+		lblNewLabel.setBounds(325, 69, 156, 193);
+		frame.getContentPane().add(lblNewLabel);
+
 		
 		
 
