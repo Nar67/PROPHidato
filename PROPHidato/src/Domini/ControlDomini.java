@@ -2,6 +2,7 @@ package Domini;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
@@ -66,11 +67,11 @@ public class ControlDomini {
 		return hidato.getTaulell().getMatriu();
 	}
 	
-	public void jugar(Integer action) {
+	/*public void jugar(Integer action) {
 		if (action == 1) this.currentpartida = generaHidato();
 		else if (action == 2) this.currentpartida = llegeixHidato();
 		this.currentpartida.startPlaying();
-	}
+	}*/
 	
 	public ArrayList<String> getPartides(String user) {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
@@ -147,7 +148,12 @@ public class ControlDomini {
 		return ControlPersistencia.getInstance().listGames(currentuser.getNom());
 	}
 	
-	public void getEasyRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
+	public HashMap<String, Integer> getEasyRanking() throws IOException {//TODO ranking
+		String rank = ControlPersistencia.getInstance().getEasyRanking();
+		Gson gson = new Gson();
+		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		return ranking.getRanking();
+		/*
 		Ranking r = EasyRanking.getInstance();
 	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
 	        users.add(pair.getKey());
@@ -158,11 +164,16 @@ public class ControlDomini {
 		users.add("davidogayer");
 		scores.add("123");
 		scores.add("88");
-		scores.add("69");
+		scores.add("69");*/
 	}
 	
-	public void getMediumRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
-		Ranking r = MediumRanking.getInstance();
+	public HashMap<String, Integer> getMediumRanking() throws IOException {//TODO ranking
+		String rank = ControlPersistencia.getInstance().getMediumRanking();
+		Gson gson = new Gson();
+		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		return ranking.getRanking();
+		
+		/*Ranking r = MediumRanking.getInstance();
 	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
 	        users.add(pair.getKey());
 	        scores.add(String.valueOf(pair.getValue()));
@@ -172,11 +183,16 @@ public class ControlDomini {
 		users.add("nersr");
 		scores.add("123");
 		scores.add("88");
-		scores.add("69");
+		scores.add("69");*/
 	}
 	
-	public void getHardRanking(ArrayList<String> users, ArrayList<String> scores) {//TODO ranking
-		Ranking r = HardRanking.getInstance();
+	public HashMap<String, Integer> getHardRanking() throws IOException {//TODO ranking
+		String rank = ControlPersistencia.getInstance().getHardRanking();
+		Gson gson = new Gson();
+		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		return ranking.getRanking();
+		
+		/*Ranking r = HardRanking.getInstance();
 	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
 	        users.add(pair.getKey());
 	        scores.add(String.valueOf(pair.getValue()));
@@ -186,10 +202,10 @@ public class ControlDomini {
 		users.add("collPuter");
 		scores.add("123");
 		scores.add("88");
-		scores.add("69");
+		scores.add("69");*/
 	}
 	
-	public void loadHidato(String name, String[] params, String[][] matriu) {
+	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
 		String hidato = ControlPersistencia.getInstance().loadHidato(name);
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")

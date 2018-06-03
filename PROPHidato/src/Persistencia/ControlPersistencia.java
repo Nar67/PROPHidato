@@ -57,7 +57,19 @@ public class ControlPersistencia {
 		return PartidaStorage.getInstance().getPartides(user).toArray(new String[0]);
 	}
 	
-	public String loadHidato(String name) {
+	public String loadHidato(String name) throws IOException {
 		return HidatoStorage.getInstance().loadHidato(name);
+	}
+	
+	public String getEasyRanking() throws IOException {
+		return RankingStorage.getInstance().getEasyRanking();
+	}
+	
+	public String getMediumRanking() throws IOException{
+		return RankingStorage.getInstance().getMediumRanking();
+	}
+
+	public String getHardRanking() throws IOException{
+		return RankingStorage.getInstance().getHardRanking();
 	}
 }
