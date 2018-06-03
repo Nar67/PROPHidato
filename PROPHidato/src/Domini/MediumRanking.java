@@ -1,5 +1,8 @@
 package Domini;
 
+import java.io.IOException;
+
+import com.google.gson.Gson;
 
 public class MediumRanking extends Ranking{
 	private static MediumRanking mr = new MediumRanking();
@@ -10,7 +13,10 @@ public class MediumRanking extends Ranking{
 		super();
 	}
 
-	public void setNewScore(String username, Integer score) {
+	public void setNewScore(String username, Integer score) throws IOException {
 		super.setNewScore(username, score+200);
+		Gson gson = new Gson();
+		String rts = gson.toJson(rank, Ranking.class);
+		ControlDomini.getInstance().storeMediumRanking(rts);
 	}
 }

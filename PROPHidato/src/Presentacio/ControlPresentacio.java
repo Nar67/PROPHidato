@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 
 import Domini.ControlDomini;
 import Persistencia.ControlPersistencia;
+import Persistencia.RankingStorage;
 
 public class ControlPresentacio {
 
