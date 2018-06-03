@@ -270,6 +270,7 @@ public class GameView {
                 			int next = -3;
 							try {
 								next = ControlPresentacio.getInstance().nextMove(i, j);
+								System.out.println("Currentaso: " + next);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

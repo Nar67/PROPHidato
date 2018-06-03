@@ -238,9 +238,10 @@ public class Partida {
 	
 	public Integer nextMove(Integer i, Integer j) throws IOException {
 		if (!isAcabada()) {
+			;/*
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
-			System.out.println("Si desitja una pista premi: 9");
+			System.out.println("Si desitja una pista premi: 9");*/
 			if (this.current == 2) {
 				int[] start = hidato.getStart();
 				curri = start[0];
@@ -288,13 +289,13 @@ public class Partida {
 					hidato.getTaulell().printBoard();
 					++nmoves;
 					if (current == getUltim()) {
-						acabarPartida();
+						//acabarPartida();
 						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
 						int movescore = 300-(nmoves-current)*5;
 						this.puntuacio = 300-(int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 					}
-					return this.current;
+					return this.current-1;
 				}
 			//}			
 		}

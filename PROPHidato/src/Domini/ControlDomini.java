@@ -58,7 +58,9 @@ public class ControlDomini {
 		Hidato hidato = partida.generarTaulell(diff, cellType, adj);
 		System.out.println("Autogenerant hidato ... ");
 		Hidato hidatobuit = new Hidato(hidato.getTaulell());
+		int count = 0;
 		while (!hidato.checkHidato()) {
+			System.out.println(count++);
 			hidato = partida.generarTaulell(diff, cellType, adj);
 			hidatobuit = hidato;
 		}
