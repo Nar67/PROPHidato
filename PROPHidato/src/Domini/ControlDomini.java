@@ -150,58 +150,22 @@ public class ControlDomini {
 	public HashMap<String, Integer> getEasyRanking() throws IOException {//TODO ranking
 		String rank = ControlPersistencia.getInstance().getEasyRanking();
 		Gson gson = new Gson();
-		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		EasyRanking ranking = gson.fromJson(rank,  EasyRanking.class);
 		return ranking.getRanking();
-		/*
-		Ranking r = EasyRanking.getInstance();
-	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
-	        users.add(pair.getKey());
-	        scores.add(String.valueOf(pair.getValue()));
-	    }
-		users.add("peneman");
-		users.add("hitler");
-		users.add("davidogayer");
-		scores.add("123");
-		scores.add("88");
-		scores.add("69");*/
 	}
 	
 	public HashMap<String, Integer> getMediumRanking() throws IOException {//TODO ranking
 		String rank = ControlPersistencia.getInstance().getMediumRanking();
 		Gson gson = new Gson();
-		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		HardRanking ranking = gson.fromJson(rank,  HardRanking.class);
 		return ranking.getRanking();
-		
-		/*Ranking r = MediumRanking.getInstance();
-	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
-	        users.add(pair.getKey());
-	        scores.add(String.valueOf(pair.getValue()));
-	    }
-		users.add("yas");
-		users.add("hitler456");
-		users.add("nersr");
-		scores.add("123");
-		scores.add("88");
-		scores.add("69");*/
 	}
 	
 	public HashMap<String, Integer> getHardRanking() throws IOException {//TODO ranking
 		String rank = ControlPersistencia.getInstance().getHardRanking();
 		Gson gson = new Gson();
-		Ranking ranking = gson.fromJson(rank,  Ranking.class);
+		HardRanking ranking = gson.fromJson(rank,  HardRanking.class);
 		return ranking.getRanking();
-		
-		/*Ranking r = HardRanking.getInstance();
-	    for (Entry<String,Integer> pair : r.getRanking().entrySet()){
-	        users.add(pair.getKey());
-	        scores.add(String.valueOf(pair.getValue()));
-	    }
-		users.add("boi");
-		users.add("hitler2");
-		users.add("collPuter");
-		scores.add("123");
-		scores.add("88");
-		scores.add("69");*/
 	}
 	
 	public void storeEasyRanking(String rts) throws IOException {//TODO ranking
@@ -209,11 +173,11 @@ public class ControlDomini {
 	}
 	
 	public void storeMediumRanking(String rts) throws IOException {//TODO ranking
-		ControlPersistencia.getInstance().storeEasyRanking(rts);
+		ControlPersistencia.getInstance().storeMediumRanking(rts);
 	}
 	
 	public void storeHardRanking(String rts) throws IOException {//TODO ranking
-		ControlPersistencia.getInstance().storeEasyRanking(rts);
+		ControlPersistencia.getInstance().storeHardRanking(rts);
 	}
 	
 	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {

@@ -3,6 +3,7 @@ package Domini;
 import java.io.IOException;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class EasyRanking extends Ranking{
 	private static EasyRanking er = new EasyRanking();
@@ -15,7 +16,7 @@ public class EasyRanking extends Ranking{
 	public void setNewScore(String username, Integer score) throws IOException {
 		super.setNewScore(username, score);
 		Gson gson = new Gson();
-		String rts = gson.toJson(rank, Ranking.class);
+		String rts = gson.toJson(this);
 		ControlDomini.getInstance().storeEasyRanking(rts);
 	}	
 }

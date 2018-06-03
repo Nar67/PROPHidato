@@ -1,4 +1,5 @@
 package Domini;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -85,7 +86,7 @@ public class Partida {
 		return acabada;
 	}
 
-	public void acabarPartida() {
+	public void acabarPartida() throws IOException {
 		this.acabada = true;
 		Ranking rank;
 		int newscore;
@@ -235,7 +236,7 @@ public class Partida {
 		return hidato;
 	}
 	
-	public void startPlaying(Integer i, Integer j) {
+	public void startPlaying(Integer i, Integer j) throws IOException {
 		if (!isAcabada()) {
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");

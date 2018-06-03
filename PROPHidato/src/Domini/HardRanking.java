@@ -16,7 +16,7 @@ public class HardRanking extends Ranking {
 	public void setNewScore(String username, Integer score) throws IOException {
 		super.setNewScore(username, score+500);
 		Gson gson = new Gson();
-		String rts = gson.toJson(rank, Ranking.class);
+		String rts = gson.toJson(this);
 		ControlDomini.getInstance().storeHardRanking(rts);
 	}
 	

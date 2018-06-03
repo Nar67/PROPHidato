@@ -69,6 +69,18 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().getHardRanking();
 	}
 	
+	public void storeEasyRanking(String rts) throws IOException {//TODO ranking
+		ControlDomini.getInstance().storeEasyRanking(rts);
+	}
+	
+	public void storeMediumRanking(String rts) throws IOException {//TODO ranking
+		ControlDomini.getInstance().storeEasyRanking(rts);
+	}
+	
+	public void storeHardRanking(String rts) throws IOException {//TODO ranking
+		ControlDomini.getInstance().storeEasyRanking(rts);
+	}
+	
 	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
 		ControlDomini.getInstance().loadHidato(name, params, matriu);
 	}
