@@ -117,7 +117,6 @@ public class ControlDomini {
 		ControlPersistencia cpers = ControlPersistencia.getInstance();
 		cpers.storeBoard(board);
 		ControlDomini cd = ControlDomini.getInstance();
-		cd.currentuser.setBoardNumerator(cd.getBoardNumerator() + 1) ;
 	}
 	/* TODO loadboard
 	protected Board loadBoard() {
