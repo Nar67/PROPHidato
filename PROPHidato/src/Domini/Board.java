@@ -135,4 +135,5 @@ public abstract class Board {
 	}
 	
 	abstract public ArrayList<Cell> getNeighbours(Cell cell);
+	
 }
