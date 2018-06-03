@@ -205,16 +205,16 @@ public class ControlDomini {
 		scores.add("69");*/
 	}
 	
-	public HashMap<String, Integer> getRanking() throws IOException {//TODO ranking
-		
+	public void storeEasyRanking(String rts) throws IOException {//TODO ranking
+		ControlPersistencia.getInstance().storeEasyRanking(rts);
 	}
 	
-	public HashMap<String, Integer> getMediumRanking() throws IOException {//TODO ranking
-		
+	public void storeMediumRanking(String rts) throws IOException {//TODO ranking
+		ControlPersistencia.getInstance().storeEasyRanking(rts);
 	}
 	
-	public HashMap<String, Integer> storeHardRanking() throws IOException {//TODO ranking
-		
+	public void storeHardRanking(String rts) throws IOException {//TODO ranking
+		ControlPersistencia.getInstance().storeEasyRanking(rts);
 	}
 	
 	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {

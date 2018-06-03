@@ -72,4 +72,16 @@ public class ControlPersistencia {
 	public String getHardRanking() throws IOException{
 		return RankingStorage.getInstance().getHardRanking();
 	}
+	
+	public void storeEasyRanking(String rts) throws IOException {//TODO ranking
+		RankingStorage.getInstance().storeEasyRanking(rts);
+	}
+	
+	public void storeMediumRanking(String rts) throws IOException {//TODO ranking
+		RankingStorage.getInstance().storeMediumRanking(rts);
+	}
+	
+	public void storeHardRanking(String rts) throws IOException {//TODO ranking
+		RankingStorage.getInstance().storeHardRanking(rts);
+	}
 }
