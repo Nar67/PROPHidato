@@ -29,7 +29,7 @@ public class HidatoStorage {
             lhidatos.add(aux);
 		}
 		String[] example = new String[lhidatos.size()];
-		example = lhidatos.toArray(example);
+		example = lhidatos.toArray(new String[0]);
 		return example;
 	}
 	

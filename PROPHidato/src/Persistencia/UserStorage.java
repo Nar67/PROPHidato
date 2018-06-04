@@ -4,15 +4,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.annotations.Expose;
-
-import Domini.ControlDomini;
 
 
 public class UserStorage {
@@ -37,11 +28,7 @@ public class UserStorage {
 		writer.close();
 	}
 
-	public boolean logInUser(String username, String password)  throws IOException{ //password és la password hashejada.
-		//TODO s'ha de completar de manera que miri si existeix l'usuari del que s'està volent fer logIn
-		//si no existeix, retorna false
-		//si existeix, es comprova que la password sigui correcte, si no ho és, retorna fals
-		//si existeix l'usuari i la password és correcte, retorna true.
+	public boolean logInUser(String username, String password)  throws IOException{
 		String path = System.getProperty("user.dir");
 		byte[] btl;
 
@@ -60,21 +47,14 @@ public class UserStorage {
 		return false;
 	}
 	
-	public boolean signUpUser(String username, String password) throws IOException { //password és la password hashejada.
-		//TODO es comprova que l'usuari no existeix
-		//si no existeix, es guarda l'usuari i retorna true
-		//si existeix, retorna false.
-		//No es el mateix que storeUser perque allà no és necesari comprovar si existeix, potser l'estas sobreescrivint.
-		System.out.println("fdasfdsae");
+	public boolean signUpUser(String username, String password) throws IOException { 
 
 		if(this.logInUser(username, password)){
-			System.out.println("falsetat");
 			return false;
 		}else {
-			System.out.println("hola");
 			this.storeUser(password,username);
+			System.out.println("hola");
 			return true;
-			
 		}
 		
 	}
