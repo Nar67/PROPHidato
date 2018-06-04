@@ -130,9 +130,9 @@ public class ControlPresentacio {
 	}
 	
 	public Vector<Vector<Polygon>> genTriangleMatrix(int rows, int cols, Vector<Vector<Point>> centers){
-		int xOffset = 800 - (cols*BORDER_SIZE)/2;
-		int yOffset = 450 - (rows*BORDER_SIZE)/2;
 		int h = (int) (BORDER_SIZE * (Math.sqrt(3.0)/2));
+		int xOffset = 800 - ((cols*BORDER_SIZE)/2)/2;
+		int yOffset = 450 - (rows*h)/2;
 		Vector<Vector<Polygon>> matrix = new Vector<Vector<Polygon>>();
 		for(int i=0;i<rows;i++){
 	        Vector<Polygon> r = new Vector<Polygon>();
@@ -180,8 +180,8 @@ public class ControlPresentacio {
 		int radius = 25;
 		int a = (int) (radius * (Math.cos(Math.toRadians(180/6))));
 		int s = (int) (a * (2* Math.tan(Math.toRadians(180/6))));
-		int initialX = 800 - (rows * a)/2;
-		int initialY = 450 - (cols * a)/2;
+		int initialX = 800 - (cols * (a*2))/2;
+		int initialY = 450 - (rows * (radius*2 - s/2))/2;
 		Vector<Vector<Polygon>> matrix = new Vector<Vector<Polygon>>();
 		for(int i=0;i<rows;i++){
 	        Vector<Polygon> r = new Vector<Polygon>();
@@ -228,6 +228,11 @@ public class ControlPresentacio {
  
         return new Point(ptX, ptY);
     }
+	
+	
+	public boolean validateBoard(String[] params, String[][] board) {
+		return ControlDomini.getInstance().validateBoard(params, board);
+	}
 	
     
 }

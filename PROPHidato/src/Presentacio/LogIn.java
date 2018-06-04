@@ -142,7 +142,7 @@ public class LogIn {
 						else {
 							MainMenu nm = new MainMenu();
 							nm.getFrame().setVisible(true);
-							frame.setVisible(false);
+							frame.dispose();
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -170,7 +170,7 @@ public class LogIn {
 						else {
 							MainMenu nm = new MainMenu();
 							nm.getFrame().setVisible(true);
-							frame.setVisible(false);
+							frame.dispose();
 						}
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block

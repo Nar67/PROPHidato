@@ -52,6 +52,9 @@ public class Hidato {
 	
 	public boolean checkHidato() {
 		setupHidato();
+		if(start == null) {
+			return false;
+		}
 		boolean aux = solve(start[0],start[1],1,0);
 		this.acabat = true;
 		if(aux) this.te_solu = true;

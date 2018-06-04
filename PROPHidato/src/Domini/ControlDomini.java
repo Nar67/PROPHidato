@@ -142,6 +142,7 @@ public class ControlDomini {
 	public boolean logInUser(String username, String password) throws IOException {
 		if(ControlPersistencia.getInstance().logInUser(username, password)) {
 			createCurrentUser(username,password);
+			return true;
 		}
 		return false;
 	}
@@ -149,6 +150,7 @@ public class ControlDomini {
 	public boolean signUpUser(String username, String password) throws IOException {
 		if(ControlPersistencia.getInstance().signUpUser(username, password)) {
 			createCurrentUser(username,password);
+			return true;
 		}
 		return false;
 	}
@@ -206,6 +208,15 @@ public class ControlDomini {
 		Hidato h = gson.fromJson(hidato,  Hidato.class);
 		params = h.getTaulell().getParams();
 		matriu = h.getTaulell().getMatriu();
+	}
+	
+	public boolean validateBoard(String[] params, String[][] board) {
+		Board b;
+		if(params[0].equals("Q")) b = new SquareBoard(params, board);
+		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
+		else b = new HexagonBoard(params, board);
+		Hidato hidato = new Hidato(b);
+		return hidato.checkHidato();
 	}
 	
 }

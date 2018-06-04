@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BasicStroke;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class GameView {
@@ -28,7 +29,7 @@ public class GameView {
 	private String[][] board;
 	private String[] params;
 	private Vector<Vector<Polygon>> matrix;
-	Vector<Vector<Point>> centers;
+	private Vector<Vector<Point>> centers;
 	private int moves;
 	/**
 	 * Launch the application.
@@ -76,7 +77,6 @@ public class GameView {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		centers = new Vector<Vector<Point>>();
-		
 		if(params[0].equals("Q"))
 			matrix = ControlPresentacio.getInstance().genSquareMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]), centers);
 		else if(params[0].equals("T"))
@@ -92,11 +92,11 @@ public class GameView {
                 super.paintComponent(g3d);
                 Graphics2D g = (Graphics2D) g3d;
                 g.setColor(Color.BLACK);
+        		g.setStroke(new BasicStroke(3));
+        		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 for(int i = 0; i < matrix.size(); i++) {
                 	for(int j = 0; j < matrix.get(0).size(); j++) {
                 		Polygon p = matrix.get(i).get(j);
-                		g.setStroke(new BasicStroke(3));
-                		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 		if(!board[i][j].equals("#"))
                 			g.drawPolygon(p);
                 		if(board[i][j].equals("*")) {
@@ -124,33 +124,35 @@ public class GameView {
                 	for(Integer j = 0; j < matrix.get(0).size(); j++) {
                 		Polygon p = matrix.get(i).get(j);
                 		if (p.contains(me.getPoint())) {
-                			Graphics g = panel.getGraphics();
-                			movesLabel.setText(String.valueOf(++moves));
+                			Graphics2D g = (Graphics2D)panel.getGraphics();
+                    		g.setStroke(new BasicStroke(3));
+                    		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
                 			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
                 			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
                 			int next = -3;
 							try {
 								next = ControlPresentacio.getInstance().nextMove(i, j);
-								System.out.println("Currentaso: " + next);
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							if(next > 0)
+							if(next > 0) {
 								g.drawString(String.valueOf(next), xOffset, yOffset);
+								movesLabel.setText(String.valueOf(++moves));
+							}
+							else if(next == -2) { //partida acabada
+								System.out.println("acabada");
+								JOptionPane.showMessageDialog(frame, "Contratulations you solved the Hidato. Return to the Main Menu", "sda", JOptionPane.INFORMATION_MESSAGE);
+								MainMenu mm = new MainMenu();
+								mm.getFrame().setVisible(true);
+								frame.dispose();
+							}
                 		}
                 	}
                 }
         };
         panel.addMouseListener(ma);//add listener to panel 
         
-        
-        Polygon p = new Polygon();
-        for (int i = 0; i < 6; i++)
-          p.addPoint((int) (50 + 50 * Math.cos(i * 2 * Math.PI / 6)),
-              (int) (50 + 50 * Math.sin(i * 2 * Math.PI / 6)));
-		
-		//JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		
 		JLabel lblTime = new JLabel("Time ");
@@ -201,6 +203,8 @@ public class GameView {
 					.addContainerGap(77, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
+		
+		
 	}
 	
 	
