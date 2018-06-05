@@ -46,7 +46,7 @@ public class BoardStorage {
 	
 	public String loadBoard(String name) throws IOException {
 		String path = System.getProperty("user.dir");
-		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Hidatos" + File.separator + name + ".txt"));
+		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Boards" + File.separator + name + ".txt"));
 		String ptl = new String(btl, Charset.forName("UTF-8"));
 		return ptl;
 	}

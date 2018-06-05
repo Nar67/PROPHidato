@@ -79,6 +79,7 @@ public class RankingView extends JFrame {
 		setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JTextPane txtpnRanking = new JTextPane();
 		txtpnRanking.setBackground(SystemColor.menu);

@@ -14,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -27,6 +29,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.sun.org.apache.xpath.internal.axes.HasPositionalPredChecker;
 
+import javafx.scene.layout.Border;
+
 import javax.swing.SwingUtilities;
 
 import javax.swing.JComboBox;
@@ -39,6 +43,7 @@ public class DrawView {
 
 	private JFrame frame;
 	private String[][] board;
+	private String[] params;
 	private Vector<Vector<Polygon>> matrix;
 	private Vector<Vector<Point>> centers;
 	private String cellType;
@@ -67,6 +72,17 @@ public class DrawView {
 	 * Create the application.
 	 */
 	public DrawView() {
+		setMatrix("T");
+		board = new String[finalRows][finalCols];
+		for(String[] b : board)
+			Arrays.fill(b, "#");
+		board[finalRows/2][finalCols/2] = "?";
+		initialize();
+	}
+	
+	public DrawView(String[] params, String[][] board) {
+		this.params = params;
+		this.board = board;
 		initialize();
 	}
 	
@@ -75,6 +91,10 @@ public class DrawView {
 			if (!Character.isDigit(c)) return false;
 		}
 		return true;
+	}
+	
+	public JFrame getFrame() {
+		return this.frame;
 	}
 
 	/**
@@ -87,9 +107,35 @@ public class DrawView {
         for(int i = 0; i < matrix.size(); i++) {
         	for(int j = 0; j < matrix.get(0).size(); j++) {
         		Polygon p = matrix.get(i).get(j);
-        		g.drawPolygon(p);
+        		if(board[i][j].equals("#")) {
+        			g.setColor(Color.LIGHT_GRAY);
+        			g.drawPolygon(p);
+        			g.setColor(Color.BLACK);
+        		}
+        		else if(board[i][j].equals("*")) {
+					g.setColor(Color.ORANGE);
+					g.fillPolygon(p);
+					g.setColor(Color.BLACK);
+					g.drawPolygon(p);
+        		}
+        		if(isNumeric(board[i][j])) {
+        			g.setColor(Color.BLACK);
+        			int xOffset = centers.get(i).get(j).x - (4*board[i][j].length());
+        			int yOffset = centers.get(i).get(j).y + (2*board[i][j].length());
+        			g.drawString(board[i][j], xOffset, yOffset);
+        			g.drawPolygon(p);
+        		}
         	}
         }
+        for(int i = 0; i < matrix.size(); i++) {
+        	for(int j = 0; j < matrix.get(0).size(); j++) {
+        		if(board[i][j].equals("?") || isNumeric(board[i][j])) {
+        			Polygon p = matrix.get(i).get(j);
+        			g.setColor(Color.BLACK);
+        			g.drawPolygon(p);
+        		}
+        	}
+		}
         g.setColor(Color.BLACK);
         g.drawPolygon(matrix.get(matrix.size()/2).get(matrix.get(0).size()/2) );
 	}
@@ -130,11 +176,23 @@ public class DrawView {
 			finalCols = hexCols;
 			matrix = ControlPresentacio.getInstance().genHexagonMatrix(hexRows, hexCols, centers);
 		}
-		board = new String[finalRows][finalCols];
-		for(String[] b : board)
-			Arrays.fill(b, "#");
-		board[finalRows/2][finalCols/2] = "?";
 		
+	}
+	
+	public void setBoard(String[][] board) {
+		this.board = board;
+	}
+	
+	public void setParams(String[] params) {
+		cellType = params[0];
+		adjType = params[1];
+		finalRows = Integer.parseInt(params[2]);
+		finalCols = Integer.parseInt(params[3]);
+		this.params = params;
+	}
+	
+	private void setParams() {
+		params = new String[] {cellType, adjType, String.valueOf(finalRows), String.valueOf(finalCols)};
 	}
 	
 	
@@ -193,7 +251,7 @@ public class DrawView {
 		JButton validateButton = new JButton("Validate");
 		validateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[] params = {cellType, adjType, String.valueOf(finalRows), String.valueOf(finalCols)};
+				setParams();
 				try {
 					validated = ControlPresentacio.getInstance().validateBoard(params, board);	
 				} catch (NullPointerException e) {
@@ -209,7 +267,7 @@ public class DrawView {
 					for(String[] b : board) {
 						for(String ele : b)
 							System.out.print(ele);
-						System.out.println(0);
+						System.out.println();
 					}
 				}
 			}
@@ -217,9 +275,42 @@ public class DrawView {
 		validateButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JButton saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(validated) {
+					String name = JOptionPane.showInputDialog(frame, "Name your hidato please", null);
+					try {
+						ControlPresentacio.getInstance().storeHidato(params, board, name);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				else {
+					String name = JOptionPane.showInputDialog(frame, "Name your board please", null);
+					try {
+						ControlPresentacio.getInstance().storeBoard(name, params, board);
+					} catch (IOException e) {
+						JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+					}
+					
+				}
+			}
+		});
 		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
+		DrawView dView = this;
+		
 		JButton loadButton = new JButton("Load");
+		loadButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ListDrawBoards ldBoards = new ListDrawBoards(dView);
+					ldBoards.setVisible(true);	
+				} catch (NoSuchFileException e) {
+					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+				}
+			}
+		});
 		loadButton.setFont(new Font("Tahoma", Font.PLAIN, 24));
         MouseAdapter ma = new MouseAdapter() {
             @Override
@@ -267,6 +358,13 @@ public class DrawView {
                 				g.fillPolygon(p);
                 				g.setColor(Color.LIGHT_GRAY);
                 				g.drawPolygon(p);
+                			}
+                			else { //numero
+                				board[i][j] = "*";
+            					g.setColor(Color.ORANGE);
+            					g.fillPolygon(p);
+            					g.setColor(Color.BLACK);
+            					g.drawPolygon(p);
                 			}
                 		}
                 	}

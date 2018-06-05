@@ -53,12 +53,20 @@ public class ControlPersistencia {
 		return HidatoStorage.getInstance().listHidatos();
 	}
 	
+	public String[] listBoards() {
+		return BoardStorage.getInstance().listBoards();
+	}
+	
 	public String[] listGames(String user) {
 		return PartidaStorage.getInstance().getPartides(user).toArray(new String[0]);
 	}
 	
 	public String loadHidato(String name) throws IOException {
 		return HidatoStorage.getInstance().loadHidato(name);
+	}
+	
+	public void storeHidato(String hidato, String name) throws IOException {
+		HidatoStorage.getInstance().storeHidato(hidato, name);
 	}
 	
 	public String loadBoard(String name) throws IOException {

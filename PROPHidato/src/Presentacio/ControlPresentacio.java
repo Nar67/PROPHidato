@@ -3,6 +3,7 @@ package Presentacio;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -47,6 +48,10 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().listHidatos();
 	}
 	
+	public String[] listBoards() {
+		return ControlDomini.getInstance().listBoards();
+	}
+	
 	public String[] listGames() {
 		return ControlDomini.getInstance().listGames();
 	}
@@ -75,16 +80,20 @@ public class ControlPresentacio {
 		ControlDomini.getInstance().storeEasyRanking(rts);
 	}
 	
-	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
+	public void loadHidato(String name, ArrayList<String> params, ArrayList<ArrayList<String>> matriu) throws IOException {
 		ControlDomini.getInstance().loadHidato(name, params, matriu);
 	}
 	
-	public void loadBoard(String name, String[] params, String[][] matriu) throws IOException {
+	public void loadBoard(String name, ArrayList<String> params, ArrayList<ArrayList<String>> matriu) throws IOException {
 		ControlDomini.getInstance().loadBoard(name, params, matriu);
 	}
 	
 	public void storeBoard(String name, String[] params, String[][] matrix) throws IOException {
 		ControlDomini.getInstance().storeBoard(name, params, matrix);
+	}
+	
+	public void storeHidato(String[] params, String[][] board, String name) throws IOException {
+		ControlDomini.getInstance().storeHidato(params, board, name);
 	}
 	
 	
