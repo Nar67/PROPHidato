@@ -22,6 +22,7 @@ import java.awt.BasicStroke;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class GameView {
 
@@ -69,6 +70,7 @@ public class GameView {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize((int)screenSize.getWidth(),(int)screenSize.getHeight());
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -115,6 +117,7 @@ public class GameView {
         };
         
 		JLabel movesLabel = new JLabel("");
+		movesLabel.setForeground(Color.WHITE);
 		movesLabel.setFont(new Font("Tahoma", Font.PLAIN, 29));
         MouseAdapter ma = new MouseAdapter() {
             @Override
@@ -156,13 +159,19 @@ public class GameView {
 		panel.setBackground(Color.WHITE);
 		
 		JLabel lblTime = new JLabel("Time ");
+		lblTime.setForeground(Color.WHITE);
+		lblTime.setBackground(Color.DARK_GRAY);
 		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		
 		JLabel chrono = new JLabel("");
+		chrono.setForeground(Color.WHITE);
 		chrono.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		
 		JLabel lblMoves = new JLabel("Moves");
+		lblMoves.setForeground(Color.WHITE);
 		lblMoves.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		
+		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
 		
 
 
@@ -170,26 +179,33 @@ public class GameView {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(30)
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblTime)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(chrono, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+							.addGap(30)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblTime)
+									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(chrono, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+								.addGroup(groupLayout.createSequentialGroup()
+									.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))))
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(36, Short.MAX_VALUE))
+							.addGap(46)
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(34, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(74)
+							.addGap(14)
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(197)
@@ -200,7 +216,7 @@ public class GameView {
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 								.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(77, Short.MAX_VALUE))
+					.addContainerGap(71, Short.MAX_VALUE))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		

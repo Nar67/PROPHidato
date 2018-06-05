@@ -22,6 +22,9 @@ import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.plaf.basic.BasicArrowButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ListHidatos extends JFrame {
 
@@ -62,6 +65,7 @@ public class ListHidatos extends JFrame {
         });
 		setBounds(100, 100, 956, 655);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -76,10 +80,11 @@ public class ListHidatos extends JFrame {
 		list.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		
 		JTextPane txtpnSelectOneHidato = new JTextPane();
+		txtpnSelectOneHidato.setForeground(Color.WHITE);
 		txtpnSelectOneHidato.setEditable(false);
-		txtpnSelectOneHidato.setBackground(SystemColor.menu);
-		txtpnSelectOneHidato.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		txtpnSelectOneHidato.setText("Select Hidato");
+		txtpnSelectOneHidato.setBackground(Color.DARK_GRAY);
+		txtpnSelectOneHidato.setFont(new Font("Verdana", Font.BOLD, 30));
+		txtpnSelectOneHidato.setText("Select an Hidato");
 		
 		JButton playButton = new JButton("Play");
 		playButton.addActionListener(new ActionListener() {
@@ -98,26 +103,39 @@ public class ListHidatos extends JFrame {
 			}
 		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		
+		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(list, GroupLayout.DEFAULT_SIZE, 910, Short.MAX_VALUE)
-						.addComponent(txtpnSelectOneHidato, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE)
-						.addComponent(playButton, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(list, GroupLayout.DEFAULT_SIZE, 916, Short.MAX_VALUE)
+								.addComponent(playButton, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 165, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap())
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
+							.addComponent(txtpnSelectOneHidato, GroupLayout.PREFERRED_SIZE, 304, GroupLayout.PREFERRED_SIZE)
+							.addGap(298))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(txtpnSelectOneHidato, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-					.addGap(13)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(txtpnSelectOneHidato, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+							.addGap(13))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)))
 					.addComponent(list, GroupLayout.PREFERRED_SIZE, 471, GroupLayout.PREFERRED_SIZE)
 					.addGap(11)
-					.addComponent(playButton, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+					.addComponent(playButton, GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
