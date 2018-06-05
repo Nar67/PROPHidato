@@ -32,6 +32,10 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.Color;
 import javax.swing.border.CompoundBorder;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class RankingView extends JFrame {
 
@@ -75,6 +79,7 @@ public class RankingView extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setResizable(false);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -82,27 +87,54 @@ public class RankingView extends JFrame {
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JTextPane txtpnRanking = new JTextPane();
-		txtpnRanking.setBackground(SystemColor.menu);
-		txtpnRanking.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		txtpnRanking.setForeground(Color.WHITE);
+		txtpnRanking.setBackground(Color.DARK_GRAY);
+		txtpnRanking.setFont(new Font("Verdana", Font.BOLD, 50));
 		txtpnRanking.setEditable(false);
-		txtpnRanking.setText("Ranking");
+		txtpnRanking.setText("HidatoGame                 Ranking");
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(RankingView.class.getResource("/img/1stplace.png")));
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setIcon(new ImageIcon(RankingView.class.getResource("/img/1stplace.png")));
+		
+		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 1884, Short.MAX_VALUE)
-						.addComponent(txtpnRanking, GroupLayout.PREFERRED_SIZE, 239, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(54)
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addGap(290)
+							.addComponent(label)
+							.addGap(100)
+							.addComponent(txtpnRanking, GroupLayout.PREFERRED_SIZE, 352, GroupLayout.PREFERRED_SIZE)
+							.addGap(96)
+							.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 1880, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(txtpnRanking, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-					.addGap(11)
-					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 905, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(76, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(65)
+							.addComponent(txtpnRanking, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(36)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
+								.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))))
+					.addGap(49)
+					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 907, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		
 		JPanel easyPanel = new JPanel();

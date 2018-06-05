@@ -38,6 +38,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.Checkbox;
+import javax.swing.plaf.basic.BasicArrowButton;
 
 public class DrawView {
 
@@ -202,6 +203,7 @@ public class DrawView {
 	
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize((int)screenSize.getWidth(),(int)screenSize.getHeight());
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -384,10 +386,12 @@ public class DrawView {
 		panel.setBackground(Color.WHITE);
 		
 		JLabel celltypeLabel = new JLabel("Cell type");
+		celltypeLabel.setForeground(Color.WHITE);
 		celltypeLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JLabel adjLabel = 
 				new JLabel("Adjacency");
+		adjLabel.setForeground(Color.WHITE);
 		adjLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 
@@ -403,6 +407,8 @@ public class DrawView {
                 }            
         );
 		
+		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
+		
 
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -411,11 +417,12 @@ public class DrawView {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(30)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 						.addComponent(errorMessage, GroupLayout.PREFERRED_SIZE, 828, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 										.addGroup(groupLayout.createSequentialGroup()
@@ -427,8 +434,7 @@ public class DrawView {
 											.addGap(18)
 											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 												.addComponent(adjacencyBox, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-												.addComponent(applyButton))))
-									.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE))
+												.addComponent(applyButton)))))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -436,14 +442,16 @@ public class DrawView {
 										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
 											.addComponent(validateButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 											.addComponent(saveButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))))))
-					.addContainerGap())
+					.addGap(29))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(74)
+							.addGap(14)
+							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(197)

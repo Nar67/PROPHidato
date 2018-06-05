@@ -61,11 +61,11 @@ public class MainMenu {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton createButton = new JButton("CREATE");
-		createButton.setBounds(513, 345, 320, 94);
+		createButton.setBounds(798, 554, 320, 94);
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
 		JButton playButton = new JButton("PLAY");
-		playButton.setBounds(513, 108, 320, 94);
+		playButton.setBounds(740, 316, 430, 153);
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -76,7 +76,7 @@ public class MainMenu {
 		});
 		
 		JButton rankingButton = new JButton("RANKING");
-		rankingButton.setBounds(513, 494, 320, 94);
+		rankingButton.setBounds(798, 734, 320, 94);
 		rankingButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RankingView rv = null;
@@ -93,7 +93,7 @@ public class MainMenu {
 		rankingButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
 		JButton logOutButton = new JButton("Log Out");
-		logOutButton.setBounds(23, 687, 121, 41);
+		logOutButton.setBounds(163, 837, 157, 66);
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LogIn login = new LogIn();
@@ -104,12 +104,12 @@ public class MainMenu {
 		logOutButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
 		JLabel label = new JLabel("");
-		label.setBounds(384, 465, 92, 140);
+		label.setBounds(652, 708, 92, 140);
 		label.setIcon(new ImageIcon(MainMenu.class.getResource("/img/Transparent_Gold_Cup_Trophy_PNG_Clipart.png")));
 		frame.getContentPane().setLayout(null);
 		
 		JLabel label_1 = new JLabel("");
-		label_1.setBounds(868, 465, 92, 140);
+		label_1.setBounds(1174, 708, 92, 140);
 		label_1.setIcon(new ImageIcon(MainMenu.class.getResource("/img/Transparent_Gold_Cup_Trophy_PNG_Clipart.png")));
 		frame.getContentPane().add(label_1);
 		frame.getContentPane().add(label);
@@ -118,9 +118,32 @@ public class MainMenu {
 		frame.getContentPane().add(rankingButton);
 		frame.getContentPane().add(logOutButton);
 		
-		JTextArea txtrDondeHayAmor = new JTextArea();
-		txtrDondeHayAmor.setText("Donde hay amor hay vida - Gandhi");
-		txtrDondeHayAmor.setBounds(166, 697, 278, 22);
-		frame.getContentPane().add(txtrDondeHayAmor);
+		JTextArea txtrHidatogame = new JTextArea();
+		txtrHidatogame.setForeground(Color.WHITE);
+		txtrHidatogame.setBackground(Color.DARK_GRAY);
+		txtrHidatogame.setFont(new Font("Verdana", Font.BOLD, 88));
+		txtrHidatogame.setText("Hidato Game");
+		txtrHidatogame.setBounds(637, 91, 743, 112);
+		frame.getContentPane().add(txtrHidatogame);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon(MainMenu.class.getResource("/img/editar-lapiz-escribir-icono-4166-128.png")));
+		label_2.setBounds(637, 544, 128, 131);
+		frame.getContentPane().add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setIcon(new ImageIcon(MainMenu.class.getResource("/img/editar-lapiz-escribir-icono-4166-128.png")));
+		label_3.setBounds(1163, 544, 128, 131);
+		frame.getContentPane().add(label_3);
+		
+		JLabel label_4 = new JLabel("");
+		label_4.setIcon(new ImageIcon(MainMenu.class.getResource("/img/xxx.png")));
+		label_4.setBounds(543, 337, 185, 132);
+		frame.getContentPane().add(label_4);
+		
+		JLabel label_5 = new JLabel("");
+		label_5.setIcon(new ImageIcon(MainMenu.class.getResource("/img/xxx.png")));
+		label_5.setBounds(1220, 337, 185, 132);
+		frame.getContentPane().add(label_5);
 	}
 }

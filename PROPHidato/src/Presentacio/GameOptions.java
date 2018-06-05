@@ -58,13 +58,14 @@ public class GameOptions extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.DARK_GRAY);
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JInternalFrame internalFrame = new JInternalFrame("Game Options");
 		internalFrame.getContentPane().setBackground(Color.WHITE);
-		internalFrame.setLocation(100, 30);
+		internalFrame.setLocation(100, 107);
 		internalFrame.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		internalFrame.setSize((int)screenSize.getWidth()-300,(int)screenSize.getHeight()-300);
 		contentPane.add(internalFrame);
