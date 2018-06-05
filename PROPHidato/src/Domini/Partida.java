@@ -1,12 +1,9 @@
 package Domini;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.print.attribute.standard.RequestingUserName;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -138,7 +135,7 @@ public class Partida {
 		if (i > hidato.getTaulell().getRows() || i < 0 || j > hidato.getTaulell().getCols() || j < 0) return false;
 		return true;
 	}
-		
+		/*
 	public Hidato llegirTaulell() {
 		System.out.println("Introdueixi un hidato valid\n");
 		Scanner keyboard = new Scanner(System.in);
@@ -171,7 +168,7 @@ public class Partida {
 		Hidato hidato = new Hidato(tauler);	
 		return hidato;
 	}
-	
+	*/
 	public Hidato generarTaulell(String diff, String cellType, String adj) {
 		
 		int randomi = ThreadLocalRandom.current().nextInt(3, 8);
@@ -238,7 +235,7 @@ public class Partida {
 	
 	public Integer nextMove(Integer i, Integer j) throws IOException {
 		if (!isAcabada()) {
-			;/*
+			/*
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
 			System.out.println("Si desitja desfer el moviment introdueixi la mateixa posicio (i,j)");
 			System.out.println("Si desitja una pista premi: 9");*/
@@ -294,6 +291,7 @@ public class Partida {
 						int movescore = 300-(nmoves-current)*5;
 						this.puntuacio = 300-(int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
+						acabada = true;
 					}
 					return this.current-1;
 				}

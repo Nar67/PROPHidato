@@ -3,7 +3,6 @@ package Domini;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class EasyRanking extends Ranking{
 	private static EasyRanking er = new EasyRanking();

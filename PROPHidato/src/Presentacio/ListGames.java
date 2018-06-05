@@ -1,6 +1,5 @@
 package Presentacio;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -23,6 +22,10 @@ import java.awt.event.ActionEvent;
 
 public class ListGames extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -78,8 +81,9 @@ public class ListGames extends JFrame {
 		JButton playButton = new JButton("Play");
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				/* Aqui s'ha de carregar la partida seleccionada
 				String selected = list.getSelectedValue();
-				String board, params, time, moves;
+				String board, params, time, moves;*/
 			}
 		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));

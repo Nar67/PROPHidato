@@ -18,9 +18,6 @@ public class HidatoStorage {
 	}
 	
 	public String[] listHidatos() {
-		//TODO ha de retornar un array de String (String[]) amb el nom de tots el hidatos
-		//hidato ha de tindre un atribut nom per a poder llistarlos
-		//el nom es tria al guardar l'hidato, pot ser null fins que no es guardi
 		ArrayList<String> lhidatos = new ArrayList<>();
 		String path = System.getProperty("user.dir");		
 		File f = new File(path + File.separator + "Hidatos");
@@ -29,12 +26,11 @@ public class HidatoStorage {
             lhidatos.add(aux);
 		}
 		String[] example = new String[lhidatos.size()];
-		example = lhidatos.toArray(example);
+		example = lhidatos.toArray(new String[0]);
 		return example;
 	}
 	
 	public void storeHidato(String hidato, String name) throws IOException {
-		//TODO s'ha de guardar l'hidato al directori "Hidatos" amb el format "hidato" + name + ".txt" o alguna cosa similar. si va millor sense el "hidato" per fer el llistat, es pot fer
 		String path = System.getProperty("user.dir");	
 		path = path + File.separator + "Hidatos";
 		File directory= new File(path);
@@ -50,7 +46,6 @@ public class HidatoStorage {
 	}
 	
 	public String loadHidato(String name) throws IOException {
-		//s'ha de poder carregar un hidato pel nom.
 		String path = System.getProperty("user.dir");
 		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Hidatos" + File.separator + name + ".txt"));
 		String ptl = new String(btl, Charset.forName("UTF-8"));

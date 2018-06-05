@@ -6,7 +6,6 @@ import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 
 public class RankingStorage {
 	private static RankingStorage rs = new RankingStorage();

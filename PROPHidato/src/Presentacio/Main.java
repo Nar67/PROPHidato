@@ -1,9 +1,6 @@
 package Presentacio;
-import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import Domini.ControlDomini;
-import Persistencia.ControlPersistencia;
 
 public class Main {
 	
@@ -18,7 +15,7 @@ public class Main {
 		}
 		
 		ControlPresentacio controlador = ControlPresentacio.getInstance();
-		controlador.jugar(action);
+		//controlador.jugar(action);
 		controlador.savePartida();
 		//controlador.displayPartides(user);
 		//controlador.loadPartida(user, ID);

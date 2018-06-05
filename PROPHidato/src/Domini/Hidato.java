@@ -52,6 +52,9 @@ public class Hidato {
 	
 	public boolean checkHidato() {
 		setupHidato();
+		if(start == null) {
+			return false;
+		}
 		boolean aux = solve(start[0],start[1],1,0);
 		this.acabat = true;
 		if(aux) this.te_solu = true;
@@ -113,6 +116,7 @@ public class Hidato {
         }
     	
     	//tornem a posar el valor bo
+
     	this.solucio.setValueToCell(i, j, valor_inicial);
     	return false;
     }
@@ -128,16 +132,15 @@ public class Hidato {
 		else {System.out.println("No hi ha solució"); this.te_solu = false;}
 	}
 	
-	public void printHidato() {
+	public String[][] printHidato() {
+		String[][] board = new String[rows][cols];
 		for(int i = 0; i < rows; ++i) {
 			for(int j = 0; j < cols; ++j) {
 				Cell a = this.solucio.getCell(i, j);
-				System.out.print(a.getValue());
-				System.out.print(",");
+				board[i][j]=  a.getValue();
 			}
-			System.out.println();
 		}
-		System.out.println();
+		return board;
 	}
 	public void printHidatoOriginal() {
 		for(int i = 0; i < rows; ++i) {

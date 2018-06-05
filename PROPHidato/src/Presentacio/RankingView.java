@@ -1,13 +1,11 @@
 package Presentacio;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -15,36 +13,33 @@ import java.util.Map.Entry;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import Domini.ControlDomini;
 import Domini.EasyRanking;
 import Domini.HardRanking;
 import Domini.MediumRanking;
 import Domini.Ranking;
-import javafx.util.Pair;
 
-import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import java.awt.Font;
 import java.awt.SystemColor;
-import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 
 public class RankingView extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable easyRanking;
 
 	/**
 	 * Launch the application.
@@ -84,6 +79,7 @@ public class RankingView extends JFrame {
 		setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JTextPane txtpnRanking = new JTextPane();
 		txtpnRanking.setBackground(SystemColor.menu);

@@ -3,8 +3,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Scanner;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -35,7 +33,7 @@ public class ControlDomini {
 	private void createCurrentUser(String nom, String pass) {
 		this.currentuser = new Usuari(nom,pass);
 	}
-	
+	/*
 	public Partida llegeixHidato() {
 		Partida partida = new Partida();
 		Hidato hidato = partida.llegirTaulell();
@@ -47,38 +45,25 @@ public class ControlDomini {
 		hidato.printHidatoOriginal();
 		return partida;
 	}
+	*/
 	
 	public String[][] generaHidato(String diff, String cellType, String adj) { 
-		//s'ha d'adaptar a la capa de presentacio, li arriben 3 strings:
-		//primer parametre -> la difficultat (pot ser: "Easy", "Medium", "Hard")
-		//segon parametre -> tipus de cell (pot ser: "Triangle" , "Square", "Hexagon")
-		//tercer parametre -> tipus d'adjacencia (pot ser: "Borders" o  "Borders and angles")
-		//S'HA DE PENSAR COM ENVIAR LA PARTIDA A LA CAPA DE PRESENTACIO DONAT QUE NO ES PODEN PASSAR OBJECTES NO PRIMITIUS
 		Partida partida = new Partida();
 		Hidato hidato = partida.generarTaulell(diff, cellType, adj);
 		System.out.println("Autogenerant hidato ... ");
-		Hidato hidatobuit = new Hidato(hidato.getTaulell());
 		int count = 0;
 		while (!hidato.checkHidato()) {
 			System.out.println(count++);
 			hidato = partida.generarTaulell(diff, cellType, adj);
-			hidatobuit = hidato;
 		}
 		partida.setHidato(hidato);
 		this.currentpartida = partida;
-		hidato.getTaulell().printBoard();
 		return hidato.getTaulell().getMatriu();
 	}
 	
 	public Integer nextMove(Integer i, Integer j) throws IOException {
 		return this.currentpartida.nextMove(i,j);
 	}
-	
-	/*public void jugar(Integer action) {
-		if (action == 1) this.currentpartida = generaHidato();
-		else if (action == 2) this.currentpartida = llegeixHidato();
-		this.currentpartida.startPlaying();
-	}*/
 	
 	public ArrayList<String> getPartides(String user) {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
@@ -119,22 +104,75 @@ public class ControlDomini {
 		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom(), this.currentpartida.getUser().getPartidaID());
 		this.currentpartida.getUser().setPartidaID(1 + this.currentpartida.getUser().getPartidaID());
 	}
-
-	protected void storeBoard(String board) throws IOException {
-		ControlPersistencia cpers = ControlPersistencia.getInstance();
-		cpers.storeBoard(board);
-		ControlDomini cd = ControlDomini.getInstance();
-	}
-	/* TODO loadboard
-	protected Board loadBoard() {
-		ControlPersistencia cpers = ControlPersistencia.getInstance();
+	
+	public void storeHidato(String[] params, String[][] board, String name) throws IOException {
+		Board b;
+		if(params[0].equals("Q")) b = new SquareBoard(params, board);
+		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
+		else b = new HexagonBoard(params, board);
+		Hidato h = new Hidato(b);
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
 		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		String hidato = gson.toJson(h);
+		ControlPersistencia.getInstance().storeHidato(hidato, name);
+		
+		Gson gsonBoard = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		String boardToStore = gsonBoard.toJson(b);
+		ControlPersistencia.getInstance().storeBoard(boardToStore, name);
 	}
-	*/
+
+	public void storeBoard(String name, String[] params, String[][] matrix) throws IOException {
+		Board b;
+		if(params[0].equals("Q")) 
+			b = new SquareBoard(params, matrix);
+		else if(params[0].equals("T"))
+			b = new TriangleBoard(params, matrix);
+		else
+			b = new HexagonBoard(params, matrix);
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "cellType")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		String board = gson.toJson(b);
+		ControlPersistencia.getInstance().storeBoard(board, name);
+	}
+	
+	
+	public void loadBoard(String name,  ArrayList<String> params, ArrayList<ArrayList<String>> matriu) throws IOException {
+		String board = ControlPersistencia.getInstance().loadBoard(name);
+		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
+				of(Board.class, "tyCell")
+			    .registerSubtype(SquareBoard.class, "Q")
+			    .registerSubtype(HexagonBoard.class, "H")
+			    .registerSubtype(TriangleBoard.class, "T");
+		
+		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
+		Board b = gson.fromJson(board, Board.class);
+		String[] par = b.getParams();
+		String[][] mat = b.getMatriu();
+		for(int i = 0; i < par.length; i++)
+			params.add(par[i]);
+		for(int i = 0; i < mat.length; i++) {
+			ArrayList<String> aux = new ArrayList<String>();
+			for (int j = 0; j < mat[0].length; j++) {
+				aux.add(mat[i][j]);
+			}
+			matriu.add(aux);
+		}
+	}
 	
 	public boolean logInUser(String username, String password) throws IOException {
 		if(ControlPersistencia.getInstance().logInUser(username, password)) {
 			createCurrentUser(username,password);
+			return true;
 		}
 		return false;
 	}
@@ -142,6 +180,7 @@ public class ControlDomini {
 	public boolean signUpUser(String username, String password) throws IOException {
 		if(ControlPersistencia.getInstance().signUpUser(username, password)) {
 			createCurrentUser(username,password);
+			return true;
 		}
 		return false;
 	}
@@ -150,44 +189,49 @@ public class ControlDomini {
 		return ControlPersistencia.getInstance().listHidatos();
 	}
 	
+	public String[] listBoards() {
+		return ControlPersistencia.getInstance().listBoards();
+	}
+	
+	
 	public String[] listGames() {
 		return ControlPersistencia.getInstance().listGames(currentuser.getNom());
 	}
 	
-	public HashMap<String, Integer> getEasyRanking() throws IOException {//TODO ranking
+	public HashMap<String, Integer> getEasyRanking() throws IOException {
 		String rank = ControlPersistencia.getInstance().getEasyRanking();
 		Gson gson = new Gson();
 		EasyRanking ranking = gson.fromJson(rank,  EasyRanking.class);
 		return ranking.getRanking();
 	}
 	
-	public HashMap<String, Integer> getMediumRanking() throws IOException {//TODO ranking
+	public HashMap<String, Integer> getMediumRanking() throws IOException {
 		String rank = ControlPersistencia.getInstance().getMediumRanking();
 		Gson gson = new Gson();
 		HardRanking ranking = gson.fromJson(rank,  HardRanking.class);
 		return ranking.getRanking();
 	}
 	
-	public HashMap<String, Integer> getHardRanking() throws IOException {//TODO ranking
+	public HashMap<String, Integer> getHardRanking() throws IOException {
 		String rank = ControlPersistencia.getInstance().getHardRanking();
 		Gson gson = new Gson();
 		HardRanking ranking = gson.fromJson(rank,  HardRanking.class);
 		return ranking.getRanking();
 	}
 	
-	public void storeEasyRanking(String rts) throws IOException {//TODO ranking
+	public void storeEasyRanking(String rts) throws IOException {
 		ControlPersistencia.getInstance().storeEasyRanking(rts);
 	}
 	
-	public void storeMediumRanking(String rts) throws IOException {//TODO ranking
+	public void storeMediumRanking(String rts) throws IOException {
 		ControlPersistencia.getInstance().storeMediumRanking(rts);
 	}
 	
-	public void storeHardRanking(String rts) throws IOException {//TODO ranking
+	public void storeHardRanking(String rts) throws IOException {
 		ControlPersistencia.getInstance().storeHardRanking(rts);
 	}
 	
-	public void loadHidato(String name, String[] params, String[][] matriu) throws IOException {
+	public void loadHidato(String name,  ArrayList<String> params, ArrayList<ArrayList<String>> matriu) throws IOException {
 		String hidato = ControlPersistencia.getInstance().loadHidato(name);
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
@@ -197,8 +241,41 @@ public class ControlDomini {
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		Hidato h = gson.fromJson(hidato,  Hidato.class);
-		params = h.getTaulell().getParams();
-		matriu = h.getTaulell().getMatriu();
+		h.printHidatoOriginal();
+		Board b = h.getTaulell();
+		System.out.println("Params: ");
+		for(String string : b.getParams())
+			System.out.println(string);
+		String[] par = b.getParams();
+		
+		String[][] mat = h.getTaulell().getMatriu();
+		for(int i = 0; i < par.length; i++)
+			params.add(par[i]);
+		for(int i = 0; i < mat.length; i++) {
+			ArrayList<String> aux = new ArrayList<String>();
+			for (int j = 0; j < mat[0].length; j++) {
+				aux.add(mat[i][j]);
+			}
+			matriu.add(aux);
+		}
+	}
+	
+	public boolean validateBoard(String[] params, String[][] board) {
+		Board b;
+		if(params[0].equals("Q")) b = new SquareBoard(params, board);
+		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
+		else b = new HexagonBoard(params, board);
+		Hidato hidato = new Hidato(b);
+		boolean a = hidato.checkHidato();
+		if(a) {
+        	String[][] solvedBoard = hidato.printHidato();
+        	for(String[] s : solvedBoard){
+        		for(String q : s)
+        			if(q.equals("?"))
+        				return false;
+        	}
+		}
+        return a;
 	}
 	
 }

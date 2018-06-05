@@ -35,9 +35,9 @@ public class ControlPersistencia {
 		PartidaStorage ps = PartidaStorage.getInstance();
 		ps.savePartida(pts, user, ID);
 	}
-	public void storeBoard(String board) throws IOException {
+	public void storeBoard(String board, String name) throws IOException {
 		BoardStorage bs = BoardStorage.getInstance();
-		bs.storeBoard(board);
+		bs.storeBoard(board, name);
 	}
 	
 	public boolean logInUser(String username, String password) throws IOException {
@@ -46,11 +46,15 @@ public class ControlPersistencia {
 	
 	
 	public boolean signUpUser(String username, String password) throws IOException {
-		return UserStorage.getInstance().logInUser(username, password);
+		return UserStorage.getInstance().signUpUser(username, password);
 	}
 	
 	public String[] listHidatos() {
 		return HidatoStorage.getInstance().listHidatos();
+	}
+	
+	public String[] listBoards() {
+		return BoardStorage.getInstance().listBoards();
 	}
 	
 	public String[] listGames(String user) {
@@ -59,6 +63,14 @@ public class ControlPersistencia {
 	
 	public String loadHidato(String name) throws IOException {
 		return HidatoStorage.getInstance().loadHidato(name);
+	}
+	
+	public void storeHidato(String hidato, String name) throws IOException {
+		HidatoStorage.getInstance().storeHidato(hidato, name);
+	}
+	
+	public String loadBoard(String name) throws IOException {
+		return BoardStorage.getInstance().loadBoard(name);
 	}
 	
 	public String getEasyRanking() throws IOException {
