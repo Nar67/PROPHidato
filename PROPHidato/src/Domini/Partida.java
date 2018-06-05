@@ -1,7 +1,6 @@
 package Domini;
 import java.io.IOException;
-
-
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -18,6 +17,7 @@ public class Partida {
 	private Integer puntuacio;
 	private String difficulty;
 	private long startime;
+	private long pausedTime; //in seconds
 	private Integer nmoves = 0;
 	private Integer current = 2;
 	private Integer curri = 0;
@@ -129,6 +129,22 @@ public class Partida {
 	public Partida(Hidato hidato) {
 		this.hidato = hidato;
 		initializeContext();
+		int max = 0;
+		for(int i = 0; i < hidato.getTaulell().getRows(); i++){
+			for (int j = 0; j < hidato.getTaulell().getCols(); j++) {
+				if(isNumeric(hidato.getTaulell().getCell(i, j).getValue()) && (Integer.parseInt(hidato.getTaulell().getCell(i, j).getValue())) > max) {
+					max = Integer.parseInt(hidato.getTaulell().getCell(i, j).getValue());
+				}
+			}
+		}
+		this.ultim = max;
+	}
+	
+	private boolean isNumeric(String s) {
+		for (char c : s.toCharArray()) {
+			if (!Character.isDigit(c)) return false;
+		}
+		return true;
 	}
 	
 	public boolean moveInBoard(int i, int j) {
@@ -234,6 +250,11 @@ public class Partida {
 	}
 	
 	public Integer nextMove(Integer i, Integer j) throws IOException {
+		String cellValue = hidato.getTaulell().getCell(i, j).getValue();
+		if(i == -1 && j == -1) {
+			pausedTime = (long)((System.currentTimeMillis() - startime)/1000.0);
+			
+		}
 		if (!isAcabada()) {
 			/*
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
@@ -257,13 +278,27 @@ public class Partida {
 				System.out.println(").");
 				hidato.getTaulell().printBoard();
 			}*/
-			//else {
+			//else
+				ArrayList<Cell> neighbours = hidato.getTaulell().getNeighbours(hidato.getTaulell().getCell(i, j));
+				for(Cell cell : neighbours)
+					if(cell.getValue().equals(String.valueOf(current+1)) && !cell.getValue().equals(String.valueOf(ultim))) {
+						hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
+						previ[current-2] = curri;
+						prevj[current-2] = currj;
+						curri = i;
+						currj = j;
+						current += 2;
+						System.out.println("curri currj value: " + hidato.getTaulell().getCell(curri, currj).getValue());
+						System.out.println("current value: " + current);
+						System.out.println("i j value: " + cellValue);
+						return Integer.parseInt(hidato.getTaulell().getCell(curri, currj).getValue());
+					}
 				if (!moveInBoard(i, j)) {
 					System.out.println("El moviment no es valid");
 					hidato.getTaulell().printBoard();
 					return -1;
 				}
-				else if (!hidato.getTaulell().getCell(i, j).getValue().equals("#") && !hidato.getTaulell().getCell(i, j).getValue().equals("?")) {
+				else if (!cellValue.equals("#") && !cellValue.equals("?") && !cellValue.equals("*")) {
 					hidato.getTaulell().setValueToCell(i, j, "?");
 					--current;
 					curri = previ[current-2];
@@ -272,7 +307,7 @@ public class Partida {
 					++nmoves;
 					return this.current;
 				}
-				else if (!hidato.isMoveValid(curri, currj, i, j)) {
+				else if (!hidato.isMoveValid(curri, currj, i, j, current)) {
 					System.out.println("El moviment no es valid");
 					return -1;
 				}
@@ -285,7 +320,11 @@ public class Partida {
 					++current;
 					hidato.getTaulell().printBoard();
 					++nmoves;
-					if (current == getUltim()) {
+					if(cellValue.equals(String.valueOf(current))) {
+						System.out.println("test");
+						return nextMove(i, j);
+					}
+					if (current+1 == getUltim()) {
 						//acabarPartida();
 						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
 						int movescore = 300-(nmoves-current)*5;

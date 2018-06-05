@@ -28,17 +28,17 @@ public class PartidaStorage {
 		return partides;
 	}
 	
-	public String loadPartida(String user, Integer ID) throws IOException {
+	public String loadPartida(String user, String name) throws IOException {
 		String path = System.getProperty("user.dir");
-		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + ID.toString() + ".txt"));
+		byte[] btl = Files.readAllBytes(Paths.get(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + name + ".txt"));
 		
 		String ptl = new String(btl, Charset.forName("UTF-8"));
 		return ptl;		
 	}
 	
-	public void savePartida(String pts, String user, Integer ID) throws IOException {
+	public void savePartida(String pts, String user, String name) throws IOException {
 		String path = System.getProperty("user.dir");
-		File f = new File(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + ID.toString() + ".txt");
+		File f = new File(path + File.separator + "Users" + File.separator + user + File.separator + "Partida_" + name + ".txt");
 		f.getParentFile().mkdirs();
 		f.createNewFile();
 		PrintWriter pfts = new PrintWriter(f);

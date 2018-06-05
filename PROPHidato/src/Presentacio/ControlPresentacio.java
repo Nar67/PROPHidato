@@ -22,14 +22,14 @@ public class ControlPresentacio {
 		controlador.jugar(action);
  	}*/
 	
-	public void loadPartida(String user, Integer ID) throws IOException {
+	public void loadPartida(String user, String name) throws IOException {
 		ControlDomini controlDomini = ControlDomini.getInstance();
-		controlDomini.loadPartida(user, ID);
+		controlDomini.loadPartida(user, name);
 	}
 	
-	public void savePartida() throws IOException {
+	public void savePartida(String name) throws IOException {
 		ControlDomini controlDomini = ControlDomini.getInstance();
-		controlDomini.savePartida();
+		controlDomini.savePartida(name);
 	}
 	
 	public boolean logInUser(String username, char[] password) throws IOException {

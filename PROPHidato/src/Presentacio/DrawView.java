@@ -264,14 +264,14 @@ public class DrawView {
 					validated = ControlPresentacio.getInstance().validateBoard(params, board);	
 				} catch (NullPointerException e) {
 					validated = false;
-					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "",  JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "Not Valid",  JOptionPane.INFORMATION_MESSAGE);
 				}
 				validateButton.setEnabled(!validated);
 				if(!validated) {
-					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "",  JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "Not Valid",  JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
-					JOptionPane.showMessageDialog(frame, "Valid", "",  JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Valid", "Valid",  JOptionPane.INFORMATION_MESSAGE);
 					for(String[] b : board) {
 						for(String ele : b)
 							System.out.print(ele);

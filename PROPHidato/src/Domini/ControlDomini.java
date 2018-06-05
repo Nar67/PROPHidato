@@ -86,9 +86,9 @@ public class ControlDomini {
         return result;
     }
 	
-	public void loadPartida(String user, Integer ID) throws IOException {
+	public void loadPartida(String user, String name) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
-		String partida = cp.loadPartida(user, ID);
+		String partida = cp.loadPartida(user, name);
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
 			    .registerSubtype(SquareBoard.class, "Q")
@@ -99,9 +99,9 @@ public class ControlDomini {
 		this.currentpartida = gson.fromJson(partida,  Partida.class);
 	}
 	
-	public void savePartida() throws IOException {
+	public void savePartida(String name) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
-		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom(), this.currentpartida.getUser().getPartidaID());
+		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom(), name);
 		this.currentpartida.getUser().setPartidaID(1 + this.currentpartida.getUser().getPartidaID());
 	}
 	
@@ -242,7 +242,6 @@ public class ControlDomini {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		Hidato h = gson.fromJson(hidato,  Hidato.class);
 		currentpartida = new Partida(h);
-		System.out.println("Params: ");
 		String[] par = h.getTaulell().getParams();
 		String[][] mat = h.getTaulell().getMatriu();
 		for(int i = 0; i < par.length; i++)

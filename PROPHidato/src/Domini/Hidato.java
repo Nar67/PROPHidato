@@ -157,30 +157,20 @@ public class Hidato {
 		}
 		System.out.println();
 	}
-	public boolean isMoveValid(int i, int j, int ii, int jj) {
-		if(this.acabat) {
-			Cell a = this.solucio.getCell(i, j);
-			ArrayList<Cell> result = this.solucio.getNeighbours(a);
-	        for (int p = 0; p < result.size(); p++) {
-	        	Cell gr = result.get(p);
-	        	if(gr.getRow() == ii && gr.getCol() == jj) {
-	        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
-	        			return true;
-	        		}
+	public boolean isMoveValid(int i, int j, int clickedi, int clickedj, int current) {
+		if(this.acabat) checkHidato();
+		Cell a = this.solucio.getCell(i, j);
+		ArrayList<Cell> result = this.solucio.getNeighbours(a);
+		ArrayList<Cell> neighbours = this.solucio.getNeighbours(this.taulell.getCell(clickedi, clickedj));
+		for (int p = 0; p < result.size(); p++) {
+			Cell gr = result.get(p);
+	        if(gr.getRow() == clickedi && gr.getCol() == clickedj) {
+	        	if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
+	        		return true;
 	        	}
 	        }
-		}
-		else {
-			checkHidato();
-			Cell a = this.solucio.getCell(i, j);
-			ArrayList<Cell> result = this.solucio.getNeighbours(a);
-	        for (int p = 0; p < result.size(); p++) {
-	        	Cell gr = result.get(p);
-	        	if(gr.getRow() == ii && gr.getCol() == jj) {
-	        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
-	        			return true;
-	        		}
-	        	}
+	        else if(neighbours.get(p).getValue().equals(String.valueOf((current-1)))) {
+	        	return true;
 	        }
 		}
 		return false;
