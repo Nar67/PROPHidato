@@ -241,13 +241,9 @@ public class ControlDomini {
 		
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		Hidato h = gson.fromJson(hidato,  Hidato.class);
-		h.printHidatoOriginal();
-		Board b = h.getTaulell();
+		currentpartida = new Partida(h);
 		System.out.println("Params: ");
-		for(String string : b.getParams())
-			System.out.println(string);
-		String[] par = b.getParams();
-		
+		String[] par = h.getTaulell().getParams();
 		String[][] mat = h.getTaulell().getMatriu();
 		for(int i = 0; i < par.length; i++)
 			params.add(par[i]);

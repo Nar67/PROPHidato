@@ -243,5 +243,6 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().validateBoard(params, board);
 	}
 	
+	
     
 }

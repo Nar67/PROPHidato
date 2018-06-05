@@ -63,6 +63,53 @@ public class GameView {
 	public GameView() {
 		initialize();
 	}
+	
+	private boolean isNumeric(String s) {
+		for (char c : s.toCharArray()) {
+			if (!Character.isDigit(c)) return false;
+		}
+		return true;
+	}
+	
+	private void drawMatrix(Vector<Vector<Polygon>> matrix, Graphics2D g) {
+        g.setColor(Color.LIGHT_GRAY);
+		g.setStroke(new BasicStroke(3));
+		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+        for(int i = 0; i < matrix.size(); i++) {
+        	for(int j = 0; j < matrix.get(0).size(); j++) {
+        		Polygon p = matrix.get(i).get(j);
+        		if(board[i][j].equals("#")) {
+        			g.setColor(Color.LIGHT_GRAY);
+        			g.drawPolygon(p);
+        			g.setColor(Color.BLACK);
+        		}
+        		else if(board[i][j].equals("*")) {
+					g.setColor(Color.ORANGE);
+					g.fillPolygon(p);
+					g.setColor(Color.BLACK);
+					g.drawPolygon(p);
+        		}
+        		if(isNumeric(board[i][j])) {
+        			g.setColor(Color.BLACK);
+        			int xOffset = centers.get(i).get(j).x - (4*board[i][j].length());
+        			int yOffset = centers.get(i).get(j).y + (2*board[i][j].length());
+        			g.drawString(board[i][j], xOffset, yOffset);
+        			g.drawPolygon(p);
+        		}
+        	}
+        }
+        for(int i = 0; i < matrix.size(); i++) {
+        	for(int j = 0; j < matrix.get(0).size(); j++) {
+        		if(!board[i][j].equals("#") ) {
+        			Polygon p = matrix.get(i).get(j);
+        			g.setColor(Color.BLACK);
+        			g.drawPolygon(p);
+        		}
+        	}
+		}
+        g.setColor(Color.BLACK);
+        g.drawPolygon(matrix.get(matrix.size()/2).get(matrix.get(0).size()/2) );
+	}
 
 
 	
@@ -91,26 +138,7 @@ public class GameView {
             protected void paintComponent(Graphics g3d) {
                 super.paintComponent(g3d);
                 Graphics2D g = (Graphics2D) g3d;
-                g.setColor(Color.BLACK);
-        		g.setStroke(new BasicStroke(3));
-        		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
-                for(int i = 0; i < matrix.size(); i++) {
-                	for(int j = 0; j < matrix.get(0).size(); j++) {
-                		Polygon p = matrix.get(i).get(j);
-                		if(!board[i][j].equals("#"))
-                			g.drawPolygon(p);
-                		if(board[i][j].equals("*")) {
-                			g.setColor(Color.PINK);
-                			g.fillPolygon(p);
-                			g.setColor(Color.BLACK);
-                		}
-                		if(!board[i][j].equals("#") && !board[i][j].equals("?")) {
-                			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
-                			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
-                			g.drawString(board[i][j], xOffset, yOffset);
-                		}
-                	}
-                }
+                drawMatrix(matrix, g);
             }
         };
         

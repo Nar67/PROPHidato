@@ -73,9 +73,7 @@ public class DrawView {
 	 */
 	public DrawView() {
 		setMatrix("T");
-		board = new String[finalRows][finalCols];
-		for(String[] b : board)
-			Arrays.fill(b, "#");
+		resetBoard();
 		board[finalRows/2][finalCols/2] = "?";
 		initialize();
 	}
@@ -84,6 +82,12 @@ public class DrawView {
 		this.params = params;
 		this.board = board;
 		initialize();
+	}
+	
+	private void resetBoard() {
+		board = new String[finalRows][finalCols];
+		for(String[] b : board)
+			Arrays.fill(b, "#");
 	}
 	
 	private boolean isNumeric(String s) {
@@ -241,7 +245,9 @@ public class DrawView {
 		applyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panel.repaint();
+				setCellAdjacency(adjacencyBox.getSelectedItem().toString());
 				setMatrix(cellType);
+				resetBoard();
 				Graphics2D g = (Graphics2D)panel.getGraphics();
 				drawMatrix(matrix, g);
 			}
@@ -277,6 +283,7 @@ public class DrawView {
 		JButton saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				setCellAdjacency(adjacencyBox.getSelectedItem().toString());
 				if(validated) {
 					String name = JOptionPane.showInputDialog(frame, "Name your hidato please", null);
 					try {

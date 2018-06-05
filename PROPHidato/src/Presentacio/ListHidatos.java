@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -87,12 +88,19 @@ public class ListHidatos extends JFrame {
 				String selected = list.getSelectedValue();
 				String[] params = new String[] {};
 				String[][] matriu = new String[][] {};
+				ArrayList<String> par = new ArrayList<>();
+				ArrayList<ArrayList<String>> mat = new ArrayList<ArrayList<String>>();
 				try {
-					ControlPresentacio.getInstance().loadHidato(selected, params, matriu);
+					ControlPresentacio.getInstance().loadHidato(selected, par, mat);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				params = par.toArray(new String[0]);
+				String[][] m = new String[mat.size()][mat.get(0).size()];
+				for(int i = 0; i< mat.size(); i++)
+					m[i] = mat.get(i).toArray(new String[0]);
+				matriu = m;
 				GameView gv = new GameView(params, matriu);
 				gv.getFrame().setVisible(true);
 			}

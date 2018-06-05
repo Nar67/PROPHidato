@@ -46,6 +46,10 @@ public class Hidato {
 	}
 	
 	public int[] getStart() {
+		for(int i = 0 ;  i < taulell.getMatriu().length; i++)
+			for (int j = 0; j < taulell.getMatriu()[0].length; j++) {
+				if(taulell.getMatriu()[i][j].equals("1")) start = new int[]{i,j}; 
+			}
 		return Hidato.start;
 	}
 	
