@@ -17,11 +17,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-import Domini.EasyRanking;
-import Domini.HardRanking;
-import Domini.MediumRanking;
-import Domini.Ranking;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;

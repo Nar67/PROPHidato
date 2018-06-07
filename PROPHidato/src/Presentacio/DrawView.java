@@ -202,7 +202,7 @@ public class DrawView {
 		ArrayList<Point> neighbours = ControlPresentacio.getInstance().getNeighbours(i, j, params, board);
 		for(Point p : neighbours)
 			if(!board[p.x][p.y].equals("#")) {
-				Polygon pol = matrix.get(i).get(j-1);
+				Polygon pol = matrix.get(p.x).get(p.y);
 				g.drawPolygon(pol);
 			}
 		/*
