@@ -374,7 +374,7 @@ public class Partida {
 						return nextMove(i, j);
 					}
 					if (current+1 == getUltim()) {
-						//acabarPartida();
+						acabarPartida();
 						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
 						int movescore = 300-(current)*5;
 						this.puntuacio = 300-(int)finaltime + movescore;						

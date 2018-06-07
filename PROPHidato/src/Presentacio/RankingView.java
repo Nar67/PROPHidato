@@ -158,8 +158,6 @@ public class RankingView extends JFrame {
 		modelEasy.addColumn("Username");
 		modelEasy.addColumn("Score");
 		
-		Ranking ranking = new EasyRanking();
-		ranking.setNewScore("ElRogerEsGay", 69);
 		HashMap<String, Integer> rankEasy = ControlPresentacio.getInstance().getEasyRanking();
 		
 	    Iterator<Entry<String, Integer>> itE = rankEasy.entrySet().iterator();
@@ -190,8 +188,7 @@ public class RankingView extends JFrame {
 		modelMedium.addColumn("Username");
 		modelMedium.addColumn("Score");
 		
-		ranking = new MediumRanking();
-		ranking.setNewScore("ElNarsEsHector", 69);
+		
 		HashMap<String, Integer> rankMedium = ControlPresentacio.getInstance().getMediumRanking();
 		
 	    Iterator<Entry<String, Integer>> itM = rankMedium.entrySet().iterator();
@@ -221,9 +218,6 @@ public class RankingView extends JFrame {
 		modelHard.addColumn("Username");
 		modelHard.addColumn("Score");
 		
-		ranking = new HardRanking();
-		ranking.setNewScore("Eldavidputoamo", 69);
-		ranking.setNewScore("DiosNoExiste",  0);
 		HashMap<String, Integer> rankHard = ControlPresentacio.getInstance().getHardRanking();
 		
 	    Iterator<Entry<String, Integer>> itH = rankHard.entrySet().iterator();

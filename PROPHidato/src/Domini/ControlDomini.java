@@ -57,6 +57,7 @@ public class ControlDomini {
 		}
 		Partida p = new Partida(hidato);
 		this.currentpartida = p;
+		p.setUser(this.currentuser);
 		return hidato.getTaulell().getMatriu();
 	}
 	

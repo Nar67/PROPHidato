@@ -9,7 +9,8 @@ public abstract class Ranking {
 		this.rank = new HashMap<String, Integer>();
 	}
 	public Integer getUserScore(String username) {
-		return rank.get(username);
+		if (rank.get(username) != null) return rank.get(username);
+		return 0;
 	}
 	public void setNewScore(String username, Integer score) throws IOException {
 		rank.put(username, score);
