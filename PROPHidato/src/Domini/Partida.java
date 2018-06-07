@@ -1,4 +1,5 @@
 package Domini;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -24,6 +25,7 @@ public class Partida {
 	private Integer currj = 0;
 	private Integer previ[] = new Integer[64];
 	private Integer prevj[] = new Integer[64];
+	private ArrayList<Point> initialNums;
 	
 	public String getDifficulty() {
 		return difficulty;
@@ -31,6 +33,50 @@ public class Partida {
 
 	public void setDifficulty(String difficulty) {
 		this.difficulty = difficulty;
+	}
+	
+	public ArrayList<Point> getInitialNums() {
+		return initialNums;
+	}
+
+	public void setInitialNums(ArrayList<Point> initialNums) {
+		this.initialNums = initialNums;
+	}
+
+	public Integer getCurrent() {
+		return current;
+	}
+
+	public void setCurrent(Integer current) {
+		this.current = current;
+	}
+
+	public Integer getCurri() {
+		return curri;
+	}
+
+	public void setCurri(Integer curri) {
+		this.curri = curri;
+	}
+
+	public Integer getCurrj() {
+		return currj;
+	}
+
+	public void setCurrj(Integer currj) {
+		this.currj = currj;
+	}
+
+	public int getMoves() {
+		return nmoves;
+	}
+	
+	public long getPausedTime() {
+		return pausedTime;
+	}
+
+	public void setPausedTime(long pausedTime) {
+		this.pausedTime = pausedTime;
 	}
 
 	public Integer getPuntuacio() {
@@ -116,8 +162,6 @@ public class Partida {
 		this.current = 2;
 		this.nmoves = 0;
 		this.current = 2;
-		this.curri = 0;
-		this.currj = 0;
 		this.previ = new Integer[64];
 		this.prevj = new Integer[64];
 	}
@@ -129,6 +173,12 @@ public class Partida {
 	public Partida(Hidato hidato) {
 		this.hidato = hidato;
 		initializeContext();
+		initialNums = hidato.getInitials();
+		for(Point p : initialNums)
+			if(hidato.getTaulell().getMatriu()[p.x][p.y].equals("1")) {
+				this.curri = p.x;
+				this.currj = p.y;
+			}
 		int max = 0;
 		for(int i = 0; i < hidato.getTaulell().getRows(); i++){
 			for (int j = 0; j < hidato.getTaulell().getCols(); j++) {
@@ -250,11 +300,11 @@ public class Partida {
 	}
 	
 	public Integer nextMove(Integer i, Integer j) throws IOException {
-		String cellValue = hidato.getTaulell().getCell(i, j).getValue();
-		if(i == -1 && j == -1) {
-			pausedTime = (long)((System.currentTimeMillis() - startime)/1000.0);
-			
+		if(i == -1) {
+			pausedTime = j;
+			return -3;
 		}
+		String cellValue = hidato.getTaulell().getCell(i, j).getValue();
 		if (!isAcabada()) {
 			/*
 			System.out.println("Introdueixi la posicio (i,j) on vol posar el seguent numero");
@@ -283,14 +333,12 @@ public class Partida {
 				for(Cell cell : neighbours)
 					if(cell.getValue().equals(String.valueOf(current+1)) && !cell.getValue().equals(String.valueOf(ultim))) {
 						hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
+						cellValue = Integer.toString(current);
 						previ[current-2] = curri;
 						prevj[current-2] = currj;
 						curri = i;
 						currj = j;
 						current += 2;
-						System.out.println("curri currj value: " + hidato.getTaulell().getCell(curri, currj).getValue());
-						System.out.println("current value: " + current);
-						System.out.println("i j value: " + cellValue);
 						return Integer.parseInt(hidato.getTaulell().getCell(curri, currj).getValue());
 					}
 				if (!moveInBoard(i, j)) {
@@ -298,8 +346,9 @@ public class Partida {
 					hidato.getTaulell().printBoard();
 					return -1;
 				}
-				else if (!cellValue.equals("#") && !cellValue.equals("?") && !cellValue.equals("*")) {
+				else if (!cellValue.equals("#") && !cellValue.equals("?") && !cellValue.equals("*") && !initialNums.contains(new Point(i, j))) {
 					hidato.getTaulell().setValueToCell(i, j, "?");
+					cellValue = "?";
 					--current;
 					curri = previ[current-2];
 					currj = prevj[current-2];
@@ -313,6 +362,7 @@ public class Partida {
 				}
 				else {
 					hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
+					cellValue = Integer.toString(current);
 					previ[current-2] = curri;
 					prevj[current-2] = currj;
 					curri = i;
@@ -321,13 +371,12 @@ public class Partida {
 					hidato.getTaulell().printBoard();
 					++nmoves;
 					if(cellValue.equals(String.valueOf(current))) {
-						System.out.println("test");
 						return nextMove(i, j);
 					}
 					if (current+1 == getUltim()) {
 						//acabarPartida();
 						double finaltime = (System.currentTimeMillis() - startime)/1000.0;
-						int movescore = 300-(nmoves-current)*5;
+						int movescore = 300-(current)*5;
 						this.puntuacio = 300-(int)finaltime + movescore;						
 						System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 						acabada = true;

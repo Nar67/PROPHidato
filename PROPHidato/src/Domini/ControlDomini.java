@@ -1,4 +1,5 @@
 package Domini;
+import java.awt.Point;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.ArrayList;
@@ -51,13 +52,11 @@ public class ControlDomini {
 		Partida partida = new Partida();
 		Hidato hidato = partida.generarTaulell(diff, cellType, adj);
 		System.out.println("Autogenerant hidato ... ");
-		int count = 0;
 		while (!hidato.checkHidato()) {
-			System.out.println(count++);
 			hidato = partida.generarTaulell(diff, cellType, adj);
 		}
-		partida.setHidato(hidato);
-		this.currentpartida = partida;
+		Partida p = new Partida(hidato);
+		this.currentpartida = p;
 		return hidato.getTaulell().getMatriu();
 	}
 	
@@ -86,8 +85,52 @@ public class ControlDomini {
         return result;
     }
 	
-	public void loadPartida(String user, String name) throws IOException {
+	public void setInitials(ArrayList<Point> initials) {
+		currentpartida.setInitialNums(initials);
+	}
+	
+	public ArrayList<Point> getInitials() {
+		return currentpartida.getInitialNums();
+	}
+	
+	public ArrayList<Integer> getHint() {
+		int i = currentpartida.getCurri();
+		int j = currentpartida.getCurrj();
+		return currentpartida.getHidato().nextMove(i, j);
+	}
+	
+	public int getUltim() {
+		return currentpartida.getUltim();
+	}
+	
+	public void storeCurrentHidato(String name) throws IOException {
+		storeHidato(currentpartida.getHidato().getTaulell().getParams(), currentpartida.getHidato().getTaulell().getMatriu(), name);
+	}
+	
+	public String[] getCurrentParams() {
+		return currentpartida.getHidato().getTaulell().getParams();
+	}
+	
+	public String[][] getCurrentBoard() {
+		return currentpartida.getHidato().getTaulell().getMatriu();
+	}
+	
+	public int getCurrentTime() {
+		return (int)currentpartida.getPausedTime();
+	}
+	
+	public int getCurrentMoves() {
+		return (int)currentpartida.getMoves();
+	}
+	
+	public void setCurrentUser(String nom, String password) {
+		Usuari u = new Usuari(nom, password);
+		this.currentuser = u;
+	}
+	
+	public void loadPartida(String name) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
+		String user = currentuser.getNom();
 		String partida = cp.loadPartida(user, name);
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
@@ -101,8 +144,9 @@ public class ControlDomini {
 	
 	public void savePartida(String name) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
-		cp.savePartida(this.currentpartida.partidaToString(), this.currentpartida.getUser().getNom(), name);
-		this.currentpartida.getUser().setPartidaID(1 + this.currentpartida.getUser().getPartidaID());
+		String partida = this.currentpartida.partidaToString();
+		String username = this.currentuser.getNom();
+		cp.savePartida(partida, username, name);
 	}
 	
 	public void storeHidato(String[] params, String[][] board, String name) throws IOException {
@@ -110,7 +154,8 @@ public class ControlDomini {
 		if(params[0].equals("Q")) b = new SquareBoard(params, board);
 		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
 		else b = new HexagonBoard(params, board);
-		Hidato h = new Hidato(b);
+		ArrayList<Point> initials = fillInitials(board);
+		Hidato h = new Hidato(b, initials);
 		RuntimeTypeAdapterFactory<Board> BoardAdapterFactory = RuntimeTypeAdapterFactory.
 				of(Board.class, "cellType")
 			    .registerSubtype(SquareBoard.class, "Q")
@@ -242,6 +287,7 @@ public class ControlDomini {
 		Gson gson = new GsonBuilder().registerTypeAdapterFactory(BoardAdapterFactory).create();
 		Hidato h = gson.fromJson(hidato,  Hidato.class);
 		currentpartida = new Partida(h);
+		currentpartida.setUser(currentuser);
 		String[] par = h.getTaulell().getParams();
 		String[][] mat = h.getTaulell().getMatriu();
 		for(int i = 0; i < par.length; i++)
@@ -255,12 +301,29 @@ public class ControlDomini {
 		}
 	}
 	
+	private boolean isNumeric(String s) {
+		for (char c : s.toCharArray()) {
+			if (!Character.isDigit(c)) return false;
+		}
+		return true;
+	}
+	
+	private ArrayList<Point> fillInitials(String[][] board){
+		ArrayList<Point> result = new ArrayList<Point>();
+		for(int i = 0; i < board.length; i++)
+			for (int j = 0; j < board[0].length; j++) {
+				if(isNumeric(board[i][j])) result.add(new Point(i, j));
+			}
+		return result;
+	}
+	
 	public boolean validateBoard(String[] params, String[][] board) {
 		Board b;
 		if(params[0].equals("Q")) b = new SquareBoard(params, board);
 		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
 		else b = new HexagonBoard(params, board);
-		Hidato hidato = new Hidato(b);
+		ArrayList<Point> initials = fillInitials(board);
+		Hidato hidato = new Hidato(b, initials);
 		boolean a = hidato.checkHidato();
 		if(a) {
         	String[][] solvedBoard = hidato.printHidato();

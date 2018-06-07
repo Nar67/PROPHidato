@@ -1,4 +1,5 @@
 package Domini;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,8 +17,19 @@ public class Hidato {
 	private boolean acabat;
 	private boolean te_solu;
     private static int[] given, start;
+    ArrayList<Point> initials;
 
 	public Hidato(Board a) {
+		initialize(a);
+		fillInitials();
+	}
+	
+	public Hidato(Board a, ArrayList<Point> initials) {
+		initialize(a);
+		this.initials = initials;
+	}
+	
+	private void initialize(Board a) {
 		if(a.getTyCell().equals("Q")) {
 			this.taulell = new SquareBoard(a.getParams(),a.getMatriu());	
 			this.solucio = new SquareBoard(a.getParams(),a.getMatriu());
@@ -38,11 +50,34 @@ public class Hidato {
 		this.te_solu = false;
 	}
 	
+	private void fillInitials() {
+		this.initials = new ArrayList<Point>(); 
+		for(int i = 0; i < taulell.getMatriu().length; i++)
+			for (int j = 0; j < taulell.getMatriu()[0].length; j++) {
+				if(isNumeric(taulell.getMatriu()[i][j])) initials.add(new Point(i, j));
+			}
+	}
+	
+	public ArrayList<Point> getInitials() {
+		return initials;
+	}
+
+	public void setInitials(ArrayList<Point> initials) {
+		this.initials = initials;
+	}
+
 	public void iniHidato() {
 		//inizialització hidato(posar numeros en una board buida)
 	}
 	public Board getTaulell() {
 		return this.taulell;
+	}
+	
+	private boolean isNumeric(String s) {
+		for (char c : s.toCharArray()) {
+			if (!Character.isDigit(c)) return false;
+		}
+		return true;
 	}
 	
 	public int[] getStart() {
@@ -59,10 +94,16 @@ public class Hidato {
 		if(start == null) {
 			return false;
 		}
+		String[][] auxBoard = new String[this.getTaulell().getMatriu().length][this.getTaulell().getMatriu()[0].length];
+		for(int i = 0; i< this.getTaulell().getMatriu().length; i++) {
+			for(int j = 0; j < this.getTaulell().getMatriu()[0].length;j++) {
+				auxBoard[i][j] = this.getTaulell().getMatriu()[i][j];
+			}
+		}
 		boolean aux = solve(start[0],start[1],1,0);
+		this.getTaulell().setMatriu(auxBoard);
 		this.acabat = true;
-		if(aux) this.te_solu = true;
-		else te_solu = false;
+		this.te_solu = aux;
 		return aux;
 	}
 	
@@ -95,8 +136,9 @@ public class Hidato {
 	}
     private  boolean solve(int i, int j, int n, int next) {
 		Cell a = this.solucio.getCell(i, j);
-		if (n > given[given.length - 1])
-            return true; //ja està resolt
+		if (n > given[given.length - 1]) {
+			return true; //ja està resolt
+		}
     	if (a.getValue().equals("*")  || a.getValue().equals("#")) return false;
     	if (!a.getValue().equals("?")  && Integer.parseInt(a.getValue()) != n)
             return false;
@@ -130,7 +172,6 @@ public class Hidato {
 		this.acabat = true;
 		if(aux) {
 			this.te_solu = true;
-			System.out.println("Hidato correcte, vas per el bon camí ;)");
 			//printHidato();
 		}
 		else {System.out.println("No hi ha solució"); this.te_solu = false;}
@@ -175,41 +216,25 @@ public class Hidato {
 		}
 		return false;
 	}
-	public ArrayList<Integer> nextMove(int i, int j) {
+	public ArrayList<Integer> nextMove(int i, int j){
 		//retona quina cella és el seguent moviment
 		//assumeix que l'Hidato és resoluble
-		ArrayList<Integer> resultt = new ArrayList<Integer>();
-
-		if(this.acabat) {
-			Cell a = this.solucio.getCell(i, j);
-			ArrayList<Cell> result = this.solucio.getNeighbours(a);
-	        for (int p = 0; p < result.size(); p++) {
-	        	Cell gr = result.get(p);
-        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
-        			if(Integer.parseInt(gr.getValue()) == ((Integer.parseInt(a.getValue())) +1)){
-        				resultt.add(gr.getRow());
-    	        		resultt.add(gr.getCol());
-    	        		return resultt;
-        			}
-        		}
-	        }
-		}
-		else {
-			checkHidato();
-			Cell a = this.solucio.getCell(i, j);
-			ArrayList<Cell> result = this.solucio.getNeighbours(a);
-	        for (int p = 0; p < result.size(); p++) {
-	        	Cell gr = result.get(p);
-        		if(!gr.getValue().equals("#") && !gr.getValue().equals("*")) {
-        			if(Integer.parseInt(gr.getValue()) == ((Integer.parseInt(a.getValue())) +1)){
-        				resultt.add(gr.getRow());
-    	        		resultt.add(gr.getCol());
-    	        		return resultt;
-        			}
-        		}
-	        }
-		}
-		return resultt;
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		if(!this.acabat) checkHidato();
+		Cell solution = this.solucio.getCell(i, j);
+		ArrayList<Cell> neighbours = this.solucio.getNeighbours(solution);
+	    for (int p = 0; p < neighbours.size(); p++) {
+	    	Cell neighbour = neighbours.get(p);
+	    	if(!neighbour.getValue().equals("#") && !neighbour.getValue().equals("*")) {
+	    		if(Integer.parseInt(neighbour.getValue()) == ((Integer.parseInt(solution.getValue())) +1)){
+	    			if(initials.contains(new Point(neighbour.getRow(), neighbour.getCol())))
+	    				return nextMove(neighbour.getRow(), neighbour.getCol());
+	    			result.add(neighbour.getRow());
+	    			result.add(neighbour.getCol());
+	    			return result;
+	    		}
+	    	}
+	    }
+	    return result;
 	}
-
 }

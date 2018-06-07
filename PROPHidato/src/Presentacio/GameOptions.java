@@ -111,10 +111,7 @@ public class GameOptions extends JFrame {
 				else if(cellType.equals("Hexagon")) cellType = "H";
 				if(adj.equals("Borders")) adj = "C";
 				if(adj.equals("Borders and angles")) adj = "CA";
-				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};
-				for(String s: params)
-					System.out.println("Params: " + s);
-				GameView gv = new GameView(params, mat);
+				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};				GameView gv = new GameView(params, mat);
 				gv.getFrame().setVisible(true);
 			}
 		});
@@ -171,6 +168,12 @@ public class GameOptions extends JFrame {
 		contentPane.add(loadHidatoButton);
 		
 		JButton loadGameButton = new JButton("Load Game");
+		loadGameButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ListGames lg = new ListGames();
+				lg.setVisible(true);
+			}
+		});
 		loadGameButton.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		loadGameButton.setBounds(1505, 974, 215, 66);
 		contentPane.add(loadGameButton);

@@ -42,7 +42,6 @@ public class UserStorage {
 			// TODO Auto-generated catch block
 			System.out.println("gas");
 		}
-		System.out.println("gaaas");
 
 		return false;
 	}

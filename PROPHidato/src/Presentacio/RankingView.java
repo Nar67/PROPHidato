@@ -27,15 +27,15 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import java.awt.Font;
-import java.awt.SystemColor;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import java.awt.Color;
 import javax.swing.border.CompoundBorder;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.plaf.basic.BasicArrowButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RankingView extends JFrame {
 
@@ -99,7 +99,14 @@ public class RankingView extends JFrame {
 		JLabel label_1 = new JLabel("");
 		label_1.setIcon(new ImageIcon(RankingView.class.getResource("/img/1stplace.png")));
 		
-		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
+		BasicArrowButton backButton = new BasicArrowButton(7);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainMenu mm = new MainMenu();
+				mm.getFrame().setVisible(true);
+				dispose();
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -107,7 +114,7 @@ public class RankingView extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(54)
-							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+							.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 							.addGap(290)
 							.addComponent(label)
 							.addGap(100)
@@ -131,7 +138,7 @@ public class RankingView extends JFrame {
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
 								.addComponent(label, GroupLayout.PREFERRED_SIZE, 202, GroupLayout.PREFERRED_SIZE)
-								.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE))))
 					.addGap(49)
 					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 907, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

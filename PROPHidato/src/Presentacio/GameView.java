@@ -23,9 +23,9 @@ import java.awt.BasicStroke;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicArrowButton;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -37,9 +37,12 @@ public class GameView {
 	private String[] params;
 	private Vector<Vector<Polygon>> matrix;
 	private Vector<Vector<Point>> centers;
-	private int moves;
+	private int moves = 0;
 	private int prenext;
-	ArrayList<Point> initialNums;
+	private ArrayList<Point> initialNums;
+	private Timer time;
+	private int clockTick;  	//number of secs
+	private String clockTimeString;
 	/**
 	 * Launch the application.
 	 */
@@ -68,6 +71,16 @@ public class GameView {
 		this.board = matrix;
 		this.initialNums = new ArrayList<Point>();
 		fillInitials();
+		ControlPresentacio.getInstance().setInitials(initialNums);
+		initialize();
+	}
+	
+	public GameView(String[] params, String[][] matrix, int time, int moves, ArrayList<Point> initialNums) {
+		this.params = params;
+		this.board = matrix;
+		this.clockTick = time;
+		this.moves = moves-2;
+		this.initialNums = initialNums;
 		initialize();
 	}
 	
@@ -87,6 +100,10 @@ public class GameView {
 			for (int j = 0; j < board[0].length; j++) {
 				if(isNumeric(board[i][j])) initialNums.add(new Point(i, j));
 			}
+	}
+	
+	public void setSeconds(int time) {
+		clockTick = time;
 	}
 	
 	private void drawMatrix(Vector<Vector<Polygon>> matrix, Graphics2D g) {
@@ -128,6 +145,17 @@ public class GameView {
         g.setColor(Color.BLACK);
         g.drawPolygon(matrix.get(matrix.size()/2).get(matrix.get(0).size()/2) );
 	}
+	
+	private void manageClock(JLabel chrono) {
+		time = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				clockTick++;
+				clockTimeString = String.valueOf(clockTick);
+				chrono.setText(clockTimeString + " seconds");
+				//System.out.println(clockTime);
+			    }
+			});
+	}
 
 
 	
@@ -141,7 +169,6 @@ public class GameView {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		centers = new Vector<Vector<Point>>();
 		if(params[0].equals("Q"))
 			matrix = ControlPresentacio.getInstance().genSquareMatrix(Integer.parseInt(params[2]),Integer.parseInt(params[3]), centers);
@@ -164,6 +191,8 @@ public class GameView {
 		JLabel movesLabel = new JLabel("");
 		movesLabel.setForeground(Color.WHITE);
 		movesLabel.setFont(new Font("Tahoma", Font.PLAIN, 29));
+		if(moves > 0) movesLabel.setText(String.valueOf(moves));
+		
         MouseAdapter ma = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -185,6 +214,7 @@ public class GameView {
 								e.printStackTrace();
 							}
 							if(board[i][j].equals(String.valueOf(prenext))) {
+								movesLabel.setText(String.valueOf(++moves));
 								g.setColor(Color.WHITE);
 								g.fillPolygon(p);
 								g.setColor(Color.BLACK);
@@ -194,7 +224,6 @@ public class GameView {
 							else if(next > 0) {
 								g.drawString(String.valueOf(next), xOffset, yOffset);
 								prenext = next;
-								System.out.println("prenext: " + prenext);
 								board[i][j] = String.valueOf(next);
 								movesLabel.setText(String.valueOf(++moves));
 							}
@@ -226,26 +255,79 @@ public class GameView {
 		lblMoves.setForeground(Color.WHITE);
 		lblMoves.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		
-		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
+		BasicArrowButton backButton = new BasicArrowButton(7);
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GameOptions go = new GameOptions();
+				go.setVisible(true);
+				frame.dispose();
+			}
+		});
 		
-		JButton saveButton = new JButton("Save");
+		JButton saveButton = new JButton("Save game");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				time.stop();
 				String name = JOptionPane.showInputDialog(frame, "Name your game please:", null);
 				try {
-					int n = ControlPresentacio.getInstance().nextMove(-1, -1);
+					int n = ControlPresentacio.getInstance().nextMove(-1, clockTick); // store the current value of seconds played
+					ControlPresentacio.getInstance().setInitials(initialNums);
 					ControlPresentacio.getInstance().savePartida(name);
 					JOptionPane.showMessageDialog(frame, "You have successfully saved your game", "",  JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
 					e1.printStackTrace();
 				}
+				time.start();
 			}
 		});
 		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		
-		JButton btnNewButton = new JButton("Hint");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JButton hintButton = new JButton("Hint");
+		hintButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ArrayList<Integer> hint = ControlPresentacio.getInstance().getHint();
+        			int xOffset = centers.get(hint.get(0)).get(hint.get(1)).x - (3*board[hint.get(0)][hint.get(1)].length());
+        			int yOffset = centers.get(hint.get(0)).get(hint.get(1)).y + (4*board[hint.get(0)][hint.get(1)].length());
+					int next = ControlPresentacio.getInstance().nextMove(hint.get(0), hint.get(1));
+					Graphics2D g = (Graphics2D)panel.getGraphics();
+					prenext = next;
+					if(prenext == -2) next = ControlPresentacio.getInstance().getUltim()-1;
+					board[hint.get(0)][hint.get(1)] = String.valueOf(next);
+					g.setStroke(new BasicStroke(3));
+            		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
+					g.drawString(String.valueOf(next), xOffset, yOffset);
+					movesLabel.setText(String.valueOf(++moves));
+					if(next == ControlPresentacio.getInstance().getUltim()-1) {
+						JOptionPane.showMessageDialog(frame, "Congratulations you solved the Hidato. Return to the Main Menu", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
+						MainMenu mm = new MainMenu();
+						mm.getFrame().setVisible(true);
+						frame.dispose();
+					}
+				} catch (IOException e1 ) {
+					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+					e1.printStackTrace();
+				}
+			}
+		});
+		hintButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		JButton saveHidatoButton = new JButton("Save hidato");
+		saveHidatoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				time.stop();
+				String name = JOptionPane.showInputDialog(frame, "Name the hidato please", null);
+				try {
+					ControlPresentacio.getInstance().storeCurrentHidato(name);
+				} catch (IOException e) {
+					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+					e.printStackTrace();
+				}
+				time.start();
+			}
+		});
+		saveHidatoButton.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		
 
 
@@ -256,21 +338,22 @@ public class GameView {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(46)
-							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+							.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(30)
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton)
+								.addComponent(hintButton)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(saveHidatoButton, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
 										.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 											.addGroup(groupLayout.createSequentialGroup()
 												.addComponent(lblTime)
-												.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(chrono, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(chrono, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 											.addGroup(groupLayout.createSequentialGroup()
 												.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
 												.addPreferredGap(ComponentPlacement.UNRELATED)
@@ -281,11 +364,11 @@ public class GameView {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(14)
-					.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addComponent(hintButton, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(31, Short.MAX_VALUE))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(197)
@@ -296,12 +379,15 @@ public class GameView {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 490, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
 					.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addGap(143))
+					.addGap(70)
+					.addComponent(saveHidatoButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+					.addGap(152))
 		);
 		frame.getContentPane().setLayout(groupLayout);
-		
+		manageClock(chrono);
+		time.start();
 		
 	}
 	

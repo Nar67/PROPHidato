@@ -27,18 +27,14 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.sun.org.apache.xpath.internal.axes.HasPositionalPredChecker;
-
-import javafx.scene.layout.Border;
-
 import javax.swing.SwingUtilities;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import java.awt.Checkbox;
 import javax.swing.plaf.basic.BasicArrowButton;
+
+import com.sun.javafx.font.Disposer;
 
 public class DrawView {
 
@@ -89,6 +85,7 @@ public class DrawView {
 		board = new String[finalRows][finalCols];
 		for(String[] b : board)
 			Arrays.fill(b, "#");
+		board[finalRows/2][finalCols/2] = "?";
 	}
 	
 	private boolean isNumeric(String s) {
@@ -260,23 +257,20 @@ public class DrawView {
 		validateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setParams();
-				try {
-					validated = ControlPresentacio.getInstance().validateBoard(params, board);	
-				} catch (NullPointerException e) {
-					validated = false;
-					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "Not Valid",  JOptionPane.INFORMATION_MESSAGE);
+				String[][] auxBoard = new String[board.length][board[0].length];
+				for(int i = 0; i< board.length; i++) {
+					for(int j = 0; j < board[0].length;j++) {
+						auxBoard[i][j] = board[i][j];
+					}
 				}
+				validated = ControlPresentacio.getInstance().validateBoard(params, board);
+				board = auxBoard;
 				validateButton.setEnabled(!validated);
 				if(!validated) {
 					JOptionPane.showMessageDialog(frame, "The hidato is not yet valid, keep trying!", "Not Valid",  JOptionPane.INFORMATION_MESSAGE);
 				}
 				else {
 					JOptionPane.showMessageDialog(frame, "Valid", "Valid",  JOptionPane.INFORMATION_MESSAGE);
-					for(String[] b : board) {
-						for(String ele : b)
-							System.out.print(ele);
-						System.out.println();
-					}
 				}
 			}
 		});
@@ -407,7 +401,15 @@ public class DrawView {
                 }            
         );
 		
-		BasicArrowButton basicArrowButton = new BasicArrowButton(7);
+		BasicArrowButton backButton = new BasicArrowButton(7);
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu mm = new MainMenu();
+				mm.getFrame().setVisible(true);
+				frame.dispose();
+			}
+		});
 		
 
 
@@ -417,7 +419,7 @@ public class DrawView {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(30)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
+						.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 						.addComponent(errorMessage, GroupLayout.PREFERRED_SIZE, 828, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
@@ -450,7 +452,7 @@ public class DrawView {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGap(14)
-							.addComponent(basicArrowButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+							.addComponent(backButton, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE))
 						.addGroup(groupLayout.createSequentialGroup()

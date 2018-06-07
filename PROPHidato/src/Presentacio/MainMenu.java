@@ -61,6 +61,13 @@ public class MainMenu {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton createButton = new JButton("CREATE");
+		createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DrawView dv = new DrawView();
+				dv.getFrame().setVisible(true);
+				frame.dispose();
+			}
+		});
 		createButton.setBounds(798, 554, 320, 94);
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 43));
 		
@@ -71,7 +78,7 @@ public class MainMenu {
 			public void actionPerformed(ActionEvent arg0) {
 				GameOptions go = new GameOptions();
 				go.setVisible(true);
-				frame.setVisible(false);
+				frame.dispose();
 			}
 		});
 		
@@ -87,6 +94,7 @@ public class MainMenu {
 					e1.printStackTrace();
 				}
 				rv.setVisible(true);
+				frame.dispose();
 				
 			}
 		});
@@ -97,7 +105,7 @@ public class MainMenu {
 		logOutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				LogIn login = new LogIn();
-				frame.setVisible(false);
+				frame.dispose();
 				login.getFrame().setVisible(true);
 			}
 		});
