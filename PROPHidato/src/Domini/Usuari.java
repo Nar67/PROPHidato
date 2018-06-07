@@ -7,7 +7,6 @@ public class Usuari {
 		private String nom;
 		@Expose
 		private String password;
-		private Integer partidaID;
 
 		public String getNom() {
 			return nom;
@@ -19,13 +18,6 @@ public class Usuari {
 		public Usuari(String nomu, String pass) {
 			this.nom = nomu;
 			this.password = ControlDomini.getInstance().getSHA256Hash(pass);
-			this.partidaID = 0;
-		}
-		public Integer getPartidaID() {
-			return partidaID;
-		}
-		public void setPartidaID(Integer partidaID) {
-			this.partidaID = partidaID;
 		}
 		
 

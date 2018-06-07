@@ -140,6 +140,7 @@ public class LogIn {
 							errorText.setText("Username or password may be incorrect, please try again");
 						}
 						else {
+							ControlPresentacio.getInstance().setCurrentUser(username, String.valueOf(password));
 							MainMenu nm = new MainMenu();
 							nm.getFrame().setVisible(true);
 							frame.dispose();

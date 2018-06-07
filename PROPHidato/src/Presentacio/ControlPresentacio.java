@@ -22,14 +22,50 @@ public class ControlPresentacio {
 		controlador.jugar(action);
  	}*/
 	
-	public void loadPartida(String user, Integer ID) throws IOException {
-		ControlDomini controlDomini = ControlDomini.getInstance();
-		controlDomini.loadPartida(user, ID);
+	public void setInitials(ArrayList<Point> initials) {
+		ControlDomini.getInstance().setInitials(initials);
 	}
 	
-	public void savePartida() throws IOException {
+	public ArrayList<Point> getInitials() {
+		return ControlDomini.getInstance().getInitials();
+	}
+	
+	public String[] getCurrentParams() {
+		return ControlDomini.getInstance().getCurrentParams();
+	}
+	
+	public String[][] getCurrentBoard() {
+		return ControlDomini.getInstance().getCurrentBoard();
+	}
+	
+	public int getCurrentTime() {
+		return ControlDomini.getInstance().getCurrentTime();
+	}
+	
+	public int getCurrentMoves() {
+		return ControlDomini.getInstance().getCurrentMoves();
+	}
+	
+	public ArrayList<Integer> getHint(){
+		return ControlDomini.getInstance().getHint();
+	}
+	
+	public void storeCurrentHidato(String name) throws IOException {
+		ControlDomini.getInstance().storeCurrentHidato(name);
+	}
+	
+	public void loadPartida(String name) throws IOException {
 		ControlDomini controlDomini = ControlDomini.getInstance();
-		controlDomini.savePartida();
+		controlDomini.loadPartida(name);
+	}
+	
+	public void savePartida(String name) throws IOException {
+		ControlDomini controlDomini = ControlDomini.getInstance();
+		controlDomini.savePartida(name);
+	}
+	
+	public int getUltim() {
+		return ControlDomini.getInstance().getUltim();
 	}
 	
 	public boolean logInUser(String username, char[] password) throws IOException {
@@ -38,6 +74,10 @@ public class ControlPresentacio {
 	
 	public boolean signUpUser(String username, char[] password) throws IOException {
 		return ControlDomini.getInstance().signUpUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
+	}
+	
+	public void setCurrentUser(String name, String pass) {
+		ControlDomini.getInstance().setCurrentUser(name, pass);
 	}
 	
 	public String[][] generateGame(String diff, String cellType, String adj) {

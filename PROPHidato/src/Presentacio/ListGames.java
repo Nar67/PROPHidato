@@ -2,9 +2,11 @@ package Presentacio;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.SystemColor;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -22,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.plaf.basic.BasicArrowButton;
+
 
 public class ListGames extends JFrame {
 
@@ -86,9 +89,19 @@ public class ListGames extends JFrame {
 		JButton playButton = new JButton("Play");
 		playButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* Aqui s'ha de carregar la partida seleccionada
 				String selected = list.getSelectedValue();
-				String board, params, time, moves;*/
+				try {
+					ControlPresentacio.getInstance().loadPartida(selected);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				String[] params = ControlPresentacio.getInstance().getCurrentParams();
+				String[][] board = ControlPresentacio.getInstance().getCurrentBoard();
+				int time = ControlPresentacio.getInstance().getCurrentTime();
+				int moves = ControlPresentacio.getInstance().getCurrentMoves();
+				ArrayList<Point> initials = ControlPresentacio.getInstance().getInitials(); 
+				GameView gv = new GameView(params, board, time, moves, initials);
+				gv.getFrame().setVisible(true);
 			}
 		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));

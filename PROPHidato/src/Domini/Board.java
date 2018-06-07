@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public abstract class Board {
 	private String tyAdj;
-	private String boardID;
 	private Integer rows;
 	private Integer cols;
 	private String tyCell;
@@ -96,6 +95,7 @@ public abstract class Board {
 	
 	void setValueToCell(Integer row, Integer col, String value) {
 		cells[row][col].setValue(value);
+		matriu[row][col] = value;
 	}
 	
 	void setValueToCell(Cell cell, String value) {
@@ -104,14 +104,6 @@ public abstract class Board {
 	
 	public Cell[][] getCells() {
 		return cells;
-	}
-
-	public String getBoardID() {
-		return boardID;
-	}
-
-	public void setBoardID(String boardID) {
-		this.boardID = boardID;
 	}
 	
 	public Cell getCell(Integer i, Integer j) {

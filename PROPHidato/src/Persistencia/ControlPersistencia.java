@@ -26,14 +26,14 @@ public class ControlPersistencia {
 		return ps.getPartides(user); 
 	}
 	
-	public String loadPartida(String user, Integer ID) throws IOException {
+	public String loadPartida(String user, String name) throws IOException {
 		PartidaStorage ps = PartidaStorage.getInstance();
-		return ps.loadPartida(user, ID);
+		return ps.loadPartida(user, name);
 	}
 	
-	public void savePartida(String pts, String user, Integer ID) throws IOException {
+	public void savePartida(String pts, String user, String name) throws IOException {
 		PartidaStorage ps = PartidaStorage.getInstance();
-		ps.savePartida(pts, user, ID);
+		ps.savePartida(pts, user, name);
 	}
 	public void storeBoard(String board, String name) throws IOException {
 		BoardStorage bs = BoardStorage.getInstance();

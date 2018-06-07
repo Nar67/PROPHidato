@@ -12,7 +12,6 @@ import javax.swing.JTextPane;
 import javax.swing.border.TitledBorder;
 
 import java.awt.Font;
-import java.awt.SystemColor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
