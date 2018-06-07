@@ -106,12 +106,17 @@ public class GameView {
 		clockTick = time;
 	}
 	
+	private boolean checkNeighboursFilled(ArrayList<Point> neighbours) {
+		return true;
+	}
+	
 	private void drawMatrix(Vector<Vector<Polygon>> matrix, Graphics2D g) {
         g.setColor(Color.LIGHT_GRAY);
 		g.setStroke(new BasicStroke(3));
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
         for(int i = 0; i < matrix.size(); i++) {
         	for(int j = 0; j < matrix.get(0).size(); j++) {
+        		ArrayList<Point> neighbours = ControlPresentacio.getInstance().getNeighbours(i, j, params, board);
         		Polygon p = matrix.get(i).get(j);
         		if(board[i][j].equals("#")) {
         			g.setColor(Color.WHITE);
@@ -133,7 +138,7 @@ public class GameView {
         		}
         	}
         }
-        for(int i = 0; i < matrix.size(); i++) {
+        for(int i = 0; i < matrix.size(); i++) {//we draw every necesary polygon for the border to be THICC af.
         	for(int j = 0; j < matrix.get(0).size(); j++) {
         		if(!board[i][j].equals("#") ) {
         			Polygon p = matrix.get(i).get(j);
@@ -156,6 +161,11 @@ public class GameView {
 			    }
 			});
 	}
+	
+	void stopTimer() {
+		time.stop();
+	}
+	
 
 
 	
@@ -192,7 +202,6 @@ public class GameView {
 		movesLabel.setForeground(Color.WHITE);
 		movesLabel.setFont(new Font("Tahoma", Font.PLAIN, 29));
 		if(moves > 0) movesLabel.setText(String.valueOf(moves));
-		
         MouseAdapter ma = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent me) {
@@ -232,6 +241,7 @@ public class GameView {
 							}
 							else if(next == -2) { //partida acabada
 								g.drawString(String.valueOf(prenext+1), xOffset, yOffset);
+								stopTimer();
 								JOptionPane.showMessageDialog(frame, "Congratulations you solved the Hidato. Return to the Main Menu", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
 								MainMenu mm = new MainMenu();
 								mm.getFrame().setVisible(true);
@@ -303,6 +313,7 @@ public class GameView {
 					g.drawString(String.valueOf(next), xOffset, yOffset);
 					movesLabel.setText(String.valueOf(++moves));
 					if(next == ControlPresentacio.getInstance().getUltim()-1) {
+						stopTimer();
 						JOptionPane.showMessageDialog(frame, "Congratulations you solved the Hidato. Return to the Main Menu", "Congratulations!", JOptionPane.INFORMATION_MESSAGE);
 						MainMenu mm = new MainMenu();
 						mm.getFrame().setVisible(true);

@@ -182,10 +182,6 @@ public class DrawView {
 		
 	}
 	
-	public void setBoard(String[][] board) {
-		this.board = board;
-	}
-	
 	public void setParams(String[] params) {
 		cellType = params[0];
 		adjType = params[1];
@@ -194,7 +190,9 @@ public class DrawView {
 		this.params = params;
 	}
 	
-	private void setParams() {
+	private void setParams(String type, String adj) {
+		setCellType(type);
+		setCellAdjacency(adj);
 		params = new String[] {cellType, adjType, String.valueOf(finalRows), String.valueOf(finalCols)};
 	}
 	
@@ -256,7 +254,7 @@ public class DrawView {
 		setCellType(cellTypeBox.getSelectedItem().toString());
 		setCellAdjacency(adjacencyBox.getSelectedItem().toString());
 		
-		setParams();
+		setParams(cellTypeBox.getSelectedItem().toString(), adjacencyBox.getSelectedItem().toString());
 		setMatrix(cellType);
 		
         JPanel panel = new JPanel() {
@@ -286,7 +284,7 @@ public class DrawView {
 		JButton validateButton = new JButton("Validate");
 		validateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setParams();
+				setParams(cellTypeBox.getSelectedItem().toString(), adjacencyBox.getSelectedItem().toString());
 				String[][] auxBoard = new String[board.length][board[0].length];
 				for(int i = 0; i< board.length; i++) {
 					for(int j = 0; j < board[0].length;j++) {
