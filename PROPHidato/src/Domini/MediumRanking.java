@@ -1,12 +1,14 @@
 package Domini;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import com.google.gson.Gson;
 
 public class MediumRanking extends Ranking{
 	private static MediumRanking mr = new MediumRanking();
-	public static MediumRanking getInstance() {
+	public static MediumRanking getInstance() throws IOException {
+		mr.setRanking(ControlDomini.getInstance().getMediumRanking());
 		return mr;
 	}
 	public MediumRanking() {
@@ -18,5 +20,8 @@ public class MediumRanking extends Ranking{
 		Gson gson = new Gson();
 		String rts = gson.toJson(this);
 		ControlDomini.getInstance().storeMediumRanking(rts);
+	}
+	public void setRanking(HashMap<String, Integer> ranking) {
+		this.rank = ranking;
 	}
 }

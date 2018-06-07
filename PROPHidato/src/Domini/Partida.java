@@ -133,6 +133,7 @@ public class Partida {
 		this.acabada = true;
 		Ranking rank;
 		int newscore;
+		System.out.println("DIFICULTAT:    " + this.difficulty);;
 		switch (this.difficulty) {
 			case "Medium":
 				rank = MediumRanking.getInstance();
@@ -232,9 +233,19 @@ public class Partida {
 	}
 	
 	public Hidato generarTaulell(String diff, String cellType, String adj) {
-		
-		int randomi = ThreadLocalRandom.current().nextInt(3, 8);
-		int randomj = ThreadLocalRandom.current().nextInt(3, 8);
+		int diffdef = 3;
+		switch (diff) {
+		case "Medium":
+			diffdef = 4;
+			break;
+		case "Hard": 
+			diffdef = 5;
+			break;
+		default:
+			break;
+		};
+		int randomi = ThreadLocalRandom.current().nextInt(diffdef, 8);
+		int randomj = ThreadLocalRandom.current().nextInt(diffdef, 8);
 		String matriu[][] = new String[randomi][randomj];
 		//System.out.println(randomi);
 		//System.out.println(randomj);
@@ -356,10 +367,14 @@ public class Partida {
 						// hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
 						System.out.println("test");
 						if(checkCorrectSolution(-1, -1)) {
-							//acabarPartida();
 							double finaltime = (System.currentTimeMillis() - startime)/1000.0;
-							int movescore = 300-(current)*5;
-							this.puntuacio = 300-(int)finaltime + movescore;						
+							System.out.println("FINALTIME = " + finaltime);
+							System.out.println("Current moves = " + nmoves);
+							int movescore = 300-(nmoves)*5;
+							int finalscore = movescore - (int)finaltime;
+							if (finalscore < 0) finalscore = 0;
+							this.puntuacio = finalscore;
+							acabarPartida();													
 							System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 							acabada = true;
 						}
