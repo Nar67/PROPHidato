@@ -68,6 +68,10 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().getUltim();
 	}
 	
+	public ArrayList<Point> getNeighbours(int i, int j, String[] params, String[][] board){
+		return ControlDomini.getInstance().getNeighbours(i, j, params, board);
+	}
+	
 	public boolean logInUser(String username, char[] password) throws IOException {
 		return ControlDomini.getInstance().logInUser(username, ControlDomini.getInstance().getSHA256Hash(String.valueOf(password)));
 	}

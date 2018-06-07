@@ -41,8 +41,8 @@ public class ListGames extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListGames frame = new ListGames();
-					frame.setVisible(true);
+					//ListGames frame = new ListGames();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -53,7 +53,8 @@ public class ListGames extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListGames() {
+	
+	public ListGames(JFrame parent) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -102,6 +103,8 @@ public class ListGames extends JFrame {
 				ArrayList<Point> initials = ControlPresentacio.getInstance().getInitials(); 
 				GameView gv = new GameView(params, board, time, moves, initials);
 				gv.getFrame().setVisible(true);
+				parent.dispose();
+				dispose();
 			}
 		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));

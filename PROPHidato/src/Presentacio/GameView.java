@@ -210,7 +210,10 @@ public class GameView {
 							try {
 								next = ControlPresentacio.getInstance().nextMove(i, j);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
+								JOptionPane.showMessageDialog(frame, "An error has occurred, you will be returned to the main menu", "",  JOptionPane.INFORMATION_MESSAGE);
+								MainMenu mm = new MainMenu();
+								mm.getFrame().setVisible(true);
+								frame.dispose();
 								e.printStackTrace();
 							}
 							if(board[i][j].equals(String.valueOf(prenext))) {
@@ -305,8 +308,11 @@ public class GameView {
 						mm.getFrame().setVisible(true);
 						frame.dispose();
 					}
-				} catch (IOException e1 ) {
-					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
+				} catch (IOException | IndexOutOfBoundsException e1 ) {
+					JOptionPane.showMessageDialog(frame, "Hint not avaliable, you will be returned to the main menu", "",  JOptionPane.INFORMATION_MESSAGE);
+					MainMenu mm = new MainMenu();
+					mm.getFrame().setVisible(true);
+					frame.dispose();
 					e1.printStackTrace();
 				}
 			}

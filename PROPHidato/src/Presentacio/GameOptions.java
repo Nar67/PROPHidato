@@ -52,6 +52,7 @@ public class GameOptions extends JFrame {
 	 * Create the frame.
 	 */
 	public GameOptions() {
+		JFrame frame = this;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setSize((int)screenSize.getWidth(),(int)screenSize.getHeight());
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -159,7 +160,7 @@ public class GameOptions extends JFrame {
 		JButton loadHidatoButton = new JButton("Load Hidato");
 		loadHidatoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListHidatos lh = new ListHidatos();
+				ListHidatos lh = new ListHidatos(frame);
 				lh.setVisible(true);
 			}
 		});
@@ -170,7 +171,7 @@ public class GameOptions extends JFrame {
 		JButton loadGameButton = new JButton("Load Game");
 		loadGameButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ListGames lg = new ListGames();
+				ListGames lg = new ListGames(frame);
 				lg.setVisible(true);
 			}
 		});
