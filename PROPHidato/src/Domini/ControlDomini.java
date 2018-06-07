@@ -128,6 +128,20 @@ public class ControlDomini {
 		this.currentuser = u;
 	}
 	
+	public ArrayList<Point> getNeighbours(int i, int j, String[] params, String[][] board){
+		Board b;
+		ArrayList<Point> result = new ArrayList<Point>();
+		if(params[0].equals("Q")) b = new SquareBoard(params, board);
+		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
+		else if(params[0].equals("H")) b = new HexagonBoard(params, board);
+		else return new ArrayList<Point>();
+		ArrayList<Cell> n = b.getNeighbours(b.getCell(i, j));
+		for(Cell c : n)
+			result.add(new Point(c.getRow(), c.getCol()));
+		return result;
+			
+	}
+	
 	public void loadPartida(String name) throws IOException {
 		ControlPersistencia cp = ControlPersistencia.getInstance();
 		String user = currentuser.getNom();

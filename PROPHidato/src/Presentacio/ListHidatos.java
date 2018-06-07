@@ -41,8 +41,8 @@ public class ListHidatos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ListHidatos frame = new ListHidatos();
-					frame.setVisible(true);
+					//ListHidatos frame = new ListHidatos();
+					//frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -53,7 +53,7 @@ public class ListHidatos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ListHidatos() {
+	public ListHidatos(JFrame parent) {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -107,6 +107,9 @@ public class ListHidatos extends JFrame {
 				matriu = m;
 				GameView gv = new GameView(params, matriu);
 				gv.getFrame().setVisible(true);
+				parent.dispose();
+				dispose();
+				
 			}
 		});
 		playButton.setFont(new Font("Tahoma", Font.PLAIN, 26));

@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -197,6 +198,33 @@ public class DrawView {
 		params = new String[] {cellType, adjType, String.valueOf(finalRows), String.valueOf(finalCols)};
 	}
 	
+	private void drawAdjacents(Graphics2D g, int i, int j) {
+		ArrayList<Point> neighbours = ControlPresentacio.getInstance().getNeighbours(i, j, params, board);
+		for(Point p : neighbours)
+			if(!board[p.x][p.y].equals("#")) {
+				Polygon pol = matrix.get(i).get(j-1);
+				g.drawPolygon(pol);
+			}
+		/*
+		if(i+1 < board.length && i+1 >= 0 && !board[i+1][j].equals("#")) {
+			Polygon p = matrix.get(i+1).get(j);
+			g.drawPolygon(p);
+		}
+		else if(i-1 >= 0 && i-1 < board.length && !board[i-1][j].equals("#")) {
+			Polygon p = matrix.get(i-1).get(j);
+			g.drawPolygon(p);
+		}
+		else if(j+1 < board[0].length && j+1 >= 0 && !board[i][j+1].equals("#")) {
+			Polygon p = matrix.get(i).get(j+1);
+			g.drawPolygon(p);
+		}
+		else if(j-1 >= 0 && j-1 < board[0].length && !board[i][j-1].equals("#")) {
+			Polygon p = matrix.get(i).get(j-1);
+			g.drawPolygon(p);	
+		}
+		*/
+	}
+	
 	
 	private void initialize() {
 		frame = new JFrame();
@@ -214,9 +242,11 @@ public class DrawView {
 		JComboBox cellTypeBox = new JComboBox();
 		cellTypeBox.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		cellTypeBox.setModel(new DefaultComboBoxModel(new String[] {"Triangle", "Square", "Hexagon"}));
+		cellTypeBox.setSelectedIndex(0);
 		
 		JComboBox adjacencyBox = new JComboBox();
 		adjacencyBox.setModel(new DefaultComboBoxModel(new String[] {"Borders", "Borders & angles"}));
+		adjacencyBox.setSelectedIndex(0);
 		adjacencyBox.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		
 		JLabel errorMessage = new JLabel("");
@@ -226,7 +256,7 @@ public class DrawView {
 		setCellType(cellTypeBox.getSelectedItem().toString());
 		setCellAdjacency(adjacencyBox.getSelectedItem().toString());
 		
-		
+		setParams();
 		setMatrix(cellType);
 		
         JPanel panel = new JPanel() {
@@ -361,6 +391,8 @@ public class DrawView {
                 				g.fillPolygon(p);
                 				g.setColor(Color.LIGHT_GRAY);
                 				g.drawPolygon(p);
+                				g.setColor(Color.BLACK);
+                				drawAdjacents(g, i, j);
                 			}
                 			else { //numero
                 				board[i][j] = "*";
