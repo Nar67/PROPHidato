@@ -1,1 +1,1 @@
-{"rank":{"Eldavidputoamo":569,"DiosNoExiste":500}}
+{"rank":{"Eldavidputoamo":569,"DiosNoExiste":500,"tintin":776}}

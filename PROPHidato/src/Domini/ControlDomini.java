@@ -58,6 +58,7 @@ public class ControlDomini {
 		Partida p = new Partida(hidato);
 		this.currentpartida = p;
 		p.setUser(this.currentuser);
+		p.setDifficulty(diff);
 		return hidato.getTaulell().getMatriu();
 	}
 	

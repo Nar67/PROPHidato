@@ -6,10 +6,13 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -159,13 +162,21 @@ public class RankingView extends JFrame {
 		modelEasy.addColumn("Score");
 		
 		HashMap<String, Integer> rankEasy = ControlPresentacio.getInstance().getEasyRanking();
-		
+		TreeMap<String, Integer> sortedrank = new TreeMap<String, Integer>(rankEasy);
+		TreeMap<Integer, String> aux = new TreeMap<Integer, String>();
+		sortedrank.descendingMap().forEach((value, key) -> {
+			aux.put(key, value);
+		});
+		aux.descendingMap().forEach((value, key) -> {
+			modelEasy.addRow(new Object[]{key, value});
+		});
+		/*
 	    Iterator<Entry<String, Integer>> itE = rankEasy.entrySet().iterator();
 	    while (itE.hasNext()) {
 	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itE.next();
 	        modelEasy.addRow(new Object[]{pair.getKey(), pair.getValue()});
 	        itE.remove(); // avoids a ConcurrentModificationException
-	    }
+	    }*/
 
 
 		easyRanking.setRowHeight(30);
@@ -190,13 +201,21 @@ public class RankingView extends JFrame {
 		
 		
 		HashMap<String, Integer> rankMedium = ControlPresentacio.getInstance().getMediumRanking();
-		
+		TreeMap<String, Integer> sortedrank2 = new TreeMap<String, Integer>(rankMedium);
+		TreeMap<Integer, String> aux2 = new TreeMap<Integer, String>();
+		sortedrank2.descendingMap().forEach((value, key) -> {
+			aux2.put(key, value);
+		});
+		aux2.descendingMap().forEach((value, key) -> {
+			modelMedium.addRow(new Object[]{key, value});
+		});
+		/*
 	    Iterator<Entry<String, Integer>> itM = rankMedium.entrySet().iterator();
 	    while (itM.hasNext()) {
 	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itM.next();
 	        modelMedium.addRow(new Object[]{pair.getKey(), pair.getValue()});
 	        itM.remove(); // avoids a ConcurrentModificationException
-	    }
+	    }*/
 		mediumRanking.setRowHeight(30);
 		TableColumnModel columnModelMedium = mediumRanking.getColumnModel();
 		columnModelMedium.getColumn(0).setPreferredWidth(1700);
@@ -219,13 +238,21 @@ public class RankingView extends JFrame {
 		modelHard.addColumn("Score");
 		
 		HashMap<String, Integer> rankHard = ControlPresentacio.getInstance().getHardRanking();
-		
+		TreeMap<String, Integer> sortedrank3 = new TreeMap<String, Integer>(rankHard);
+		TreeMap<Integer, String> aux3 = new TreeMap<Integer, String>();
+		sortedrank3.descendingMap().forEach((value, key) -> {
+			aux3.put(key, value);
+		});
+		aux3.descendingMap().forEach((value, key) -> {
+			modelHard.addRow(new Object[]{key, value});
+		});
+		/*
 	    Iterator<Entry<String, Integer>> itH = rankHard.entrySet().iterator();
 	    while (itH.hasNext()) {
 	        Map.Entry<String, Integer> pair = (Entry<String, Integer>)itH.next();
 	        modelHard.addRow(new Object[]{pair.getKey(), pair.getValue()});
 	        itH.remove(); // avoids a ConcurrentModificationException
-	    }
+	    }*/
 		hardRanking.setRowHeight(30);
 		TableColumnModel columnModelHard = hardRanking.getColumnModel();
 		columnModelHard.getColumn(0).setPreferredWidth(1700);
