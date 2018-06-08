@@ -133,7 +133,6 @@ public class Partida {
 		this.acabada = true;
 		Ranking rank;
 		int newscore;
-		System.out.println("DIFICULTAT:    " + this.difficulty);;
 		switch (this.difficulty) {
 			case "Medium":
 				rank = MediumRanking.getInstance();
@@ -159,7 +158,6 @@ public class Partida {
 	private boolean checkCorrectSolution(int i, int j) {
 		if(i == -1 && j == -1) {
 			for(Point point : initialNums) {
-				//System.out.println("InitialNums: " + hidato.getTaulell().getCell(point.x, point.y).getValue());
 				if(hidato.getTaulell().getCell(point.x, point.y).getValue().equals("1")) {
 					i = point.x;
 					j = point.y;
@@ -170,11 +168,9 @@ public class Partida {
 		int cellValue = Integer.parseInt(cell.getValue());
 		ArrayList<Cell> neighbours = hidato.getTaulell().getNeighbours(cell);
 		for(Cell c : neighbours) {
-			System.out.println("cellValue: " + cellValue);
 			if((cellValue == ultim-2 && c.getValue().equals("?"))) {
 				hidato.getTaulell().setValueToCell(c, String.valueOf(ultim-1));
 			}
-			System.out.println("neigh: " + c.getValue()); 
 			if(c.getValue().equals(String.valueOf(cellValue+1))) {
 				if(cellValue+1 == ultim)
 					return true;
@@ -232,13 +228,6 @@ public class Partida {
 		return true;
 	}
 	
-	private void printBoard(String[][] board) {
-		for(String[] a : board) {
-			for(String s : a) 
-				System.out.print(s);
-			System.out.println();
-		}
-	}
 	
 	public Hidato generarTaulell(String diff, String cellType, String adj) {
 		int diffdef = 3;
@@ -255,8 +244,6 @@ public class Partida {
 		int randomi = ThreadLocalRandom.current().nextInt(diffdef, 8);
 		int randomj = ThreadLocalRandom.current().nextInt(diffdef, 8);
 		String matriu[][] = new String[randomi][randomj];
-		//System.out.println(randomi);
-		//System.out.println(randomj);
 		int randomstarti = ThreadLocalRandom.current().nextInt(0, randomi);
 		int randomstartj = ThreadLocalRandom.current().nextInt(0, randomj);
 		matriu[randomstarti][randomstartj] = "1";
@@ -322,8 +309,6 @@ public class Partida {
 		String cellValue = hidato.getTaulell().getCell(i, j).getValue();
 		if(!isAcabada()) {
 			if (!moveInBoard(i, j)) {
-				System.out.println("El moviment no es valid");
-				hidato.getTaulell().printBoard();
 				return -1;
 			}
 			if (current == 1) { //inicialitzacio
@@ -361,7 +346,6 @@ public class Partida {
 				return current-3; // codi per determinar que borrem un moviment
 			}
 			else if (!hidato.isMoveValid(curri, currj, i, j, current)) {
-				System.out.println("El moviment no es valid");
 				return -1;
 			}
 			else { //cliquem a una cel 
@@ -400,8 +384,6 @@ public class Partida {
 						return Integer.parseInt(hidato.getTaulell().getCell(curri, currj).getValue());
 					}
 				if (!moveInBoard(i, j)) {
-					System.out.println("El moviment no es valid");
-					hidato.getTaulell().printBoard();
 					return -1;
 				}
 				else if (!cellValue.equals("#") && !cellValue.equals("?") && !cellValue.equals("*") && !initialNums.contains(new Point(i, j))) {
@@ -410,19 +392,14 @@ public class Partida {
 					--current;
 					curri = previ[current-1];
 					currj = prevj[current-1];
-					hidato.getTaulell().printBoard();
 					++nmoves;
 					return this.current;
 				}
 				else if (!hidato.isMoveValid(curri, currj, i, j, current)) {
-					System.out.println("El moviment no es valid");
 					return -1;
 				}
 				else {
-					System.out.println("current: " + current);
-					System.out.println("curri: " + curri + " currj: " + currj);
 					hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
-					hidato.getTaulell().printBoard();
 					++current;
 					cellValue = Integer.toString(current);
 					previ[current-1] = curri;
@@ -430,25 +407,15 @@ public class Partida {
 					curri = i;
 					currj = j;
 					++nmoves;
-					/*
-					if(cellValue.equals(String.valueOf(current))) {
-						System.out.println("test");
-						return nextMove(i, j);
-						
-					}*/
 					if (current == getUltim()) {
 						// hidato.getTaulell().setValueToCell(i, j, Integer.toString(current));
-						System.out.println("test");
 						if(checkCorrectSolution(-1, -1)) {
 							double finaltime = (System.currentTimeMillis() - startime)/1000.0;
-							System.out.println("FINALTIME = " + finaltime);
-							System.out.println("Current moves = " + nmoves);
 							int movescore = 300-(nmoves)*5;
 							int finalscore = movescore - (int)finaltime;
 							if (finalscore < 0) finalscore = 0;
 							this.puntuacio = finalscore;
 							acabarPartida();													
-							System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 							acabada = true;
 							return -2;
 						}

@@ -62,15 +62,15 @@ public class PartidaTest {
 	public static void testLlegirTaulell() {
 		System.out.println("Hidato introduit");
 		Partida partida = new Partida();
-		Hidato hidato = partida.llegirTaulell();
-		partida.setHidato(hidato);
-		partida.getHidato().getTaulell().printBoard();
+		//Hidato hidato = partida.llegirTaulell();
+		//partida.setHidato(hidato);
+		//partida.getHidato().getTaulell().printBoard();
 	}
 	
 	public static void testGenerarTaulell() {
 		Partida partida = new Partida();
-		Hidato hidato = partida.generarTaulell(4);
-		hidato.getTaulell().printBoard();
+		//Hidato hidato = partida.generarTaulell(4);
+		//hidato.getTaulell().printBoard();
 	}
 	
 	public static void testSetUltim() {

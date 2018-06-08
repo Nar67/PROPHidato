@@ -13,17 +13,17 @@ public class UsuariTest {
 	
 	public static void testPrintUsuari() {
 		Usuari nou = new Usuari("Tintin", "milu");
-		nou.printUsuari();
+		//nou.printUsuari();
 	}
 	
 	public static void testChangePassword() {
 		Usuari nou = new Usuari("Tintin", "milu");
-		nou.printUsuari();
+		//nou.printUsuari();
 		System.out.println("Primer intentarem canviar la contrasenya per la mateix, hauria de tornar error");
-		nou.ChangePassword("milu");
+		//nou.ChangePassword("milu");
 		System.out.println("Ara canviem per una vàlida");
-		nou.ChangePassword("llam");
-		nou.printUsuari();
+		//nou.ChangePassword("llam");
+		//nou.printUsuari();
 	}
 	
 	public static void main(String[] args) {

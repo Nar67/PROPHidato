@@ -20,7 +20,7 @@ public class HidatoTest {
 		String[] params = {"Q", "CA", "5", "5"};
 		Board tauler = new SquareBoard(params, matriu);
 		Hidato hidato = new Hidato(tauler);
-		hidato.getTaulell().printBoard();
+		//hidato.getTaulell().printBoard();
 	}
 	
 	public static void testGetStart() {
@@ -79,7 +79,7 @@ public class HidatoTest {
 		Hidato hidatoo = new Hidato(tauleer);
 		hidatoo.checkHidato();
 		System.out.println("Original:");
-		hidatoo.printHidatoOriginal();
+		//hidatoo.printHidatoOriginal();
 		System.out.println("Solució:");
 		hidatoo.printHidato();
 	}
@@ -89,8 +89,8 @@ public class HidatoTest {
 		String[] paramss = {"Q", "CA", "5", "5"};
 		Board tauleer = new SquareBoard(paramss, matriuu);
 		Hidato hidatoo = new Hidato(tauleer);
-		boolean aux = hidatoo.isMoveValid(0, 2, 1, 3);
-		System.out.println(aux);
+		//boolean aux = hidatoo.isMoveValid(0, 2, 1, 3);
+		//System.out.println(aux);
 	}
 	
 	public static void testNextMove() {

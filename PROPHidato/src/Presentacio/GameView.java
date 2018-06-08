@@ -79,7 +79,7 @@ public class GameView {
 		this.params = params;
 		this.board = matrix;
 		this.clockTick = time;
-		this.moves = moves-2;
+		this.moves = moves;
 		this.initialNums = initialNums;
 		initialize();
 	}
@@ -340,22 +340,6 @@ public class GameView {
 		});
 		hintButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		
-		JButton saveHidatoButton = new JButton("Save hidato");
-		saveHidatoButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				time.stop();
-				String name = JOptionPane.showInputDialog(frame, "Name the hidato please", null);
-				try {
-					ControlPresentacio.getInstance().storeCurrentHidato(name);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(frame, "An error has  occurred, please try again", "",  JOptionPane.INFORMATION_MESSAGE);
-					e.printStackTrace();
-				}
-				time.start();
-			}
-		});
-		saveHidatoButton.setFont(new Font("Tahoma", Font.PLAIN, 29));
-		
 
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -374,7 +358,6 @@ public class GameView {
 									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 1600, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(saveHidatoButton, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
 										.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
 										.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 											.addGroup(groupLayout.createSequentialGroup()
@@ -406,11 +389,9 @@ public class GameView {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(movesLabel, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMoves, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 346, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 515, Short.MAX_VALUE)
 					.addComponent(saveButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addGap(70)
-					.addComponent(saveHidatoButton, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-					.addGap(152))
+					.addGap(118))
 		);
 		frame.getContentPane().setLayout(groupLayout);
 		manageClock(chrono);

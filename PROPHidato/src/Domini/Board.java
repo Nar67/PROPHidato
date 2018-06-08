@@ -12,21 +12,6 @@ public abstract class Board {
 	private String[][] matriu;
 	
 
-
-	public void printBoard() {
-		Integer rows = this.getRows();
-		Integer cols = this.getCols();
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				if(j != 0){
-					System.out.print(",");
-				}
-				System.out.print(this.getCell(i, j).getValue());
-			}
-			System.out.println();
-		}
-	}
-
 	public Board(String params[], String input[][]) {
 		this.params = params;
 		this.matriu = input;

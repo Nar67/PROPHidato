@@ -34,24 +34,10 @@ public class ControlDomini {
 	private void createCurrentUser(String nom, String pass) {
 		this.currentuser = new Usuari(nom,pass);
 	}
-	/*
-	public Partida llegeixHidato() {
-		Partida partida = new Partida();
-		Hidato hidato = partida.llegirTaulell();
-		while (!hidato.checkHidato()) {
-			System.out.println("L'hidato proposat no es resoluble");
-			hidato = partida.llegirTaulell();
-		}
-		partida.setHidato(hidato);
-		hidato.printHidatoOriginal();
-		return partida;
-	}
-	*/
 	
 	public String[][] generaHidato(String diff, String cellType, String adj) { 
 		Partida partida = new Partida();
 		Hidato hidato = partida.generarTaulell(diff, cellType, adj);
-		System.out.println("Autogenerant hidato ... ");
 		while (!hidato.checkHidato()) {
 			hidato = partida.generarTaulell(diff, cellType, adj);
 		}

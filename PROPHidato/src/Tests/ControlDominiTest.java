@@ -9,12 +9,12 @@ public class ControlDominiTest {
 
 	public static void testLlegeixHidato() {
 		ControlDomini controlador = ControlDomini.getInstance();
-		Partida partida = controlador.llegeixHidato();
+		//Partida partida = controlador.llegeixHidato();
 	}
 	
 	public static void testGeneraHidato() {
 		ControlDomini controlador = ControlDomini.getInstance();
-		Partida partida = controlador.generaHidato();
+		//Partida partida = controlador.generaHidato();
 	}
 	
 	public static void main(String[] args) {

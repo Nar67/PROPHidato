@@ -175,7 +175,7 @@ public class Hidato {
 			this.te_solu = true;
 			//printHidato();
 		}
-		else {System.out.println("No hi ha solució"); this.te_solu = false;}
+		else this.te_solu = false;
 	}
 	
 	public String[][] printHidato() {
@@ -188,17 +188,7 @@ public class Hidato {
 		}
 		return board;
 	}
-	public void printHidatoOriginal() {
-		for(int i = 0; i < rows; ++i) {
-			for(int j = 0; j < cols; ++j) {
-				Cell a = this.taulell.getCell(i, j);
-				System.out.print(a.getValue());
-				System.out.print(",");
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
+
 	public boolean isMoveValid(int i, int j, int clickedi, int clickedj, int current) {
 		if(this.acabat) checkHidato();
 		Cell a = this.solucio.getCell(i, j);

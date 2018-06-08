@@ -40,7 +40,6 @@ public class UserStorage {
 			}
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			System.out.println("gas");
 		}
 
 		return false;
@@ -52,7 +51,6 @@ public class UserStorage {
 			return false;
 		}else {
 			this.storeUser(password,username);
-			System.out.println("hola");
 			return true;
 		}
 		

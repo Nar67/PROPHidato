@@ -25,20 +25,7 @@ public class Usuari {
 			//S'implementara en la seguent entrega ja que agafa un usuari de la base de dades
 			return this;
 		}
-		public void printUsuari() {
-			System.out.println(this.nom);
-			System.out.println(this.password);
-		}
-		public void printNomUsuari() {
-			System.out.println(this.nom);
-		}
-		public void ChangePassword(String pass) {
-			String sha = ControlDomini.getInstance().getSHA256Hash(pass);
-			if(this.password.equals(sha)) {
-				System.out.println("Perdoni, ha introduit la mateixa contrasenya");
-			}
-			else this.password = sha;
-		}
+
 		public int MillorTemps(String dificultat) {
 			//retornarà el millor temps de l'usuari depenent de la dificultat
 			return 0;
