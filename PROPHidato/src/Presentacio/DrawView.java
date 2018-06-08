@@ -254,8 +254,8 @@ public class DrawView {
 		setCellType(cellTypeBox.getSelectedItem().toString());
 		setCellAdjacency(adjacencyBox.getSelectedItem().toString());
 		
-		setParams(cellTypeBox.getSelectedItem().toString(), adjacencyBox.getSelectedItem().toString());
 		setMatrix(cellType);
+		setParams(cellTypeBox.getSelectedItem().toString(), adjacencyBox.getSelectedItem().toString());
 		
         JPanel panel = new JPanel() {
 			private static final long serialVersionUID = 1L;

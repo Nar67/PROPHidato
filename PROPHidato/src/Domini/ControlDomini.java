@@ -132,6 +132,8 @@ public class ControlDomini {
 	
 	public ArrayList<Point> getNeighbours(int i, int j, String[] params, String[][] board){
 		Board b;
+		String par = new String(params[1]);
+		params[1] = "C";
 		ArrayList<Point> result = new ArrayList<Point>();
 		if(params[0].equals("Q")) b = new SquareBoard(params, board);
 		else if(params[0].equals("T")) b = new TriangleBoard(params, board);
@@ -140,6 +142,7 @@ public class ControlDomini {
 		ArrayList<Cell> n = b.getNeighbours(b.getCell(i, j));
 		for(Cell c : n)
 			result.add(new Point(c.getRow(), c.getCol()));
+		params[1] = par;
 		return result;
 			
 	}

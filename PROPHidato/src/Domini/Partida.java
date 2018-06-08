@@ -244,8 +244,8 @@ public class Partida {
 		default:
 			break;
 		};
-		int randomi = ThreadLocalRandom.current().nextInt(diffdef, 9);
-		int randomj = ThreadLocalRandom.current().nextInt(diffdef, 9);
+		int randomi = ThreadLocalRandom.current().nextInt(diffdef, 8);
+		int randomj = ThreadLocalRandom.current().nextInt(diffdef, 8);
 		String matriu[][] = new String[randomi][randomj];
 		//System.out.println(randomi);
 		//System.out.println(randomj);

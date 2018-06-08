@@ -106,19 +106,29 @@ public class GameView {
 		clockTick = time;
 	}
 	
-	private boolean checkNeighboursFilled(ArrayList<Point> neighbours) {
-		return true;
+	private boolean checkNeighboursFilled(int i, int j) {
+		ArrayList<Point> neighbours = ControlPresentacio.getInstance().getNeighbours(i, j, params, board);
+		int count = 0;
+		for(Point p : neighbours)
+			if(!board[p.x][p.y].equals("#"))
+				count++;
+		if(params[0].equals("Q")) return count == 4;
+		else if(params[0].equals("T")) return count == 3;
+		else if(params[0].equals("H")) return count == 6;
+		return false;
 	}
 	
 	private void drawMatrix(Vector<Vector<Polygon>> matrix, Graphics2D g) {
-        g.setColor(Color.LIGHT_GRAY);
 		g.setStroke(new BasicStroke(3));
 		g.setFont(new Font("TimesRoman", Font.PLAIN, 18));
         for(int i = 0; i < matrix.size(); i++) {
         	for(int j = 0; j < matrix.get(0).size(); j++) {
-        		ArrayList<Point> neighbours = ControlPresentacio.getInstance().getNeighbours(i, j, params, board);
         		Polygon p = matrix.get(i).get(j);
         		if(board[i][j].equals("#")) {
+        			if(checkNeighboursFilled(i, j)) {
+            			g.setColor(Color.LIGHT_GRAY);
+            			g.fillPolygon(p);
+        			}
         			g.setColor(Color.WHITE);
         			g.drawPolygon(p);
         			g.setColor(Color.BLACK);
