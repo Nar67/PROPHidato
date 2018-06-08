@@ -130,6 +130,8 @@ public class ControlDomini {
 		this.currentuser = u;
 	}
 	
+	
+	
 	public ArrayList<Point> getNeighbours(int i, int j, String[] params, String[][] board){
 		Board b;
 		String par = new String(params[1]);

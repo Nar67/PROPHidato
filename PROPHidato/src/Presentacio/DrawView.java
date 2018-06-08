@@ -182,6 +182,10 @@ public class DrawView {
 		
 	}
 	
+	public void setBoard(String[][] board) {	
+		this.board = board;	
+	}
+	
 	public void setParams(String[] params) {
 		cellType = params[0];
 		adjType = params[1];

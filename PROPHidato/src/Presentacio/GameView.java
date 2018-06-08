@@ -226,9 +226,9 @@ public class GameView {
                 			int xOffset = centers.get(i).get(j).x - (3*board[i][j].length());
                 			int yOffset = centers.get(i).get(j).y + (4*board[i][j].length());
                 			int next = -3;
-							try {
+                			try {
 								next = ControlPresentacio.getInstance().nextMove(i, j);
-							} catch (IOException e) {
+							} catch (IOException | IndexOutOfBoundsException e) {
 								JOptionPane.showMessageDialog(frame, "An error has occurred, you will be returned to the main menu", "",  JOptionPane.INFORMATION_MESSAGE);
 								MainMenu mm = new MainMenu();
 								mm.getFrame().setVisible(true);

@@ -100,6 +100,7 @@ public class ControlPresentacio {
 		return ControlDomini.getInstance().listGames();
 	}
 	
+
 	public HashMap<String, Integer> getEasyRanking() throws IOException {
 		return ControlDomini.getInstance().getEasyRanking();
 	}

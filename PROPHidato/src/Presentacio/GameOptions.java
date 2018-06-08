@@ -106,14 +106,19 @@ public class GameOptions extends JFrame {
 				String diff = difficulyBox.getSelectedItem().toString();
 				String adj = adjacencyBox.getSelectedItem().toString();
 				String cellType = cellTypeBox.getSelectedItem().toString();
+				LoadingView lv = new LoadingView();
+				lv.setVisible(true);
 				String[][] mat = cp.generateGame(diff, cellType, adj);
 				if(cellType.equals("Square")) cellType = "Q";
 				else if(cellType.equals("Triangle")) cellType = "T";
 				else if(cellType.equals("Hexagon")) cellType = "H";
 				if(adj.equals("Borders")) adj = "C";
 				if(adj.equals("Borders and angles")) adj = "CA";
-				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};				GameView gv = new GameView(params, mat);
+				String[] params = new String[] {cellType, adj, Integer.toString(mat.length), Integer.toString(mat[0].length)};			
+				GameView gv = new GameView(params, mat);
 				gv.getFrame().setVisible(true);
+				lv.dispose();
+				dispose();
 			}
 		});
 		GroupLayout groupLayout = new GroupLayout(internalFrame.getContentPane());

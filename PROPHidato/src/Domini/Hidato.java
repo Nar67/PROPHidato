@@ -136,6 +136,7 @@ public class Hidato {
 	}
     private  boolean solve(int i, int j, int n, int next) {
 		Cell a = this.solucio.getCell(i, j);
+		if(given.length == 0) return false;
 		if (n > given[given.length - 1]) {
 			return true; //ja està resolt
 		}
