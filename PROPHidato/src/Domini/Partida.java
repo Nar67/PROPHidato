@@ -377,6 +377,7 @@ public class Partida {
 							acabarPartida();													
 							System.out.println("Enhorabona!! Has resolt l'Hidato correctament!");
 							acabada = true;
+							return -2;
 						}
 					}
 					return this.current-1;
